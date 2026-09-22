@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articulation Camp Waitlist</title>
+  <meta name="description" content="Join the waitlist for a 6-week articulation training camp. Speak clearly, be understood the first time." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f7f4ee;
+      --surface: #ffffff;
+      --text: #1d1b18;
+      --muted: #6b645a;
+      --accent: #c2502b;
+      --accent-hover: #a8421f;
+      --border: #e4ddd1;
+      --focus: rgba(194, 80, 43, 0.25);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #16140f;
+        --surface: #211e18;
+        --text: #f3eee5;
+        --muted: #a79f92;
+        --accent: #e0714b;
+        --accent-hover: #ea8864;
+        --border: #37322a;
+        --focus: rgba(224, 113, 75, 0.3);
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      width: 100%;
+      max-width: 520px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(34px, 7vw, 48px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .lede {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 440px;
+      margin: 0 auto 32px;
+    }
+
+    /* Wraps both the placeholder form and the EmailOctopus embed */
+    .signup {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: left;
+    }
+
+    /* Generic styles so the EmailOctopus embedded form matches the page */
+    .signup input[type="email"],
+    .signup input[type="text"] {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      font: inherit;
+      font-size: 16px;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .signup input[type="email"]:focus,
+    .signup input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--focus);
+    }
+    .signup button,
+    .signup input[type="submit"] {
+      width: 100%;
+      height: 48px;
+      margin-top: 12px;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--accent);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .signup button:hover,
+    .signup input[type="submit"]:hover { background: var(--accent-hover); }
+
+    .signup label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .note {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .success {
+      display: none;
+      text-align: center;
+      padding: 8px 0;
+    }
+    .success strong { display: block; font-size: 18px; margin-bottom: 4px; }
+    .success p { color: var(--muted); font-size: 15px; }
+
+    footer {
+      margin-top: 32px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="eyebrow">6-week articulation training camp</span>
+    <h1>Speak clearly.<br />Be understood the first time.</h1>
+    <p class="lede">
+      Six weeks of focused drills to sharpen your diction, pacing, and clarity.
+      Join the waitlist to hear first when enrollment opens.
+    </p>
+
+    <div class="signup">
+      <!--
+        ===== EMAILOCTOPUS EMBED =====
+        In EmailOctopus: Forms → your form → "Embed on your website" → copy the code.
+        Delete everything between START and END below and paste that code in its place.
+      -->
+      <!-- START placeholder form -->
+      <form id="preview-form" novalidate>
+        <label for="email">Email address</label>
+        <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+        <button type="submit">Join the waitlist</button>
+        <p class="note">No spam. Unsubscribe anytime.</p>
+      </form>
+      <div class="success" id="preview-success" role="status">
+        <strong>You're on the list!</strong>
+        <p>Preview mode — connect EmailOctopus to send the welcome email.</p>
+      </div>
+      <script>
+        (function () {
+          var form = document.getElementById("preview-form");
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            var input = document.getElementById("email");
+            if (!input.checkValidity()) { input.reportValidity(); return; }
+            form.style.display = "none";
+            document.getElementById("preview-success").style.display = "block";
+          });
+        })();
+      </script>
+      <!-- END placeholder form -->
+    </div>
+
+    <footer>&copy; 2026 Articulation Training Camp</footer>
+  </main>
+</body>
+</html>

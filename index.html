@@ -87,7 +87,7 @@
     }
     .hero-note {
       margin-top: 14px;
-      color: var(--accent);
+      color: var(--text);
       font-family: "DM Serif Display", Georgia, serif;
       font-style: italic;
       font-size: 20px;
@@ -271,6 +271,37 @@
     }
     .signup button:hover,
     .signup input[type="submit"]:hover { background: var(--accent-hover); }
+    /* EmailOctopus ships its own Bootstrap styles; pull the embed back onto the brand palette */
+    .signup-label {
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .signup .btn-primary {
+      height: 48px !important;
+      margin-top: 4px !important; /* the embed already adds 8px under the input */
+      font: inherit !important;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      color: var(--bg) !important;
+      background: var(--accent) !important;
+      border: none !important;
+      border-radius: 10px !important;
+    }
+    .signup .btn-primary:hover,
+    .signup .btn-primary:focus { background: var(--accent-hover) !important; }
+    .signup .form-control {
+      height: 48px !important;
+      padding: 0 14px !important;
+      font: inherit !important;
+      font-size: 16px !important;
+      color: var(--text) !important;
+      background: var(--bg) !important;
+      border: 1px solid #c9d6d3 !important;
+      border-radius: 10px !important;
+    }
+    .signup .form-control:focus { border-color: var(--accent) !important; box-shadow: 0 0 0 4px var(--focus) !important; }
     .signup label {
       display: block;
       margin-bottom: 8px;
@@ -588,9 +619,8 @@
 
     /* ---------- How it works: roadmap + weekly rhythm with mockups ---------- */
     main > section.how-section { max-width: 1000px; }
-    .how-section > h2, .how-section > .how-lead { text-align: center; }
+    .how-section > h2 { text-align: center; }
     .how-section > h2 { font-size: clamp(34px, 6.5vw, 50px); line-height: 1.02; margin-bottom: 22px; text-wrap: balance; }
-    .how-lead { max-width: 560px; margin: -8px auto 32px; font-size: 17px; color: var(--muted); }
     .how-sub {
       margin: 88px 0 20px;
       font-family: "Anton", Impact, sans-serif;
@@ -647,6 +677,7 @@
       text-transform: uppercase;
     }
     .roadmap span { display: block; font-size: 14px; color: var(--muted); }
+    .roadmap span.roadmap-plus { margin-bottom: 6px; font-weight: 600; color: var(--accent); }
     .roadmap-note { margin-top: 14px; text-align: center; font-size: 14px; color: var(--muted); }
     @media (max-width: 760px) { .roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 480px) { .roadmap { grid-template-columns: 1fr; } }
@@ -661,28 +692,46 @@
       margin: 0 auto 24px;
       text-align: center;
     }
-    .weekstrip li {
+    .weekstrip li { display: flex; }
+    .weekstrip button {
+      flex: 1;
       padding: 10px 4px;
       border-radius: 10px;
       background: var(--surface);
       border: 1px solid rgba(102, 155, 188, 0.5);
+      font: inherit;
       font-size: 12px;
       line-height: 1.25;
       color: var(--muted);
     }
+    .weekstrip button { cursor: pointer; transition: background 0.15s, border-color 0.15s, transform 0.15s; }
+    .weekstrip button:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .weekstrip button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
     .weekstrip b { display: block; font-size: 13px; color: var(--text); text-transform: uppercase; letter-spacing: 0.06em; }
-    .weekstrip .fri, .weekstrip .sat { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-    .weekstrip .fri b, .weekstrip .sat b { color: var(--bg); }
-    .weekstrip .sun { opacity: 0.6; }
+    .weekstrip button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .weekstrip button[aria-pressed="true"] b { color: var(--bg); }
+    .weekstrip-hint { margin: -12px 0 20px; text-align: center; font-size: 13px; color: var(--muted); }
     @media (max-width: 520px) {
       .weekstrip { gap: 4px; }
-      .weekstrip li { padding: 8px 2px; font-size: 10px; }
+      .weekstrip button { padding: 8px 2px; font-size: 10px; }
       .weekstrip b { font-size: 11px; letter-spacing: 0; }
     }
 
     /* Rhythm cards */
     .rhythm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    @media (max-width: 720px) { .rhythm { grid-template-columns: 1fr; } }
+    .rhythm[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .rhythm[data-count="1"] { grid-template-columns: minmax(0, 480px); justify-content: center; }
+    @media (max-width: 720px) { .rhythm, .rhythm[data-count] { grid-template-columns: 1fr; } }
+    .rhythm-card[hidden] { display: none; }
+    .rhythm.switching .rhythm-card { animation: card-in 0.35s ease both; }
+    .rhythm.switching .rhythm-card:nth-child(2) { animation-delay: 0.05s; }
+    .rhythm.switching .rhythm-card:nth-child(3) { animation-delay: 0.1s; }
+    .rhythm.switching .rhythm-card:nth-child(4) { animation-delay: 0.15s; }
+    @keyframes card-in { from { opacity: 0; transform: translateY(10px); } }
+    @media (prefers-reduced-motion: reduce) {
+      .rhythm.switching .rhythm-card { animation: none; }
+      .weekstrip button { transition: none; }
+    }
     .rhythm-card {
       display: flex;
       flex-direction: column;
@@ -764,6 +813,40 @@
     .mp-rec { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text); }
     .mp-rec::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
 
+    /* Mockup: drill card */
+    .mock-drill {
+      width: 210px;
+      padding: 18px 18px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 14px 30px rgba(0, 48, 73, 0.2);
+      transform: rotate(-3deg);
+    }
+    .md-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+    .md-title {
+      margin: 6px 0 12px;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-size: 20px;
+      line-height: 1.15;
+      color: var(--text);
+    }
+    .md-steps { list-style: none; display: grid; gap: 7px; }
+    .md-steps li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: var(--text);
+      background: var(--surface);
+      border-radius: 8px;
+    }
+    .md-steps span { flex-shrink: 0; font-size: 11px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+    .md-steps .done span { color: var(--accent); }
+
     /* Mockup: daily tip video slot */
     .tip-video {
       position: relative;
@@ -800,7 +883,7 @@
       border-radius: 999px;
     }
 
-    /* Mockup: friday feedback chat */
+    /* Mockup: saturday feedback chat */
     .mock-chat {
       width: 100%;
       max-width: 330px;
@@ -866,7 +949,7 @@
       font-size: 11px;
     }
 
-    /* Mockup: saturday zoom call */
+    /* Mockup: sunday zoom call */
     .mock-zoom {
       width: 100%;
       max-width: 340px;
@@ -1036,6 +1119,8 @@
       color: var(--muted);
       text-align: center;
     }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--accent); }
 
     /* ---------- Last call + p.s. ---------- */
     main > section.lastcall { max-width: 1000px; }
@@ -1344,11 +1429,12 @@
           <span class="hj-card hj-step hj-standup">giving a 5&#8209;minute standup</span>
         </div>
         </div>
-        <figcaption class="hero-note">if I can do it, you can do it too</figcaption>
+        <figcaption class="hero-note">sharing everything I've learned along the way</figcaption>
       </figure>
       <div class="hero-copy">
       <h1>6-week <span class="nowrap">hyper-intensive</span> articulation bootcamp</h1>
       <ul class="hero-points">
+        <li>daily 1-minute speaking practice</li>
         <li>daily drills that rewire how you talk</li>
         <li>daily tips to sharpen your pronunciation, pacing and delivery</li>
         <li>weekly live zoom to practice speaking</li>
@@ -1356,35 +1442,22 @@
       </ul>
 
       <div class="signup">
-        <!--
-          ===== EMAILOCTOPUS EMBED =====
-          In EmailOctopus: Forms → your form → "Embed on your website" → copy the code.
-          Delete everything between START and END below and paste that code in its place.
-        -->
-        <!-- START placeholder form -->
-        <form id="preview-form" novalidate>
-          <label for="email">get in first when doors open</label>
-          <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
-          <button type="submit">I'm in</button>
-          <p class="note">no spam. just a heads up when it's go time.</p>
-        </form>
-        <div class="success" id="preview-success" role="status">
-          <strong>you're on the list!</strong>
-          <p>Preview mode — connect EmailOctopus to send the welcome email.</p>
-        </div>
+        <p class="signup-label">get in first when doors open</p>
+        <!-- EmailOctopus waitlist form (placeholder and button text are set below once it renders) -->
         <script>
           (function () {
-            var form = document.getElementById("preview-form");
-            form.addEventListener("submit", function (e) {
-              e.preventDefault();
-              var input = document.getElementById("email");
-              if (!input.checkValidity()) { input.reportValidity(); return; }
-              form.style.display = "none";
-              document.getElementById("preview-success").style.display = "block";
-            });
+            var box = document.currentScript.parentNode;
+            new MutationObserver(function (_, obs) {
+              var input = box.querySelector('input[type="email"]');
+              if (!input) return;
+              input.placeholder = "you@example.com";
+              var button = box.querySelector('[type="submit"]');
+              if (button) button.value = "I'm in";
+              obs.disconnect();
+            }).observe(box, { childList: true, subtree: true });
           })();
         </script>
-        <!-- END placeholder form -->
+        <script async src="https://eocampaign1.com/form/344f1aea-bd0d-11f1-991f-39819b1d3e3d.js" data-form="344f1aea-bd0d-11f1-991f-39819b1d3e3d"></script>
       </div>
 
       </div>
@@ -1433,22 +1506,22 @@
 
     <!-- ================= UNTAUGHT: STAT CARDS ================= -->
     <section class="untaught" aria-labelledby="untaught-title">
-      <h2 id="untaught-title"><em>you got years of math class.</em> <span>no one taught you how to talk.</span></h2>
-      <p class="untaught-lead">and yet how you speak is the skill that quietly decides your promotion, your first date, &amp; your friendships.</p>
+      <h2 id="untaught-title"><em>you got years of math class</em> <span>no one taught you how to talk</span></h2>
+      <p class="untaught-lead">and yet how you speak is the skill that quietly decides your promotion, your first date, &amp; your friendships</p>
       <ul class="stats">
         <li class="stat">
           <span class="stat-num">2 in 3</span>
-          <p>employers look for verbal communication skills when hiring new grads.</p>
+          <p>employers look for verbal communication skills when hiring new grads</p>
           <p class="stat-src"><a href="https://www.naceweb.org/talent-acquisition/candidate-selection/what-are-employers-looking-for-when-reviewing-college-students-resumes" target="_blank" rel="noopener">NACE Job Outlook 2025</a></p>
         </li>
         <li class="stat">
           <span class="stat-num">50%+</span>
-          <p>more worth if you get better at communicating, according to Warren Buffett.</p>
+          <p>more worth if you get better at communicating, according to Warren Buffett</p>
           <p class="stat-src"><a href="https://www.cnbc.com/2018/12/05/warren-buffett-how-to-increase-your-worth-by-50-percent.html" target="_blank" rel="noopener">CNBC</a></p>
         </li>
         <li class="stat">
           <span class="stat-num">3 in 4</span>
-          <p>people get nervous speaking in front of others. you're very much not the only one.</p>
+          <p>people get nervous speaking in front of others. you're very much not the only one</p>
           <p class="stat-src"><a href="https://www.teleprompter.com/blog/public-speaking-statistics" target="_blank" rel="noopener">roundup of public speaking surveys</a></p>
         </li>
       </ul>
@@ -1474,7 +1547,7 @@
 
     <!-- ================= REWIRED ================= -->
     <section class="rewired">
-      <h2><span class="rewired-line1">Speech isn't talent.</span> <span class="rewired-line2">It's reps.</span></h2>
+      <h2><span class="rewired-line1">Speech isn't talent.</span> <span class="rewired-line2">It's reps</span></h2>
       <p>I spent the past year <em>rewiring</em> how I talk &amp; I'm gonna teach you how to:</p>
       <ul class="rewired-learn">
         <li>speak with the right rhythm, tone and pitch</li>
@@ -1487,7 +1560,7 @@
     <!-- ================= TRIED EVERYTHING ================= -->
     <section class="tried">
       <h2>I tried (a lot of) things</h2>
-      <p>for the past year I tried every speech exercise I could get my hands on. pens in my mouth, tongue twisters, shadowing, reading out loud.</p>
+      <p>for the past year I tried every speech exercise I could get my hands on. pens in my mouth, tongue twisters, shadowing, reading out loud</p>
       <ul class="proof-shots">
         <li><img src="images/proof-random-topic.jpg" alt="Instagram video, 7.2M views: day 11 of 30 of talking for 1 minute on a random topic" width="600" height="1135" loading="lazy" /><p>7.2M views</p></li>
         <li><img src="images/proof-shadowing-day-23.jpg" alt="Instagram video, 844K views: day 23 of 100 of shadowing to get better at speaking" width="600" height="1135" loading="lazy" /><p>844K views</p></li>
@@ -1510,50 +1583,31 @@
     <!-- ================= HOW IT WORKS ================= -->
     <section class="how-section">
       <h2>how it works</h2>
-      <p class="how-lead">six weeks. one skill a week. speaking every single day.</p>
 
       <ol class="roadmap">
-        <li><b>pronunciation drills</b><span>say goodbye to mumbling. every word comes out crisp and clear, and people stop asking you to repeat yourself.</span></li>
-        <li><b>rhythm, pitch &amp; volume drills</b><span>a flat voice becomes one people actually want to keep listening to.</span></li>
-        <li><b>tone &amp; pausing drills</b><span>slow down, let a moment breathe, and make your words easy to follow.</span></li>
-        <li><b>shadowing drills</b><span>copy a speaker you admire: their pace, their energy, the way they land a point.</span></li>
-        <li><b>stage presence &amp; audience engagement</b><span>time to take it public. walking up to the front stops feeling like a big deal.</span></li>
-        <li><b>storytelling + humor</b><span>make people remember what you said, and finish talking in a way that feels like you.</span></li>
+        <li><b>pronunciation drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>say goodbye to mumbling. every word comes out crisp and clear, and people stop asking you to repeat yourself</span></li>
+        <li><b>rhythm, pitch &amp; volume drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>a flat voice becomes one people actually want to keep listening to</span></li>
+        <li><b>tone &amp; pausing drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>slow down, let a moment breathe, and make your words easy to follow</span></li>
+        <li><b>shadowing drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>copy a speaker you admire: their pace, their energy, the way they land a point</span></li>
+        <li><b>stage presence &amp; audience engagement</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>time to take it public. walking up to the front stops feeling like a big deal</span></li>
+        <li><b>storytelling + humor</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>make people remember what you said, and finish talking in a way that feels like you</span></li>
       </ol>
 
       <h3 class="how-sub">what you get <em>every week</em></h3>
 
       <ol class="weekstrip" aria-label="the weekly schedule">
-        <li><b>mon</b>drill + record</li>
-        <li><b>tue</b>drill + record</li>
-        <li><b>wed</b>drill + record</li>
-        <li><b>thu</b>drill + record</li>
-        <li class="fri"><b>fri</b>post + feedback</li>
-        <li class="sat"><b>sat</b>live session</li>
-        <li class="sun"><b>sun</b>rest</li>
+        <li><button type="button" data-day="mon" aria-pressed="true" aria-controls="rhythm"><b>mon</b>tip · drill · record</button></li>
+        <li><button type="button" data-day="tue" aria-pressed="false" aria-controls="rhythm"><b>tue</b>tip · drill · record</button></li>
+        <li><button type="button" data-day="wed" aria-pressed="false" aria-controls="rhythm"><b>wed</b>tip · drill · record</button></li>
+        <li><button type="button" data-day="thu" aria-pressed="false" aria-controls="rhythm"><b>thu</b>tip · drill · record</button></li>
+        <li><button type="button" data-day="fri" aria-pressed="false" aria-controls="rhythm"><b>fri</b>tip · drill · record</button></li>
+        <li><button type="button" data-day="sat" aria-pressed="false" aria-controls="rhythm"><b>sat</b>post for feedback</button></li>
+        <li><button type="button" data-day="sun" aria-pressed="false" aria-controls="rhythm"><b>sun</b>live session</button></li>
       </ol>
+      <p class="weekstrip-hint" hidden>tap a day to see what's on it</p>
 
-      <div class="rhythm">
-        <article class="rhythm-card">
-          <div class="rhythm-visual" aria-hidden="true">
-            <div class="mock-phone">
-              <div class="mp-screen">
-                <span class="mp-label">today's random topic</span>
-                <p class="mp-topic">“what's a hill you'd die on?”</p>
-                <span class="mp-drill">drill: land every ending consonant</span>
-                <div class="mp-wave"><i style="height:8px"></i><i style="height:16px"></i><i style="height:26px"></i><i style="height:14px"></i><i style="height:30px"></i><i style="height:20px"></i><i style="height:10px"></i><i style="height:24px"></i><i style="height:32px"></i><i style="height:18px"></i><i style="height:12px"></i><i style="height:22px"></i><i style="height:28px"></i><i style="height:14px"></i><i style="height:8px"></i><i style="height:18px"></i><i style="height:26px"></i><i style="height:12px"></i></div>
-                <span class="mp-rec">0:47 / 1:00</span>
-              </div>
-            </div>
-          </div>
-          <div class="rhythm-text">
-            <span class="rhythm-when">every day, mon – friday</span>
-            <b>drill + record</b>
-            <p>a quick drill for that week's skill, then a random topic. hit record and talk for a minute.</p>
-          </div>
-        </article>
-
-        <article class="rhythm-card">
+      <div class="rhythm" id="rhythm" aria-live="polite">
+        <article class="rhythm-card" data-days="mon tue wed thu fri">
           <div class="rhythm-visual">
             <div class="tip-video">
               <!--
@@ -1569,14 +1623,51 @@
           <div class="rhythm-text">
             <span class="rhythm-when">every day, mon – friday</span>
             <b>a tip from me</b>
-            <p>a prerecorded video on the exact thing we're working on, plus the drill or mindset shift that actually worked for me.</p>
+            <p>a prerecorded video on the exact thing we're working on, plus the drill or mindset shift that actually worked for me</p>
           </div>
         </article>
 
-        <article class="rhythm-card">
+        <article class="rhythm-card" data-days="mon tue wed thu fri">
+          <div class="rhythm-visual" aria-hidden="true">
+            <div class="mock-drill">
+              <span class="md-label">week 1 · pronunciation</span>
+              <p class="md-title">land every ending consonant</p>
+              <ol class="md-steps">
+                <li class="done">“red lorry, yellow lorry” <span>5× ✓</span></li>
+                <li class="done">“big black bug” <span>5× ✓</span></li>
+                <li>read a paragraph slowly <span>1×</span></li>
+              </ol>
+            </div>
+          </div>
+          <div class="rhythm-text">
+            <span class="rhythm-when">every day, mon – friday</span>
+            <b>a drill</b>
+            <p>a quick drill that targets that week's skill, so it starts to become muscle memory</p>
+          </div>
+        </article>
+
+        <article class="rhythm-card" data-days="mon tue wed thu fri">
+          <div class="rhythm-visual" aria-hidden="true">
+            <div class="mock-phone">
+              <div class="mp-screen">
+                <span class="mp-label">today's random topic</span>
+                <p class="mp-topic">“what's a hill you'd die on?”</p>
+                <div class="mp-wave"><i style="height:8px"></i><i style="height:16px"></i><i style="height:26px"></i><i style="height:14px"></i><i style="height:30px"></i><i style="height:20px"></i><i style="height:10px"></i><i style="height:24px"></i><i style="height:32px"></i><i style="height:18px"></i><i style="height:12px"></i><i style="height:22px"></i><i style="height:28px"></i><i style="height:14px"></i><i style="height:8px"></i><i style="height:18px"></i><i style="height:26px"></i><i style="height:12px"></i></div>
+                <span class="mp-rec">0:47 / 1:00</span>
+              </div>
+            </div>
+          </div>
+          <div class="rhythm-text">
+            <span class="rhythm-when">every day, mon – friday</span>
+            <b>record 1 minute of speaking</b>
+            <p>hit record and speak for 1 minute on a topic I'll send in the group. everyone speaks on the same topic</p>
+          </div>
+        </article>
+
+        <article class="rhythm-card" data-days="sat">
           <div class="rhythm-visual" aria-hidden="true">
             <div class="mock-chat">
-              <div class="mc-head"># friday-feedback <span>· the cohort</span></div>
+              <div class="mc-head"># saturday-feedback <span>· the cohort</span></div>
               <div class="mc-body">
                 <div class="mc-msg">
                   <span class="mc-av">J</span>
@@ -1595,16 +1686,16 @@
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every friday</span>
+            <span class="rhythm-when">every saturday</span>
             <b>post + get feedback</b>
-            <p>post your 1-minute impromptu speech in the group chat, and we'll give each other feedback on how to improve our speech.</p>
+            <p>post your 1-minute impromptu speech in the group chat, and we'll give each other feedback on how to improve our speech</p>
           </div>
         </article>
 
-        <article class="rhythm-card">
+        <article class="rhythm-card" data-days="sun">
           <div class="rhythm-visual" aria-hidden="true">
             <div class="mock-zoom">
-              <div class="mz-top"><span class="mz-live">live · saturday session</span><span>24 people</span></div>
+              <div class="mz-top"><span class="mz-live">live · sunday session</span><span>24 people</span></div>
               <div class="mz-grid">
                 <div>A</div>
                 <div class="speaking">S<small>sam 🎤</small></div>
@@ -1617,23 +1708,57 @@
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every saturday</span>
+            <span class="rhythm-when">every sunday</span>
             <b>live session</b>
             <p>we hop on a big zoom call and practice public speaking for real. there may be games and debates in store 👀</p>
           </div>
         </article>
       </div>
+      <script>
+        (function () {
+          var strip = document.querySelector(".weekstrip");
+          var rhythm = document.getElementById("rhythm");
+          if (!strip || !rhythm) return;
+          var buttons = strip.querySelectorAll("button[data-day]");
+          var cards = rhythm.querySelectorAll(".rhythm-card");
+          var hint = document.querySelector(".weekstrip-hint");
+          if (hint) hint.hidden = false;
+
+          function show(day, animate) {
+            var count = 0;
+            buttons.forEach(function (btn) {
+              btn.setAttribute("aria-pressed", btn.dataset.day === day ? "true" : "false");
+            });
+            cards.forEach(function (card) {
+              var on = card.dataset.days.split(" ").indexOf(day) !== -1;
+              card.hidden = !on;
+              if (on) count++;
+            });
+            rhythm.dataset.count = count;
+            if (animate) {
+              rhythm.classList.remove("switching");
+              void rhythm.offsetWidth;
+              rhythm.classList.add("switching");
+            }
+          }
+
+          buttons.forEach(function (btn) {
+            btn.addEventListener("click", function () { show(btn.dataset.day, true); });
+          });
+          show("mon", false);
+        })();
+      </script>
     </section>
 
     <!-- ================= OUTCOMES ================= -->
     <section class="outcomes-section">
       <h2>what you'll leave with</h2>
       <ul class="outcomes">
-        <li><div><b>a mouth on autopilot (the good kind)</b><p>30 days of reps until speaking clearly is your default, not something you have to think about.</p></div></li>
-        <li><div><b>ears for your own habits</b><p>the ums. the trailing off. the speed-talking when you're nervous. you'll start catching them mid-sentence.</p></div></li>
-        <li><div><b>confidence without a script</b><p>simple frameworks and the power of a pause, so a surprise question doesn't send you spiraling.</p></div></li>
-        <li><div><b>people who actually keep listening</b><p>openings that hook in 5 seconds, stories with real tension, and endings that land instead of fizzle.</p></div></li>
-        <li><div><b>way less fear of being judged</b><p>the only fix I've ever found is doing it scared, over and over. we're doing it together.</p></div></li>
+        <li><div><b>a mouth on autopilot (the good kind)</b><p>6 weeks of reps until speaking clearly is your default, not something you have to think about</p></div></li>
+        <li><div><b>ears for your own habits</b><p>the ums. the trailing off. the speed-talking when you're nervous. you'll start catching them mid-sentence</p></div></li>
+        <li><div><b>confidence without a script</b><p>simple frameworks and the power of a pause, so a surprise question doesn't send you spiraling</p></div></li>
+        <li><div><b>people who actually keep listening</b><p>openings that hook in 5 seconds, stories with real tension, and endings that land instead of fizzle</p></div></li>
+        <li><div><b>way less fear of being judged</b><p>the only fix I've ever found is doing it scared, over and over. we're doing it together</p></div></li>
       </ul>
       <div class="outcomes-cta"><a class="cta" href="#join">sign me up</a></div>
     </section>
@@ -1642,19 +1767,19 @@
     <section class="honest">
       <div class="honest-copy">
       <span class="honest-label">// the honest part</span>
-      <h2>there's nothing special <em>about me.</em></h2>
-      <p>I'm not a born speaker. in january I sat in the very back row of my first toastmasters meeting and could barely get my own name out.</p>
-      <p>what I <strong>did</strong> do is practice. a lot. badly at first. then a little less badly.</p>
-      <p>tons of people want to get over their fear of speaking. very few actually do something about it. this is me doing something about it, and dragging you along with me.</p>
-      <p class="honest-shout">if I can do it,<br />you can do it too.</p>
+      <h2>there's nothing special <em>about me</em></h2>
+      <p>I'm not a born speaker. in january I sat in the very back row of my first toastmasters meeting and could barely get my own name out</p>
+      <p>what I <strong>did</strong> do is practice. a lot. badly at first. then a little less badly</p>
+      <p>tons of people want to get over their fear of speaking. very few actually do something about it. this is me doing something about it, and dragging you along with me</p>
+      <p class="honest-shout">if I can do it,<br />you can do it too</p>
       </div>
       <img class="honest-photo" src="images/about-mona-cake.jpg" alt="Mona smiling and holding a cake that says 100K" width="900" height="1197" loading="lazy" />
     </section>
 
     <!-- ================= SPINNER VS BOOTCAMP ================= -->
     <section class="vs-section">
-      <h2>my spinner is free.<br /><em>here's what it can't do.</em></h2>
-      <p class="vs-lead">1.2M+ people have used my <a href="https://speechtopicgen.com" target="_blank" rel="noopener">free random topic spinner</a>. but it can't tell you what you're doing wrong or how to fix it.</p>
+      <h2>my spinner is free<br /><em>here's what it can't do</em></h2>
+      <p class="vs-lead">1.2M+ people have used my <a href="https://speechtopicgen.com" target="_blank" rel="noopener">free random topic spinner</a>. but it can't tell you what you're doing wrong or how to fix it</p>
       <table class="vs">
         <thead>
           <tr><th scope="col"><span class="sr-only">what you get</span></th><th scope="col">free spinner</th><th scope="col" class="us">the bootcamp</th></tr>
@@ -1662,7 +1787,9 @@
         <tbody>
           <tr><td>a random topic to talk about</td><td aria-label="yes">✓</td><td class="us" aria-label="yes">✓</td></tr>
           <tr><td>knowing your speech style</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
-          <tr><td>a daily video from me: what to notice + a drill to fix it</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
+          <tr><td>improve pronunciation</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
+          <tr><td>improve rhythm, tone, pitch</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
+          <tr><td>a daily video from me:<br>what to notice + a drill to fix it</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
           <tr><td>weekly feedback from real people</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
           <tr><td>low-stakes live sessions with humans</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
           <tr><td>a before/after that proves it worked</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
@@ -1677,13 +1804,13 @@
       <div class="story about-grid">
         <img class="about-photo" src="images/honest-mona.jpg" alt="Mona taking a selfie on a rooftop, shading her eyes from the sun" width="750" height="1000" loading="lazy" />
         <div class="story-text">
-          <p>this january I made one new year's resolution: stop being scared of public speaking. I was so tired of not showing up the way I wanted to socially - both at work and in day to day.</p>
-          <p>so I joined toastmasters and blacked out on my first impromptu speech. then I gave myself a 30-day challenge: one 1-minute speech a day on a random topic, posted online.</p>
-          <p>I built a <a href="https://speechtopicgen.com" target="_blank" rel="noopener">free random topic spinner</a> so anyone could do the same thing. <b>1.2M+ visitors</b> later, it got me noticed by <a href="https://abcnews.com/video/134706341/" target="_blank" rel="noopener"><b>ABC News</b></a>.</p>
+          <p>this january I made one new year's resolution: stop being scared of public speaking. I was so tired of not showing up the way I wanted to socially - both at work and in day to day</p>
+          <p>so I joined toastmasters and blacked out on my first impromptu speech. then I gave myself a 30-day challenge: one 1-minute speech a day on a random topic, posted online</p>
+          <p>I built a <a href="https://speechtopicgen.com" target="_blank" rel="noopener">free random topic spinner</a> so anyone could do the same thing. <b>1.2M+ visitors</b> later, it got me noticed by <a href="https://abcnews.com/video/134706341/" target="_blank" rel="noopener"><b>ABC News</b></a></p>
           <p>along the way, I've somehow stumbled into a community of <b>300K+ followers</b> - all people who want to improve their articulation!</p>
           <p>most recently, I took on the public speaking final boss and took a stand-up class. I went to a few open mics and ultimately performed for <b>80+ people</b> at the student showcase. ikkk I still can't believe it and will not be doing it again anytime soon lol</p>
-          <p>the point is, I <b>committed to taking action to get better at speaking</b> and I did it! speech is a trainable skill and all it takes is a bit of dedication.</p>
-          <p>I still get nervous before public speaking. but I'm not letting fear decide how I show up anymore, and <b>I don't want it deciding for you either.</b></p>
+          <p>the point is, I <b>committed to taking action to get better at speaking</b> and I did it! speech is a trainable skill and all it takes is a bit of dedication</p>
+          <p>I still get nervous before public speaking. but I'm not letting fear decide how I show up anymore, and <b>I don't want it deciding for you either</b></p>
           <p class="sign">— Mona, aka @babystepstothemic</p>
         </div>
       </div>
@@ -1692,8 +1819,8 @@
     <!-- ================= DARE ================= -->
     <section class="dare">
       <div class="dare-copy">
-        <h2>a place where you get to train your articulation <em>like you train at the gym.</em></h2>
-        <p>there's zero judgement. we're all here to get better.</p>
+        <h2>a place where you get to train your articulation <em>like you train at the gym</em></h2>
+        <p>there's zero judgement. we're all here to get better</p>
         <div class="dare-cta"><a class="cta" href="#join">sign me up</a></div>
       </div>
       <div class="dare-visual" aria-hidden="true">
@@ -1731,8 +1858,8 @@
       </div>
       <div class="levelset-copy">
       <span class="levelset-label">// let's level set</span>
-      <h2>this is not a <em>magic fix.</em></h2>
-      <p>you've been unconsciously training the way you talk your whole life. 6 weeks won't undo all of it.</p>
+      <h2>this is not a <em>magic fix</em></h2>
+      <p>you've been unconsciously training the way you talk your whole life. 6 weeks won't undo all of it</p>
       <p>what 6 weeks <em>can</em> do:</p>
       <ul class="levelset-list">
         <li>start intentionally training your speech</li>
@@ -1740,10 +1867,10 @@
         <li>hear the difference in your own recordings from week 1 to week 6</li>
         <li>leave with a routine you can run on your own</li>
       </ul>
-      <p>it's the kickstart. the rest of the journey is yours.</p>
+      <p>it's the kickstart. the rest of the journey is yours</p>
       <div class="ps">
-        <p>I know the feeling. heart pounding, face hot, rehearsing one sentence in your head for so long the moment passes. I lived there for years.</p>
-        <p>here's the whole secret: no one is judging you as hard as you're judging you. the rest is just reps.</p>
+        <p>I know the feeling. heart pounding, face hot, rehearsing one sentence in your head for so long the moment passes. I lived there for years</p>
+        <p>here's the whole secret: no one is judging you as hard as you're judging you. the rest is just reps</p>
         <p class="sig">see you at the mic. – mona</p>
       </div>
       </div>
@@ -1751,11 +1878,11 @@
 
     <!-- ================= LAST CALL ================= -->
     <section class="lastcall">
-      <h2><span class="lastcall-line">you can keep <em>swallowing your ideas.</em></span> or you can start speaking up.</h2>
+      <h2><span class="lastcall-line">you can keep <em>swallowing your ideas.</em></span> or you can start speaking up</h2>
       <a class="cta" href="#join">I'm in 🎤</a>
     </section>
 
-    <footer>&copy; 2026 JINY LLC</footer>
+    <footer>&copy; 2026 JINY LLC &middot; <a href="terms.html">terms</a></footer>
   </main>
 
 </body>

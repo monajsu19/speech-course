@@ -3,94 +3,238 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Articulation Camp Waitlist</title>
-  <meta name="description" content="Join the waitlist for a 6-week articulation training camp. Speak clearly, be understood the first time." />
+  <title>Articulation Bootcamp: Baby Steps</title>
+  <meta name="description" content="A hyper-intensive 6-week articulation bootcamp. Train your speaking muscle memory, sound more confident and engaging, and stop being scared to speak up. Join the waitlist." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f7f4ee;
-      --surface: #ffffff;
-      --text: #1d1b18;
-      --muted: #6b645a;
-      --accent: #c2502b;
-      --accent-hover: #a8421f;
-      --border: #e4ddd1;
-      --focus: rgba(194, 80, 43, 0.25);
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #16140f;
-        --surface: #211e18;
-        --text: #f3eee5;
-        --muted: #a79f92;
-        --accent: #e0714b;
-        --accent-hover: #ea8864;
-        --border: #37322a;
-        --focus: rgba(224, 113, 75, 0.3);
-      }
+      --bg: #fdf0d5;          /* papaya whip */
+      --surface: #fff9ec;
+      --text: #003049;        /* deep space blue */
+      --muted: #3d5a6c;
+      --accent: #c1121f;      /* brick red */
+      --accent-hover: #780000; /* molten lava */
+      --accent-on-dark: #ff5a5f; /* brick red lifted for text on deep space blue (4.5:1) */
+      --steel: #669bbc;       /* steel blue: lines and borders only, too light for text */
+      --border: #669bbc;
+      --focus: rgba(102, 155, 188, 0.45);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
       background: var(--bg);
       color: var(--text);
       font-family: "Inter", system-ui, -apple-system, sans-serif;
-      line-height: 1.5;
+      line-height: 1.55;
       -webkit-font-smoothing: antialiased;
     }
 
+    .topbar {
+      padding: 10px 16px;
+      background: var(--text);
+      color: var(--bg);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .topbar b { font-weight: 700; }
+
     main {
-      width: 100%;
-      max-width: 520px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 56px 20px 0;
+    }
+
+    section { margin-top: 104px; }
+    @media (max-width: 520px) { section { margin-top: 84px; } }
+    main > section, footer { max-width: 640px; margin-left: auto; margin-right: auto; }
+
+    h1, h2 {
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      line-height: 1.05;
+    }
+    h1 { font-size: clamp(36px, 8vw, 58px); color: var(--accent); max-width: 560px; margin: 0 auto 24px; }
+    h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 20px; }
+
+    .hero { text-align: center; }
+    .hero-pill {
+      display: inline-block;
+      margin-bottom: 28px;
+      padding: 7px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nowrap { white-space: nowrap; }
+
+    .hero-figure {
+      position: relative;
+      max-width: 460px;
+      margin: 0 auto 28px;
+    }
+    .hero-note {
+      margin-top: 14px;
+      color: var(--accent);
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-size: 20px;
+      line-height: 1.25;
       text-align: center;
     }
 
-    .eyebrow {
-      display: inline-block;
-      margin-bottom: 20px;
-      padding: 6px 12px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.02em;
+    .hero-figure { margin-top: 44px; }
+    .hero-journey {
+      position: absolute;
+      top: -30px;
+      left: -14px;
+      right: -14px;
+      z-index: 1;
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      pointer-events: none;
+    }
+    .hj-card {
+      flex: 0 1 150px;
+      padding: 8px 12px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.2;
+      text-align: center;
+      border-radius: 6px;
+      box-shadow: 0 2px 10px rgba(0, 48, 73, 0.18);
+    }
+    .hero-journey { justify-content: space-between; }
+    @media (max-width: 520px) {
+      .hj-card { flex-basis: 118px; font-size: 13px; padding: 7px 9px; }
+    }
+    .hj-card { border: 1.5px solid currentColor; text-wrap: balance; }
+    .hj-from { transform: rotate(-5deg); margin-top: 0; }
+    .hj-to { transform: rotate(4deg); margin-top: 14px; color: var(--accent); }
+    .hj-arrow {
+      display: block;
+      flex: 1 1 0;
+      min-width: 64px;
+      max-width: 140px;
+      height: 40px;
+      max-height: 40px;
+      margin-top: -12px;
+      color: var(--accent);
     }
 
-    h1 {
-      font-family: "Fraunces", Georgia, serif;
-      font-weight: 600;
-      font-size: clamp(34px, 7vw, 48px);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
+    .hero-photo-wrap { position: relative; }
+    .hero-photo-frame { overflow: hidden; border-radius: 16px; }
+    .hero-photo-frame .hero-photo { transform: scale(1.1) translate(3.5%, 4%); }
+    .hj-side {
+      position: absolute;
+      top: 40px;
+      right: -14px;
+      width: 118px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      pointer-events: none;
+    }
+    .hj-step { flex: none; width: 100%; color: var(--accent); }
+    .hj-abc { transform: rotate(-3deg); }
+    .hj-standup { transform: rotate(3deg); }
+
+    .hero-photo {
+      display: block;
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      object-position: 40% 22%;
+      border-radius: 16px;
     }
 
-    .lede {
-      font-size: 17px;
-      color: var(--muted);
-      max-width: 440px;
+    @media (min-width: 860px) {
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) clamp(280px, 34vw, 380px);
+        gap: 56px;
+        align-items: center;
+        text-align: left;
+      }
+      /* center the pill over the left (text) column only */
+      .hero-pill {
+        display: block;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        transform: translateX(calc((clamp(280px, 34vw, 380px) + 56px) / -2));
+      }
+      .hero-grid h1 { margin-left: 0; font-size: 46px; }
+      .hero-grid .hero-points { display: grid; margin-left: 0; }
+      .hero-grid .signup { margin-left: 0; }
+      .hero-figure { order: 2; max-width: none; margin: 44px 0 0; }
+      .hero-note { font-size: 22px; }
+      .hero-journey { left: -44px; right: -12px; top: -34px; }
+      .hj-card { font-size: 17px; flex-basis: 160px; }
+      .hj-side { right: -12px; width: 160px; top: 64px; gap: 24px; }
+      .hj-step { flex-basis: auto; }
+      .hero-photo {
+        height: auto;
+        aspect-ratio: 4 / 5;
+        object-position: 40% 30%;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .hero-journey { right: -44px; }
+      .hj-side { right: -44px; }
+    }
+
+    .hero-points {
+      display: inline-grid;
+      gap: 10px;
       margin: 0 auto 32px;
+      list-style: none;
+      max-width: 520px;
+      text-align: left;
+      font-size: 18px;
+    }
+    .hero-points li {
+      display: grid;
+      grid-template-columns: 10px 1fr;
+      gap: 12px;
+      align-items: baseline;
+    }
+    .hero-points li::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: var(--accent);
     }
 
-    /* Wraps both the placeholder form and the EmailOctopus embed */
+    /* ---------- Signup (wraps placeholder form or EmailOctopus embed) ---------- */
     .signup {
+      max-width: 460px;
+      margin: 0 auto;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 24px;
       text-align: left;
     }
-
-    /* Generic styles so the EmailOctopus embedded form matches the page */
     .signup input[type="email"],
     .signup input[type="text"] {
       width: 100%;
@@ -100,7 +244,7 @@
       font-size: 16px;
       color: var(--text);
       background: var(--bg);
-      border: 1px solid var(--border);
+      border: 1px solid #c9d6d3;
       border-radius: 10px;
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
@@ -118,7 +262,7 @@
       font: inherit;
       font-size: 16px;
       font-weight: 600;
-      color: #fff;
+      color: var(--bg);
       background: var(--accent);
       border: none;
       border-radius: 10px;
@@ -127,78 +271,1492 @@
     }
     .signup button:hover,
     .signup input[type="submit"]:hover { background: var(--accent-hover); }
-
     .signup label {
       display: block;
       margin-bottom: 8px;
       font-size: 14px;
       font-weight: 500;
     }
-
     .note {
       margin-top: 12px;
       font-size: 13px;
       color: var(--muted);
       text-align: center;
     }
-
-    .success {
-      display: none;
-      text-align: center;
-      padding: 8px 0;
-    }
+    .success { display: none; text-align: center; padding: 8px 0; }
     .success strong { display: block; font-size: 18px; margin-bottom: 4px; }
     .success p { color: var(--muted); font-size: 15px; }
 
+    /* ---------- Proof strip ---------- */
+    .proof {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      max-width: 800px;
+      margin: 48px auto 0;
+      text-align: center;
+    }
+    .proof div {
+      position: relative;
+      padding: 16px 10px;
+    }
+    .proof div::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--steel);
+      transform-origin: left;
+    }
+    .proof strong {
+      display: block;
+      font-variant-numeric: tabular-nums;
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      font-size: 28px;
+      line-height: 1.1;
+    }
+    .proof span { font-size: 13px; color: var(--muted); }
+    .proof.animate div {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .proof.animate div::before {
+      transform: scaleX(0);
+      transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .proof.animate div:nth-child(2), .proof.animate div:nth-child(2)::before { transition-delay: 0.12s; }
+    .proof.animate div:nth-child(3), .proof.animate div:nth-child(3)::before { transition-delay: 0.24s; }
+    .proof.animate div:nth-child(4), .proof.animate div:nth-child(4)::before { transition-delay: 0.36s; }
+    .proof.animate.in div { opacity: 1; transform: none; }
+    .proof.animate.in div::before { transform: scaleX(1); }
+
+    /* ---------- Rewired: tagline under the hero ---------- */
+    main > section.rewired {
+      max-width: 1000px;
+      text-align: center;
+      padding: 56px 48px;
+      color: var(--bg);
+      background: var(--text);
+      border-radius: 20px;
+    }
+    @media (max-width: 520px) { main > section.rewired { padding: 40px 22px; } }
+    .rewired h2 { font-size: clamp(34px, 6.5vw, 50px); line-height: 1.02; margin-bottom: 22px; }
+    .rewired h2 span { display: block; }
+    .rewired h2, .rewired p { text-wrap: balance; }
+    .rewired-line1 { color: var(--bg); }
+    .rewired-line2 { color: var(--accent-on-dark); }
+    .rewired p { font-size: clamp(18px, 2.6vw, 24px); font-weight: 600; }
+    .rewired p em {
+      font-family: "DM Serif Display", Georgia, serif;
+      font-weight: 400;
+      color: var(--accent-on-dark);
+    }
+    .rewired-learn {
+      list-style: none;
+      width: fit-content;
+      max-width: 100%;
+      margin: 40px auto 0;
+      text-align: left;
+      display: grid;
+      gap: 10px;
+      font-size: clamp(14px, 1.8vw, 17px);
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bg);
+      opacity: 0.85;
+    }
+    /* Hanging indent: wrapped lines line up with the text, not the dot (dot 7px + gap 12px) */
+    .rewired-learn li { padding-left: 19px; text-indent: -19px; }
+    .rewired-learn li::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 12px;
+      vertical-align: 0.15em;
+      border-radius: 50%;
+      background: var(--accent-on-dark);
+    }
+    .rewired-cta {
+      display: inline-block;
+      margin-top: 36px;
+      padding: 18px 36px;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--bg);
+      background: var(--accent);
+      border-radius: 10px;
+      transition: background 0.15s;
+    }
+    .rewired-cta:hover { color: var(--accent); background: var(--bg); }
+
+    /* ---------- Journey: scared in meetings -> on stage ---------- */
+    main > section.journey { max-width: 1000px; }
+    .journey-before img,
+    .journey-after img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+    .journey-before img { aspect-ratio: 4 / 5; object-position: 50% 30%; }
+    .journey-lead {
+      display: block;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(22px, 3.6vw, 28px);
+      line-height: 1.1;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .journey-big { display: block; font-size: clamp(44px, 9vw, 64px); line-height: 1; }
+    .journey-arrow {
+      display: block;
+      width: 96px;
+      margin: 20px auto;
+      color: var(--accent);
+      transform: rotate(90deg);
+    }
+    .journey-after { list-style: none; display: grid; gap: 22px; }
+    .journey-after img { aspect-ratio: 16 / 9; }
+    .journey-before p { margin-top: 8px; font-weight: 600; text-align: center; }
+    .journey-after p {
+      margin-top: 10px;
+      text-align: center;
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      font-size: 22px;
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+    @media (min-width: 860px) {
+      .journey {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 130px minmax(0, 1fr);
+        column-gap: 16px;
+        align-items: center;
+      }
+      .journey-arrow { width: 130px; margin: 0; transform: none; }
+    }
+
+    /* ---------- Tried everything ---------- */
+    main > section.tried { max-width: 1000px; }
+    .tried h2, .tried > p { max-width: 640px; margin-left: auto; margin-right: auto; }
+    .tried h2 { max-width: 1000px; text-align: center; font-size: clamp(34px, 6.5vw, 50px); line-height: 1.02; margin-bottom: 22px; text-wrap: balance; }
+    .tried > p { font-size: 17px; margin-bottom: 20px; }
+    .tried-bridge {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+      margin: 20px 0 -48px;
+      color: var(--accent);
+    }
+    .tried-arrow { flex: none; width: 70px; height: 112px; }
+    .tried-bridge p {
+      max-width: 300px;
+      text-wrap: balance;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-size: clamp(20px, 3vw, 26px);
+      line-height: 1.15;
+      transform: rotate(-3deg);
+    }
+    /* Fanned, overlapping stack: first card (most views) sits on top */
+    .proof-shots {
+      --overlap: 64px;
+      --per-row: 8;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 36px;
+      padding: 16px 0 24px;
+      list-style: none;
+    }
+    .proof-shots li {
+      position: relative;
+      flex: 0 0 calc((100% + (var(--per-row) - 1) * var(--overlap)) / var(--per-row));
+      margin-left: calc(var(--overlap) * -1);
+      transform: translateY(var(--y, 0)) rotate(var(--r, 0deg));
+      transition: transform 0.2s ease;
+    }
+    .proof-shots li:first-child { margin-left: 0; }
+    .proof-shots li:nth-child(1) { --r: -5deg; --y: 0px;   z-index: 8; }
+    .proof-shots li:nth-child(2) { --r: 3deg;  --y: 14px;  z-index: 7; }
+    .proof-shots li:nth-child(3) { --r: -2deg; --y: -6px;  z-index: 6; }
+    .proof-shots li:nth-child(4) { --r: 5deg;  --y: 10px;  z-index: 5; }
+    .proof-shots li:nth-child(5) { --r: -4deg; --y: -4px;  z-index: 4; }
+    .proof-shots li:nth-child(6) { --r: 2deg;  --y: 12px;  z-index: 3; }
+    .proof-shots li:nth-child(7) { --r: -3deg; --y: 0px;   z-index: 2; }
+    .proof-shots li:nth-child(8) { --r: 4deg;  --y: 8px;   z-index: 1; }
+    .proof-shots li:hover {
+      z-index: 20;
+      transform: translateY(-14px) rotate(0deg) scale(1.06);
+    }
+    .proof-shots img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 600 / 1135;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid var(--surface);
+      box-shadow: 0 8px 22px rgba(0, 48, 73, 0.22);
+    }
+    .proof-shots p {
+      position: absolute;
+      right: -6px;
+      bottom: -12px;
+      padding: 4px 10px;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      border-radius: 999px;
+    }
+    @media (max-width: 720px) {
+      .proof-shots { --overlap: 36px; --per-row: 4; }
+      .proof-shots li:nth-child(5) { margin-left: 0; }
+      .proof-shots p { font-size: 12px; padding: 3px 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .proof-shots li { transition: none; }
+    }
+
+    /* ---------- Outcomes ---------- */
+    .outcomes { list-style: none; display: grid; gap: 14px; }
+    .outcomes li {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      align-items: start;
+      font-size: 17px;
+    }
+    .outcomes li::before {
+      content: "";
+      width: 22px;
+      height: 22px;
+      margin-top: 2px;
+      border-radius: 50%;
+      background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fdf0d5' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center / 13px no-repeat;
+    }
+    .outcomes b { font-weight: 600; }
+    .outcomes p { color: var(--muted); font-size: 15px; }
+
+    /* ---------- Story ---------- */
+    main > section.about, main > section.honest { max-width: 820px; }
+    .story p { margin-bottom: 14px; font-size: 16px; }
+    .story p:last-child { margin-bottom: 0; }
+    .story .sign { font-weight: 600; }
+    .story a { color: var(--accent); text-decoration: none; }
+    .story a:hover { color: var(--accent-hover); }
+    .about-hi {
+      margin-bottom: 18px;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-size: clamp(34px, 6vw, 52px);
+      line-height: 1.05;
+      color: var(--text);
+    }
+    .about-photo {
+      display: block;
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      margin: 0 auto 24px;
+      border-radius: 12px;
+    }
+    @media (min-width: 860px) {
+      main > section.about { max-width: 1000px; }
+      .about-grid { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 36px; align-items: start; }
+      .about-photo { max-width: none; margin: 0; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 32px); }
+    }
+
+    /* ---------- How it works: roadmap + weekly rhythm with mockups ---------- */
+    main > section.how-section { max-width: 1000px; }
+    .how-section > h2, .how-section > .how-lead { text-align: center; }
+    .how-section > h2 { font-size: clamp(34px, 6.5vw, 50px); line-height: 1.02; margin-bottom: 22px; text-wrap: balance; }
+    .how-lead { max-width: 560px; margin: -8px auto 32px; font-size: 17px; color: var(--muted); }
+    .how-sub {
+      margin: 88px 0 20px;
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      font-size: clamp(34px, 6.5vw, 50px);
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.02;
+      text-wrap: balance;
+    }
+    .how-sub em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    /* Roadmap */
+    .roadmap {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      counter-reset: wk;
+    }
+    .roadmap li {
+      counter-increment: wk;
+      position: relative;
+      padding: 20px 18px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+    .roadmap li::before {
+      content: "week " counter(wk);
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 3px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--text);
+      border-radius: 999px;
+    }
+    .roadmap li:nth-child(n+5)::before { background: var(--accent); }
+    .roadmap b {
+      display: block;
+      margin-bottom: 6px;
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      font-size: 21px;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+    .roadmap span { display: block; font-size: 14px; color: var(--muted); }
+    .roadmap-note { margin-top: 14px; text-align: center; font-size: 14px; color: var(--muted); }
+    @media (max-width: 760px) { .roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 480px) { .roadmap { grid-template-columns: 1fr; } }
+
+    /* Week strip */
+    .weekstrip {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+      max-width: 720px;
+      margin: 0 auto 24px;
+      text-align: center;
+    }
+    .weekstrip li {
+      padding: 10px 4px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid rgba(102, 155, 188, 0.5);
+      font-size: 12px;
+      line-height: 1.25;
+      color: var(--muted);
+    }
+    .weekstrip b { display: block; font-size: 13px; color: var(--text); text-transform: uppercase; letter-spacing: 0.06em; }
+    .weekstrip .fri, .weekstrip .sat { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .weekstrip .fri b, .weekstrip .sat b { color: var(--bg); }
+    .weekstrip .sun { opacity: 0.6; }
+    @media (max-width: 520px) {
+      .weekstrip { gap: 4px; }
+      .weekstrip li { padding: 8px 2px; font-size: 10px; }
+      .weekstrip b { font-size: 11px; letter-spacing: 0; }
+    }
+
+    /* Rhythm cards */
+    .rhythm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    @media (max-width: 720px) { .rhythm { grid-template-columns: 1fr; } }
+    .rhythm-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .rhythm-visual {
+      display: grid;
+      place-items: center;
+      height: 300px;
+      padding: 20px;
+      background: #f7e3bb;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .rhythm-text { padding: 18px 20px 20px; }
+    .rhythm-when {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .rhythm-text b {
+      display: block;
+      margin-bottom: 6px;
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+    .rhythm-text p { font-size: 15px; color: var(--muted); }
+
+    /* Mockup: phone recorder with random topic */
+    .mock-phone {
+      width: 176px;
+      height: 256px;
+      padding: 8px;
+      background: var(--text);
+      border-radius: 30px;
+      box-shadow: 0 14px 30px rgba(0, 48, 73, 0.25);
+      transform: rotate(-4deg);
+    }
+    .mp-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: center;
+      padding: 12px;
+      background: var(--bg);
+      border-radius: 22px;
+      text-align: center;
+    }
+    .mp-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .mp-topic {
+      margin: 8px 0 12px;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-size: 19px;
+      line-height: 1.15;
+      color: var(--text);
+    }
+    .mp-drill {
+      padding: 5px 9px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text);
+      background: rgba(102, 155, 188, 0.25);
+      border-radius: 999px;
+    }
+    .mp-wave { display: flex; align-items: center; gap: 3px; height: 34px; margin: 14px 0 10px; }
+    .mp-wave i { display: block; width: 4px; border-radius: 2px; background: var(--accent); }
+    .mp-rec { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text); }
+    .mp-rec::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+
+    /* Mockup: daily tip video slot */
+    .tip-video {
+      position: relative;
+      width: 142px;
+      aspect-ratio: 9 / 16;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--text);
+      box-shadow: 0 14px 30px rgba(0, 48, 73, 0.25);
+      transform: rotate(3deg);
+    }
+    .tip-video img, .tip-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tip-play {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: 54px;
+      height: 54px;
+      margin: -27px 0 0 -27px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(253, 240, 213, 0.92);
+      color: var(--accent);
+    }
+    .tip-tag {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    /* Mockup: friday feedback chat */
+    .mock-chat {
+      width: 100%;
+      max-width: 330px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 14px 30px rgba(0, 48, 73, 0.18);
+      font-size: 12px;
+      text-align: left;
+    }
+    .mc-head {
+      padding: 9px 14px;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--text);
+      border-radius: 15px 15px 0 0;
+    }
+    .mc-head span { font-weight: 400; opacity: 0.75; }
+    .mc-body { display: grid; gap: 10px; padding: 12px 14px 14px; }
+    .mc-msg { display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: start; }
+    .mc-av {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--text);
+      object-fit: cover;
+    }
+    .mc-name { display: block; font-weight: 600; color: var(--text); }
+    .mc-msg p { color: var(--text); line-height: 1.35; }
+    .mc-clip {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      height: 62px;
+      margin-top: 4px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--bg);
+      background: linear-gradient(135deg, #003049, #1d4d68);
+    }
+    .mc-clip::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -9px 0 0 -5px;
+      border-left: 14px solid var(--bg);
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent;
+    }
+    .mc-react { display: flex; gap: 6px; margin-top: 4px; }
+    .mc-react span {
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: rgba(102, 155, 188, 0.22);
+      font-size: 11px;
+    }
+
+    /* Mockup: saturday zoom call */
+    .mock-zoom {
+      width: 100%;
+      max-width: 340px;
+      padding: 10px;
+      background: var(--text);
+      border-radius: 14px;
+      box-shadow: 0 14px 30px rgba(0, 48, 73, 0.25);
+    }
+    .mz-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--bg);
+    }
+    .mz-live { display: inline-flex; align-items: center; gap: 5px; }
+    .mz-live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-on-dark); }
+    .mz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+    .mz-grid div {
+      position: relative;
+      display: grid;
+      place-items: center;
+      aspect-ratio: 4 / 3;
+      border-radius: 6px;
+      background: #1d4d68;
+      font-family: "Anton", Impact, sans-serif;
+      font-size: 18px;
+      color: var(--bg);
+      overflow: hidden;
+    }
+    .mz-grid div:nth-child(3n+2) { background: #2a5f7d; }
+    .mz-grid img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .mz-grid .speaking { outline: 2px solid var(--accent-on-dark); outline-offset: -2px; }
+    .mz-grid small {
+      position: absolute;
+      left: 4px;
+      bottom: 3px;
+      padding: 0 4px;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      border-radius: 3px;
+      background: rgba(0, 48, 73, 0.75);
+    }
+    .mz-bar { display: flex; justify-content: center; gap: 10px; margin-top: 9px; }
+    .mz-bar span {
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #2a5f7d;
+      color: var(--bg);
+    }
+    .mz-bar .leave { width: 40px; border-radius: 13px; background: var(--accent); }
+
+    /* ---------- Dare: deep space blue card ---------- */
+    main > section.dare {
+      max-width: 1000px;
+      text-align: center;
+      padding: 56px 48px;
+      color: var(--bg);
+      background: var(--text);
+      border-radius: 20px;
+    }
+    @media (max-width: 520px) { main > section.dare { padding: 40px 22px; } }
+    .dare { display: grid; gap: 40px; align-items: center; }
+    @media (min-width: 820px) {
+      main > section.dare { grid-template-columns: 1.15fr 1fr; text-align: left; }
+    }
+    .dare h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 18px; text-wrap: balance; }
+    .dare h2 em {
+      display: block;
+      margin-top: 4px;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--accent-on-dark);
+    }
+    .dare p { font-size: clamp(17px, 2.2vw, 20px); text-wrap: balance; }
+    .dare-cta { margin-top: 28px; }
+    .dare-visual { position: relative; width: 100%; max-width: 360px; margin: 0 auto; padding-top: 34px; }
+    .dare-bell {
+      position: absolute;
+      top: 0;
+      right: -14px;
+      z-index: 1;
+      width: 170px;
+      transform: rotate(-12deg);
+      filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3));
+    }
+    .workout {
+      padding: 24px 24px 20px;
+      color: var(--text);
+      text-align: left;
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.3);
+      transform: rotate(2deg);
+    }
+    .workout-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .workout-title {
+      display: block;
+      margin: 2px 0 12px;
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+    .workout ul { list-style: none; }
+    .workout li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 0;
+      font-size: 14px;
+      border-top: 1px dashed rgba(102, 155, 188, 0.7);
+    }
+    .workout li::before {
+      content: "";
+      flex: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--text);
+      border-radius: 4px;
+    }
+    .workout li.done::before {
+      border-color: var(--accent);
+      background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23fdf0d5' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+    }
+    .workout li.done span:first-child { text-decoration: line-through; text-decoration-color: var(--accent); }
+    .workout li span:first-child { flex: 1; }
+    .workout li span:last-child { font-weight: 600; color: var(--muted); white-space: nowrap; }
+
+    /* ---------- Final CTA ---------- */
+    .cta {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 600;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .cta:hover { background: var(--accent-hover); }
+    main > section.outcomes-section { margin-top: 136px; }
+    @media (max-width: 520px) { main > section.outcomes-section { margin-top: 104px; } }
+    .outcomes-section > h2 { text-align: center; line-height: 1.02; margin-bottom: 22px; text-wrap: balance; }
+    .outcomes-cta { margin-top: 32px; text-align: center; }
+
     footer {
-      margin-top: 32px;
+      margin-top: 48px;
+      padding-bottom: 40px;
       font-size: 13px;
       color: var(--muted);
+      text-align: center;
+    }
+
+    /* ---------- Last call + p.s. ---------- */
+    main > section.lastcall { max-width: 1000px; }
+    /* Fanned stack of speaking photos, left of the level-set copy on desktop */
+    .photo-stack {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      height: 450px;
+      margin: 0 auto 36px;
+    }
+    .photo-stack img {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 190px;
+      aspect-ratio: 3 / 4;
+      height: auto;
+      margin-left: -95px;
+      object-fit: cover;
+      object-position: 50% 30%;
+      border: 4px solid #fff;
+      border-radius: 12px;
+      box-shadow: 0 12px 26px rgba(0, 48, 73, 0.3);
+    }
+    .photo-stack img.shot { width: 150px; margin-left: -75px; aspect-ratio: 9 / 16; object-position: 50% 45%; }
+    .photo-stack img:nth-child(1) { transform: translate(-62px, 0) rotate(-8deg); }
+    .photo-stack img:nth-child(2) { transform: translate(62px, -8px) rotate(7deg); }
+    .photo-stack img:nth-child(3) { transform: translate(-84px, 56px) rotate(-10deg); }
+    .photo-stack img:nth-child(4) { transform: translate(86px, 44px) rotate(9deg); }
+    .photo-stack img:nth-child(5) { transform: translate(0, 176px) rotate(-2deg); }
+    @media (min-width: 860px) {
+      main > section.levelset { max-width: 1000px; display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 48px; align-items: center; }
+      .photo-stack { height: 460px; margin: 0; }
+    }
+    .lastcall {
+      padding: 52px 36px 44px;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 20px;
+      text-align: center;
+    }
+    .lastcall h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 28px; }
+    .lastcall h2 em {
+      display: block;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1em;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .ps {
+      max-width: 580px;
+      margin: 28px 0 0;
+      padding: 26px 28px;
+      border: 2px solid var(--text);
+      color: var(--text);
+      border-radius: 16px;
+      text-align: left;
+      transform: rotate(-1.5deg);
+    }
+    .ps p { font-size: 16px; opacity: 0.88; }
+    .ps p + p { margin-top: 12px; }
+    .ps .sig {
+      margin-top: 16px;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-size: 21px;
+      font-weight: 400;
+      line-height: 1.1;
+      opacity: 1;
+    }
+    @media (max-width: 520px) {
+      .lastcall { padding: 40px 22px 32px; }
+      .ps { padding: 22px 20px; }
+    }
+
+    /* ---------- Level set ---------- */
+    .levelset-label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .levelset h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 18px; }
+    .levelset h2 em {
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1em;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--accent);
+    }
+    .levelset-copy > p { font-size: 17px; color: var(--muted); }
+    .levelset-copy > p + p { margin-top: 16px; }
+    .levelset-copy > p em { color: var(--text); }
+    .levelset-copy > p + .levelset-list { margin-top: 8px; }
+    .levelset-list { list-style: none; font-size: 17px; color: var(--muted); }
+    .levelset-list li { position: relative; padding-left: 22px; }
+    .levelset-list li + li { margin-top: 6px; }
+    .levelset-list li::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 0.62em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .levelset-list + p { margin-top: 16px; }
+
+    /* ---------- Spinner vs bootcamp ---------- */
+    main > section.vs-section { max-width: 760px; text-align: center; }
+    .vs-section h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 14px; }
+    .vs-section h2 em {
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1em;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--accent);
+    }
+    .vs-lead { max-width: 620px; margin: 0 auto; font-size: 17px; color: var(--muted); }
+    .vs-lead a { color: var(--accent); text-decoration: none; }
+    .vs-lead a:hover { color: var(--accent-hover); }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    .vs {
+      width: 100%;
+      margin: 32px auto 0;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      text-align: left;
+    }
+    .vs th, .vs td { padding: 14px 18px; border-bottom: 1px solid rgba(102, 155, 188, 0.35); }
+    .vs tbody tr:last-child td { border-bottom: 0; }
+    .vs thead th {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+    .vs thead th.us { color: var(--bg); background: var(--text); }
+    .vs td:not(:first-child) { width: 22%; text-align: center; font-size: 18px; font-weight: 700; }
+    .vs td.us { background: rgba(102, 155, 188, 0.2); color: var(--text); }
+    .vs td.no { color: var(--muted); opacity: 0.5; font-weight: 400; }
+    @media (max-width: 520px) {
+      .vs th, .vs td { padding: 11px 10px; font-size: 14px; }
+      .vs thead th { font-size: 10px; letter-spacing: 0.06em; }
+    }
+
+    /* ---------- Untaught: stat cards ---------- */
+    main > section.untaught {
+      max-width: 1000px;
+      text-align: center;
+    }
+    .untaught h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 20px; text-wrap: balance; }
+    .untaught h2 em {
+      display: block;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1em;
+      line-height: 1.05;
+      margin-bottom: 0.2em;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .untaught h2 span { display: block; color: var(--accent); }
+    .untaught-lead { max-width: 620px; margin: 0 auto; font-size: 18px; color: var(--muted); text-wrap: balance; }
+    .stats {
+      list-style: none;
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      text-align: left;
+    }
+    @media (max-width: 760px) { .stats { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; } }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      padding: 26px 24px 22px;
+      color: var(--bg);
+      background: var(--text);
+      border-radius: 18px;
+    }
+    .stat-num {
+      display: block;
+      margin-bottom: 10px;
+      font-family: "Anton", Impact, sans-serif;
+      font-size: 60px;
+      line-height: 1;
+      color: var(--bg);
+    }
+    .stat p { font-size: 17px; line-height: 1.4; }
+    .stat .stat-src { margin-top: auto; padding-top: 18px; font-size: 13px; }
+    .stat-src a { color: rgba(253, 240, 213, 0.7); }
+
+    /* ---------- The honest part ---------- */
+    .honest {
+      padding: 44px 36px;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 20px;
+    }
+    .honest-label {
+      display: block;
+      margin-bottom: 14px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    .honest h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 22px; }
+    .honest h2 em {
+      display: block;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1em;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .honest p { font-size: 17px; opacity: 0.88; }
+    .honest p + p { margin-top: 16px; }
+    .honest strong { opacity: 1; font-weight: 600; }
+    .honest p.honest-shout {
+      margin: 26px 0 8px;
+      font-family: "Anton", Impact, "Arial Narrow", sans-serif;
+      font-size: clamp(36px, 7vw, 56px);
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: var(--bg);
+      opacity: 1;
+    }
+    .honest-photo {
+      display: block;
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      margin: 28px auto 0;
+      border-radius: 14px;
+      border: 4px solid var(--bg);
+      transform: rotate(2.5deg);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+    }
+    @media (min-width: 760px) {
+      main > section.honest { max-width: 940px; }
+      .honest { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 44px; align-items: center; padding-right: 48px; }
+      .honest-photo { margin: 0; }
+    }
+    @media (max-width: 520px) {
+      .honest { padding: 32px 22px; }
+    }
+
+    @media (max-width: 520px) {
+      .proof { grid-template-columns: repeat(2, 1fr); }
+      .how { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+  <div class="topbar">the waitlist is open <span aria-hidden="true">·</span> <b>doors open soon</b></div>
   <main>
-    <span class="eyebrow">6-week articulation training camp</span>
-    <h1>Speak clearly.<br />Be understood the first time.</h1>
-    <p class="lede">
-      Six weeks of focused drills to sharpen your diction, pacing, and clarity.
-      Join the waitlist to hear first when enrollment opens.
-    </p>
+    <!-- ================= HERO ================= -->
+    <header class="hero" id="join">
+      <span class="hero-pill">baby steps to the mic</span>
+      <div class="hero-grid">
+      <figure class="hero-figure">
+        <div class="hero-journey">
+          <span class="hj-card hj-from">I went from blacking out on stage</span>
+          <svg class="hj-arrow" viewBox="0 0 120 40" preserveAspectRatio="xMidYMid meet" fill="none" aria-hidden="true">
+            <path d="M6 30 C 20 14, 40 8, 56 14 C 70 20, 66 36, 56 32 C 46 28, 54 10, 72 10 C 88 10, 100 16, 110 24" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M99 25 L 111 25 L 107 13" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="hj-card hj-to">giving 7 min speech</span>
+        </div>
+        <div class="hero-photo-wrap">
+        <div class="hero-photo-frame">
+          <img class="hero-photo" src="images/mona-hero.jpg" alt="Mona sitting on the floor, smiling at the camera" width="1050" height="1400" />
+        </div>
+        <div class="hj-side">
+          <span class="hj-card hj-step hj-abc">going on ABC News</span>
+          <span class="hj-card hj-step hj-standup">giving a 5&#8209;minute standup</span>
+        </div>
+        </div>
+        <figcaption class="hero-note">if I can do it, you can do it too</figcaption>
+      </figure>
+      <div class="hero-copy">
+      <h1>6-week <span class="nowrap">hyper-intensive</span> articulation bootcamp</h1>
+      <ul class="hero-points">
+        <li>daily drills that rewire how you talk</li>
+        <li>daily tips to sharpen your pronunciation, pacing and delivery</li>
+        <li>weekly live zoom to practice speaking</li>
+        <li>real feedback from a cohort doing the reps with you</li>
+      </ul>
 
-    <div class="signup">
-      <!--
-        ===== EMAILOCTOPUS EMBED =====
-        In EmailOctopus: Forms → your form → "Embed on your website" → copy the code.
-        Delete everything between START and END below and paste that code in its place.
-      -->
-      <!-- START placeholder form -->
-      <form id="preview-form" novalidate>
-        <label for="email">Email address</label>
-        <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
-        <button type="submit">Join the waitlist</button>
-        <p class="note">No spam. Unsubscribe anytime.</p>
-      </form>
-      <div class="success" id="preview-success" role="status">
-        <strong>You're on the list!</strong>
-        <p>Preview mode — connect EmailOctopus to send the welcome email.</p>
+      <div class="signup">
+        <!--
+          ===== EMAILOCTOPUS EMBED =====
+          In EmailOctopus: Forms → your form → "Embed on your website" → copy the code.
+          Delete everything between START and END below and paste that code in its place.
+        -->
+        <!-- START placeholder form -->
+        <form id="preview-form" novalidate>
+          <label for="email">get in first when doors open</label>
+          <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+          <button type="submit">I'm in</button>
+          <p class="note">no spam. just a heads up when it's go time.</p>
+        </form>
+        <div class="success" id="preview-success" role="status">
+          <strong>you're on the list!</strong>
+          <p>Preview mode — connect EmailOctopus to send the welcome email.</p>
+        </div>
+        <script>
+          (function () {
+            var form = document.getElementById("preview-form");
+            form.addEventListener("submit", function (e) {
+              e.preventDefault();
+              var input = document.getElementById("email");
+              if (!input.checkValidity()) { input.reportValidity(); return; }
+              form.style.display = "none";
+              document.getElementById("preview-success").style.display = "block";
+            });
+          })();
+        </script>
+        <!-- END placeholder form -->
+      </div>
+
+      </div>
+      </div>
+
+      <div class="proof">
+        <div><strong data-count="300" data-suffix="K+">300K+</strong><span>followers</span></div>
+        <div><strong>ABC News</strong><span>feature</span></div>
+        <div><strong>1 year</strong><span>of speech training</span></div>
+        <div><strong data-count="1.2" data-decimals="1" data-suffix="M+">1.2M+</strong><span>visitors on random topic spinner website</span></div>
       </div>
       <script>
         (function () {
-          var form = document.getElementById("preview-form");
-          form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            var input = document.getElementById("email");
-            if (!input.checkValidity()) { input.reportValidity(); return; }
-            form.style.display = "none";
-            document.getElementById("preview-success").style.display = "block";
-          });
+          var proof = document.querySelector(".proof");
+          if (!proof || !("IntersectionObserver" in window)) return;
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          proof.classList.add("animate");
+
+          function countUp(el) {
+            var target = parseFloat(el.dataset.count);
+            var decimals = parseInt(el.dataset.decimals || "0", 10);
+            var suffix = el.dataset.suffix || "";
+            var duration = 1400;
+            var start = null;
+            function tick(now) {
+              if (start === null) start = now;
+              var t = Math.min((now - start) / duration, 1);
+              var eased = 1 - Math.pow(1 - t, 3);
+              el.textContent = (target * eased).toFixed(decimals) + suffix;
+              if (t < 1) requestAnimationFrame(tick);
+            }
+            el.textContent = (0).toFixed(decimals) + suffix;
+            requestAnimationFrame(tick);
+          }
+
+          var io = new IntersectionObserver(function (entries) {
+            if (!entries[0].isIntersecting) return;
+            io.disconnect();
+            proof.classList.add("in");
+            proof.querySelectorAll("[data-count]").forEach(countUp);
+          }, { threshold: 0.4 });
+          io.observe(proof);
         })();
       </script>
-      <!-- END placeholder form -->
-    </div>
+    </header>
 
-    <footer>&copy; 2026 Articulation Training Camp</footer>
+    <!-- ================= UNTAUGHT: STAT CARDS ================= -->
+    <section class="untaught" aria-labelledby="untaught-title">
+      <h2 id="untaught-title"><em>you got years of math class.</em> <span>no one taught you how to talk.</span></h2>
+      <p class="untaught-lead">and yet how you speak is the skill that quietly decides your promotion, your first date, &amp; your friendships.</p>
+      <ul class="stats">
+        <li class="stat">
+          <span class="stat-num">2 in 3</span>
+          <p>employers look for verbal communication skills when hiring new grads.</p>
+          <p class="stat-src"><a href="https://www.naceweb.org/talent-acquisition/candidate-selection/what-are-employers-looking-for-when-reviewing-college-students-resumes" target="_blank" rel="noopener">NACE Job Outlook 2025</a></p>
+        </li>
+        <li class="stat">
+          <span class="stat-num">50%+</span>
+          <p>more worth if you get better at communicating, according to Warren Buffett.</p>
+          <p class="stat-src"><a href="https://www.cnbc.com/2018/12/05/warren-buffett-how-to-increase-your-worth-by-50-percent.html" target="_blank" rel="noopener">CNBC</a></p>
+        </li>
+        <li class="stat">
+          <span class="stat-num">3 in 4</span>
+          <p>people get nervous speaking in front of others. you're very much not the only one.</p>
+          <p class="stat-src"><a href="https://www.teleprompter.com/blog/public-speaking-statistics" target="_blank" rel="noopener">roundup of public speaking surveys</a></p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================= JOURNEY ================= -->
+    <section class="journey">
+      <div class="journey-before">
+        <h2><span class="journey-lead"><span class="nowrap">I went from being</span></span> <span class="journey-big">scared to speak up in meetings</span></h2>
+        <img src="images/journey-meeting.jpg" alt="Mona at her desk in headphones, on a work call" width="800" height="1418" loading="lazy" />
+        <p>Me on a work call last year 😭</p>
+      </div>
+      <svg class="journey-arrow" viewBox="0 0 140 90" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 62 C 26 18, 70 10, 74 40 C 77 64, 46 66, 50 46 C 55 22, 98 22, 130 44" />
+        <path d="M114 30 L131 45 L110 52" />
+      </svg>
+      <ul class="journey-after">
+        <li><img src="images/journey-toastmasters.jpg" alt="Mona waving to the room while giving a Toastmasters speech" width="800" height="1236" loading="lazy" style="object-position: 50% 28%" /><p>Delivering a 7-min Toastmaster speech</p></li>
+        <li><img src="images/journey-abc-news.jpg" alt="Mona being interviewed on ABC News for a segment on improving your public speaking" width="800" height="450" loading="lazy" /><p>Going on ABC News</p></li>
+        <li><img src="images/journey-stand-up.jpg" alt="Mona on stage with a microphone doing stand-up comedy" width="800" height="1000" loading="lazy" style="object-position: 50% 38%" /><p>Giving a 5 min stand up set</p></li>
+      </ul>
+    </section>
+
+    <!-- ================= REWIRED ================= -->
+    <section class="rewired">
+      <h2><span class="rewired-line1">Speech isn't talent.</span> <span class="rewired-line2">It's reps.</span></h2>
+      <p>I spent the past year <em>rewiring</em> how I talk &amp; I'm gonna teach you how to:</p>
+      <ul class="rewired-learn">
+        <li>speak with the right rhythm, tone and pitch</li>
+        <li>speak in public without losing people</li>
+        <li>overcome the fear of judgement</li>
+      </ul>
+      <a class="rewired-cta" href="#join">get in <span aria-hidden="true">→</span></a>
+    </section>
+
+    <!-- ================= TRIED EVERYTHING ================= -->
+    <section class="tried">
+      <h2>I tried (a lot of) things</h2>
+      <p>for the past year I tried every speech exercise I could get my hands on. pens in my mouth, tongue twisters, shadowing, reading out loud.</p>
+      <ul class="proof-shots">
+        <li><img src="images/proof-random-topic.jpg" alt="Instagram video, 7.2M views: day 11 of 30 of talking for 1 minute on a random topic" width="600" height="1135" loading="lazy" /><p>7.2M views</p></li>
+        <li><img src="images/proof-shadowing-day-23.jpg" alt="Instagram video, 844K views: day 23 of 100 of shadowing to get better at speaking" width="600" height="1135" loading="lazy" /><p>844K views</p></li>
+        <li><img src="images/proof-learn-vocab.jpg" alt="Instagram video, 128K views: practicing new vocab in a 30-second timed speech" width="600" height="1135" loading="lazy" /><p>128K views</p></li>
+        <li><img src="images/proof-shadowing-day-1-vs-30.jpg" alt="Instagram video, 127K views: day 1 vs day 30 of shadowing to get better at speaking" width="600" height="1123" loading="lazy" /><p>127K views</p></li>
+        <li><img src="images/proof-ten-word-sentences.jpg" alt="Instagram video, 67K views: trying the 10-words-per-sentence exercise to stop rambling" width="600" height="1135" loading="lazy" /><p>67K views</p></li>
+        <li><img src="images/proof-pen-in-mouth.jpg" alt="Instagram video, 51.4K views: day 27 of 100 of reading with a pen in my mouth to improve articulation" width="600" height="1135" loading="lazy" /><p>51.4K views</p></li>
+        <li><img src="images/proof-reading-out-loud.jpg" alt="Instagram video, 39.2K views: day 27 of 100 of reading out loud to get better at speaking" width="600" height="1124" loading="lazy" /><p>39.2K views</p></li>
+        <li><img src="images/proof-tongue-twisters.jpg" alt="Instagram video, 34K views: the tongue twisters final boss" width="600" height="1130" loading="lazy" /><p>34K views</p></li>
+      </ul>
+      <div class="tried-bridge">
+        <svg class="tried-arrow" viewBox="0 0 100 160" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M38 6 C 78 26, 80 66, 50 72 C 24 77, 26 46, 50 52 C 80 60, 66 116, 48 148" />
+          <path d="M33 134 L48 150 L61 132" />
+        </svg>
+        <p>I condensed the drills that worked into&nbsp;6&nbsp;weeks</p>
+      </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="how-section">
+      <h2>how it works</h2>
+      <p class="how-lead">six weeks. one skill a week. speaking every single day.</p>
+
+      <ol class="roadmap">
+        <li><b>pronunciation drills</b><span>say goodbye to mumbling. every word comes out crisp and clear, and people stop asking you to repeat yourself.</span></li>
+        <li><b>rhythm, pitch &amp; volume drills</b><span>a flat voice becomes one people actually want to keep listening to.</span></li>
+        <li><b>tone &amp; pausing drills</b><span>slow down, let a moment breathe, and make your words easy to follow.</span></li>
+        <li><b>shadowing drills</b><span>copy a speaker you admire: their pace, their energy, the way they land a point.</span></li>
+        <li><b>stage presence &amp; audience engagement</b><span>time to take it public. walking up to the front stops feeling like a big deal.</span></li>
+        <li><b>storytelling + humor</b><span>make people remember what you said, and finish talking in a way that feels like you.</span></li>
+      </ol>
+
+      <h3 class="how-sub">what you get <em>every week</em></h3>
+
+      <ol class="weekstrip" aria-label="the weekly schedule">
+        <li><b>mon</b>drill + record</li>
+        <li><b>tue</b>drill + record</li>
+        <li><b>wed</b>drill + record</li>
+        <li><b>thu</b>drill + record</li>
+        <li class="fri"><b>fri</b>post + feedback</li>
+        <li class="sat"><b>sat</b>live session</li>
+        <li class="sun"><b>sun</b>rest</li>
+      </ol>
+
+      <div class="rhythm">
+        <article class="rhythm-card">
+          <div class="rhythm-visual" aria-hidden="true">
+            <div class="mock-phone">
+              <div class="mp-screen">
+                <span class="mp-label">today's random topic</span>
+                <p class="mp-topic">“what's a hill you'd die on?”</p>
+                <span class="mp-drill">drill: land every ending consonant</span>
+                <div class="mp-wave"><i style="height:8px"></i><i style="height:16px"></i><i style="height:26px"></i><i style="height:14px"></i><i style="height:30px"></i><i style="height:20px"></i><i style="height:10px"></i><i style="height:24px"></i><i style="height:32px"></i><i style="height:18px"></i><i style="height:12px"></i><i style="height:22px"></i><i style="height:28px"></i><i style="height:14px"></i><i style="height:8px"></i><i style="height:18px"></i><i style="height:26px"></i><i style="height:12px"></i></div>
+                <span class="mp-rec">0:47 / 1:00</span>
+              </div>
+            </div>
+          </div>
+          <div class="rhythm-text">
+            <span class="rhythm-when">every day, mon – friday</span>
+            <b>drill + record</b>
+            <p>a quick drill for that week's skill, then a random topic. hit record and talk for a minute.</p>
+          </div>
+        </article>
+
+        <article class="rhythm-card">
+          <div class="rhythm-visual">
+            <div class="tip-video">
+              <!--
+                ===== DAILY TIP VIDEO =====
+                Drop the video into images/ (or a videos/ folder) and swap the <img> + play button below for:
+                <video src="videos/daily-tip.mp4" poster="images/mona-hero.jpg" controls playsinline preload="none"></video>
+              -->
+              <img src="images/mona-hero.jpg" alt="Mona recording a daily speaking tip" width="1050" height="1400" loading="lazy" />
+              <span class="tip-play" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></span>
+              <span class="tip-tag">daily tip</span>
+            </div>
+          </div>
+          <div class="rhythm-text">
+            <span class="rhythm-when">every day, mon – friday</span>
+            <b>a tip from me</b>
+            <p>a prerecorded video on the exact thing we're working on, plus the drill or mindset shift that actually worked for me.</p>
+          </div>
+        </article>
+
+        <article class="rhythm-card">
+          <div class="rhythm-visual" aria-hidden="true">
+            <div class="mock-chat">
+              <div class="mc-head"># friday-feedback <span>· the cohort</span></div>
+              <div class="mc-body">
+                <div class="mc-msg">
+                  <span class="mc-av">J</span>
+                  <div><span class="mc-name">jess</span><div class="mc-clip">1:00 · “best advice you ever ignored”</div></div>
+                </div>
+                <div class="mc-msg">
+                  <span class="mc-av" style="background: var(--accent)">K</span>
+                  <div><span class="mc-name">kai</span><p>your pauses this week?? so much better</p></div>
+                </div>
+                <div class="mc-msg">
+                  <img class="mc-av" src="images/profile-mona.jpg" alt="" width="320" height="320" loading="lazy" />
+                  <div><span class="mc-name">mona</span><p>love the opener! try slowing down on the last line so it lands</p>
+                    <div class="mc-react"><span>🔥 12</span><span>👏 8</span></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="rhythm-text">
+            <span class="rhythm-when">every friday</span>
+            <b>post + get feedback</b>
+            <p>post your 1-minute impromptu speech in the group chat, and we'll give each other feedback on how to improve our speech.</p>
+          </div>
+        </article>
+
+        <article class="rhythm-card">
+          <div class="rhythm-visual" aria-hidden="true">
+            <div class="mock-zoom">
+              <div class="mz-top"><span class="mz-live">live · saturday session</span><span>24 people</span></div>
+              <div class="mz-grid">
+                <div>A</div>
+                <div class="speaking">S<small>sam 🎤</small></div>
+                <div>R</div>
+                <div><img src="images/profile-mona.jpg" alt="" width="320" height="320" loading="lazy" /><small>mona</small></div>
+                <div>T</div>
+                <div>L</div>
+              </div>
+              <div class="mz-bar"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg></span><span class="leave"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M3 14.5c5-4.7 13-4.7 18 0l-2.4 2.6-3.7-1.5v-3a12 12 0 0 0-5.8 0v3l-3.7 1.5z"/></svg></span></div>
+            </div>
+          </div>
+          <div class="rhythm-text">
+            <span class="rhythm-when">every saturday</span>
+            <b>live session</b>
+            <p>we hop on a big zoom call and practice public speaking for real. there may be games and debates in store 👀</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= OUTCOMES ================= -->
+    <section class="outcomes-section">
+      <h2>what you'll leave with</h2>
+      <ul class="outcomes">
+        <li><div><b>a mouth on autopilot (the good kind)</b><p>30 days of reps until speaking clearly is your default, not something you have to think about.</p></div></li>
+        <li><div><b>ears for your own habits</b><p>the ums. the trailing off. the speed-talking when you're nervous. you'll start catching them mid-sentence.</p></div></li>
+        <li><div><b>confidence without a script</b><p>simple frameworks and the power of a pause, so a surprise question doesn't send you spiraling.</p></div></li>
+        <li><div><b>people who actually keep listening</b><p>openings that hook in 5 seconds, stories with real tension, and endings that land instead of fizzle.</p></div></li>
+        <li><div><b>way less fear of being judged</b><p>the only fix I've ever found is doing it scared, over and over. we're doing it together.</p></div></li>
+      </ul>
+      <div class="outcomes-cta"><a class="cta" href="#join">sign me up</a></div>
+    </section>
+
+    <!-- ================= THE HONEST PART ================= -->
+    <section class="honest">
+      <div class="honest-copy">
+      <span class="honest-label">// the honest part</span>
+      <h2>there's nothing special <em>about me.</em></h2>
+      <p>I'm not a born speaker. in january I sat in the very back row of my first toastmasters meeting and could barely get my own name out.</p>
+      <p>what I <strong>did</strong> do is practice. a lot. badly at first. then a little less badly.</p>
+      <p>tons of people want to get over their fear of speaking. very few actually do something about it. this is me doing something about it, and dragging you along with me.</p>
+      <p class="honest-shout">if I can do it,<br />you can do it too.</p>
+      </div>
+      <img class="honest-photo" src="images/about-mona-cake.jpg" alt="Mona smiling and holding a cake that says 100K" width="900" height="1197" loading="lazy" />
+    </section>
+
+    <!-- ================= SPINNER VS BOOTCAMP ================= -->
+    <section class="vs-section">
+      <h2>my spinner is free.<br /><em>here's what it can't do.</em></h2>
+      <p class="vs-lead">1.2M+ people have used my <a href="https://speechtopicgen.com" target="_blank" rel="noopener">free random topic spinner</a>. but it can't tell you what you're doing wrong or how to fix it.</p>
+      <table class="vs">
+        <thead>
+          <tr><th scope="col"><span class="sr-only">what you get</span></th><th scope="col">free spinner</th><th scope="col" class="us">the bootcamp</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>a random topic to talk about</td><td aria-label="yes">✓</td><td class="us" aria-label="yes">✓</td></tr>
+          <tr><td>knowing your speech style</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
+          <tr><td>a daily video from me: what to notice + a drill to fix it</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
+          <tr><td>weekly feedback from real people</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
+          <tr><td>low-stakes live sessions with humans</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
+          <tr><td>a before/after that proves it worked</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
+          <tr><td>a crew keeping you accountable</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ================= STORY / CREDIBILITY ================= -->
+    <section class="about">
+      <p class="about-hi">hi, I'm mona 👋</p>
+      <div class="story about-grid">
+        <img class="about-photo" src="images/honest-mona.jpg" alt="Mona taking a selfie on a rooftop, shading her eyes from the sun" width="750" height="1000" loading="lazy" />
+        <div class="story-text">
+          <p>this january I made one new year's resolution: stop being scared of public speaking. I was so tired of not showing up the way I wanted to socially - both at work and in day to day.</p>
+          <p>so I joined toastmasters and blacked out on my first impromptu speech. then I gave myself a 30-day challenge: one 1-minute speech a day on a random topic, posted online.</p>
+          <p>I built a <a href="https://speechtopicgen.com" target="_blank" rel="noopener">free random topic spinner</a> so anyone could do the same thing. <b>1.2M+ visitors</b> later, it got me noticed by <a href="https://abcnews.com/video/134706341/" target="_blank" rel="noopener"><b>ABC News</b></a>.</p>
+          <p>along the way, I've somehow stumbled into a community of <b>300K+ followers</b> - all people who want to improve their articulation!</p>
+          <p>most recently, I took on the public speaking final boss and took a stand-up class. I went to a few open mics and ultimately performed for <b>80+ people</b> at the student showcase. ikkk I still can't believe it and will not be doing it again anytime soon lol</p>
+          <p>the point is, I <b>committed to taking action to get better at speaking</b> and I did it! speech is a trainable skill and all it takes is a bit of dedication.</p>
+          <p>I still get nervous before public speaking. but I'm not letting fear decide how I show up anymore, and <b>I don't want it deciding for you either.</b></p>
+          <p class="sign">— Mona, aka @babystepstothemic</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DARE ================= -->
+    <section class="dare">
+      <div class="dare-copy">
+        <h2>a place where you get to train your articulation <em>like you train at the gym.</em></h2>
+        <p>there's zero judgement. we're all here to get better.</p>
+        <div class="dare-cta"><a class="cta" href="#join">sign me up</a></div>
+      </div>
+      <div class="dare-visual" aria-hidden="true">
+        <svg class="dare-bell" viewBox="0 0 220 90" fill="none">
+          <rect x="30" y="39" width="160" height="12" rx="6" fill="#fdf0d5"/>
+          <rect x="12" y="14" width="22" height="62" rx="6" fill="#ff5a5f"/>
+          <rect x="36" y="22" width="16" height="46" rx="5" fill="#fdf0d5"/>
+          <rect x="186" y="14" width="22" height="62" rx="6" fill="#ff5a5f"/>
+          <rect x="168" y="22" width="16" height="46" rx="5" fill="#fdf0d5"/>
+          <rect x="0" y="36" width="12" height="18" rx="4" fill="#fdf0d5"/>
+          <rect x="208" y="36" width="12" height="18" rx="4" fill="#fdf0d5"/>
+        </svg>
+        <div class="workout">
+          <span class="workout-label">today's workout</span>
+          <b class="workout-title">voice day 💪</b>
+          <ul>
+            <li class="done"><span>warm-up: lip trills</span><span>2 min</span></li>
+            <li class="done"><span>tongue twisters</span><span>3 × 10</span></li>
+            <li class="done"><span>shadowing set</span><span>3 × 1 min</span></li>
+            <li><span>1-min impromptu</span><span>1 rep</span></li>
+            <li><span>cool-down: watch it back</span><span>no cringing</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LEVEL SET ================= -->
+    <section class="levelset">
+      <div class="photo-stack">
+        <img src="images/lastcall-1.jpg" alt="Mona giving a speech in front of the Toastmasters banner" width="515" height="651" loading="lazy" />
+        <img src="images/lastcall-2.jpg" alt="Mona speaking to a seated audience at Toastmasters, holding a notebook" width="640" height="865" loading="lazy" />
+        <img class="shot" src="images/proof-random-topic.jpg" alt="Instagram video, 7.2M views: day 11 of 30 of talking for 1 minute on a random topic" width="600" height="1135" loading="lazy" />
+        <img class="shot" src="images/proof-learn-vocab.jpg" alt="Instagram video, 128K views: practicing new vocab in a timed speech" width="600" height="1135" loading="lazy" />
+        <img src="images/lastcall-3.jpg" alt="Mona smiling mid-speech at Toastmasters in a grey sweater" width="593" height="900" loading="lazy" />
+      </div>
+      <div class="levelset-copy">
+      <span class="levelset-label">// let's level set</span>
+      <h2>this is not a <em>magic fix.</em></h2>
+      <p>you've been unconsciously training the way you talk your whole life. 6 weeks won't undo all of it.</p>
+      <p>what 6 weeks <em>can</em> do:</p>
+      <ul class="levelset-list">
+        <li>start intentionally training your speech</li>
+        <li>gain awareness of speech patterns through daily drills + reps</li>
+        <li>hear the difference in your own recordings from week 1 to week 6</li>
+        <li>leave with a routine you can run on your own</li>
+      </ul>
+      <p>it's the kickstart. the rest of the journey is yours.</p>
+      <div class="ps">
+        <p>I know the feeling. heart pounding, face hot, rehearsing one sentence in your head for so long the moment passes. I lived there for years.</p>
+        <p>here's the whole secret: no one is judging you as hard as you're judging you. the rest is just reps.</p>
+        <p class="sig">see you at the mic. – mona</p>
+      </div>
+      </div>
+    </section>
+
+    <!-- ================= LAST CALL ================= -->
+    <section class="lastcall">
+      <h2><span class="lastcall-line">you can keep <em>swallowing your ideas.</em></span> or you can start speaking up.</h2>
+      <a class="cta" href="#join">I'm in 🎤</a>
+    </section>
+
+    <footer>&copy; 2026 JINY LLC</footer>
   </main>
+
 </body>
 </html>

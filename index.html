@@ -1868,18 +1868,37 @@
             }
           }
 
-          // Mobile: all cards in a stacked deck, front card at `index`
-          var dots = cards.map(function (card, i) {
-            var dot = document.createElement("button");
-            dot.type = "button";
-            dot.setAttribute("aria-label", "card " + (i + 1) + " of " + cards.length + ": " + card.querySelector(".rhythm-text b").textContent);
-            dot.addEventListener("click", function () { go(i); });
-            nav.appendChild(dot);
-            return dot;
-          });
+          // Mobile: only the chosen day's cards, stacked as a deck with the front card at `index`
+          var deck = [];
+          var dots = [];
+
+          function buildDeck(d) {
+            pressDay(d);
+            deck = cards.filter(function (card) { return cardDays(card).indexOf(d) !== -1; });
+            cards.forEach(function (card) {
+              card.hidden = deck.indexOf(card) === -1;
+              if (card.hidden) {
+                card.style.transform = card.style.opacity = card.style.zIndex = "";
+                card.removeAttribute("aria-hidden");
+              }
+            });
+            index = 0;
+            nav.innerHTML = "";
+            dots = deck.length < 2 ? [] : deck.map(function (card, i) {
+              var dot = document.createElement("button");
+              dot.type = "button";
+              dot.setAttribute("aria-label", "card " + (i + 1) + " of " + deck.length + ": " + card.querySelector(".rhythm-text b").textContent);
+              dot.addEventListener("click", function () { go(i); });
+              nav.appendChild(dot);
+              return dot;
+            });
+            nav.style.display = deck.length < 2 ? "none" : "";
+            if (hint) hint.textContent = deck.length < 2 ? "tap a day to see what's on it" : "swipe the cards or tap a day";
+            layout(0);
+          }
 
           function layout(dragX) {
-            cards.forEach(function (card, i) {
+            deck.forEach(function (card, i) {
               var d = i - index;
               var t, o = 1;
               if (d < 0) { t = "translateX(-115%) rotate(-8deg)"; o = 0; }
@@ -1888,36 +1907,34 @@
               else { t = "translateY(24px) scale(0.9)"; o = 0; }
               card.style.transform = t;
               card.style.opacity = o;
-              card.style.zIndex = cards.length - Math.abs(d);
+              card.style.zIndex = deck.length - Math.abs(d);
               card.setAttribute("aria-hidden", d === 0 ? "false" : "true");
             });
             dots.forEach(function (dot, i) { dot.setAttribute("aria-current", i === index ? "true" : "false"); });
           }
 
           function go(i) {
-            index = Math.max(0, Math.min(cards.length - 1, i));
-            var days = cardDays(cards[index]);
-            if (days.indexOf(day) === -1) pressDay(days[0]);
+            index = Math.max(0, Math.min(deck.length - 1, i));
             layout(0);
           }
 
           // swipe the front card
           var startX = null, dx = 0, pointerId = null;
           rhythm.addEventListener("pointerdown", function (e) {
-            if (!rhythm.classList.contains("deck") || !cards[index].contains(e.target)) return;
+            if (!rhythm.classList.contains("deck") || !deck[index] || !deck[index].contains(e.target)) return;
             startX = e.clientX; dx = 0; pointerId = e.pointerId;
-            cards[index].classList.add("dragging");
+            deck[index].classList.add("dragging");
           });
           rhythm.addEventListener("pointermove", function (e) {
             if (startX === null || e.pointerId !== pointerId) return;
             dx = e.clientX - startX;
             if (Math.abs(dx) > 6 && !rhythm.hasPointerCapture(pointerId)) rhythm.setPointerCapture(pointerId);
-            var atEnd = (dx < 0 && index === cards.length - 1) || (dx > 0 && index === 0);
+            var atEnd = (dx < 0 && index === deck.length - 1) || (dx > 0 && index === 0);
             layout(atEnd ? dx / 4 : dx);
           });
           function endDrag() {
             if (startX === null) return;
-            cards[index].classList.remove("dragging");
+            deck[index].classList.remove("dragging");
             startX = null;
             if (dx < -60) go(index + 1);
             else if (dx > 60) go(index - 1);
@@ -1937,9 +1954,7 @@
               rhythm.classList.remove("switching");
               rhythm.tabIndex = 0;
               rhythm.setAttribute("aria-roledescription", "carousel");
-              cards.forEach(function (card) { card.hidden = false; });
-              if (hint) hint.textContent = "swipe the cards or tap a day";
-              go(index);
+              buildDeck(day);
             } else {
               rhythm.classList.remove("deck");
               rhythm.removeAttribute("tabindex");
@@ -1948,6 +1963,7 @@
                 card.style.transform = card.style.opacity = card.style.zIndex = "";
                 card.removeAttribute("aria-hidden");
               });
+              nav.style.display = "";
               if (hint) hint.textContent = "tap a day to see what's on it";
               show(day, false);
             }
@@ -1955,11 +1971,8 @@
 
           buttons.forEach(function (btn) {
             btn.addEventListener("click", function () {
-              var d = btn.dataset.day;
-              if (!rhythm.classList.contains("deck")) { show(d, !reduceMotion.matches); return; }
-              pressDay(d);
-              var current = cardDays(cards[index]).indexOf(d) !== -1;
-              if (!current) go(cards.findIndex(function (card) { return cardDays(card).indexOf(d) !== -1; }));
+              if (rhythm.classList.contains("deck")) buildDeck(btn.dataset.day);
+              else show(btn.dataset.day, !reduceMotion.matches);
             });
           });
 

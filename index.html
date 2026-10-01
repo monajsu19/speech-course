@@ -96,6 +96,13 @@
     }
 
     .hero-figure { margin-top: 44px; }
+    /* mobile: photo sits below the signup form */
+    @media (max-width: 859px) {
+      .hero-grid { display: flex; flex-direction: column; }
+      .hero-figure { order: 2; width: 100%; margin-top: 64px; }
+    }
+    @media (max-width: 370px) { .hero-note { font-size: 18px; } }
+    @media (min-width: 860px) and (max-width: 999px) { .hero-figure .hero-note { font-size: 20px; } }
     .hero-journey {
       position: absolute;
       top: -30px;
@@ -1199,6 +1206,43 @@
       .ps { padding: 22px 20px; }
     }
 
+    /* ---------- FAQ ---------- */
+    main > section.faq { max-width: 680px; }
+    .faq h2 { text-align: center; margin-bottom: 28px; }
+    .faq details {
+      background: var(--surface);
+      border: 1px solid rgba(102, 155, 188, 0.4);
+      border-radius: 16px;
+    }
+    .faq details + details { margin-top: 12px; }
+    .faq summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 22px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      border-radius: 16px;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: "+";
+      flex: none;
+      color: var(--accent);
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq summary:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--focus); }
+    .faq details p { padding: 0 22px 20px; font-size: 15px; color: var(--muted); }
+    .faq details a { color: var(--accent); }
+    .faq details a:hover { color: var(--accent-hover); }
+
     /* ---------- Level set ---------- */
     .levelset-label {
       display: block;
@@ -1413,23 +1457,23 @@
       <div class="hero-grid">
       <figure class="hero-figure">
         <div class="hero-journey">
-          <span class="hj-card hj-from">I went from blacking out on stage</span>
+          <span class="hj-card hj-from">I went from<br />blacking out<br />on stage</span>
           <svg class="hj-arrow" viewBox="0 0 120 40" preserveAspectRatio="xMidYMid meet" fill="none" aria-hidden="true">
             <path d="M6 30 C 20 14, 40 8, 56 14 C 70 20, 66 36, 56 32 C 46 28, 54 10, 72 10 C 88 10, 100 16, 110 24" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M99 25 L 111 25 L 107 13" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span class="hj-card hj-to">giving 7 min speech</span>
+          <span class="hj-card hj-to">giving a 7&nbsp;min speech</span>
         </div>
         <div class="hero-photo-wrap">
         <div class="hero-photo-frame">
           <img class="hero-photo" src="images/mona-hero.jpg" alt="Mona sitting on the floor, smiling at the camera" width="1050" height="1400" />
         </div>
         <div class="hj-side">
-          <span class="hj-card hj-step hj-abc">going on ABC News</span>
-          <span class="hj-card hj-step hj-standup">giving a 5&#8209;minute standup</span>
+          <span class="hj-card hj-step hj-abc">featuring on ABC News</span>
+          <span class="hj-card hj-step hj-standup">delivering a 5&nbsp;min standup</span>
         </div>
         </div>
-        <figcaption class="hero-note">sharing everything I've learned along the way</figcaption>
+        <figcaption class="hero-note"><span class="nowrap">sharing everything I've learned</span><br />along the way</figcaption>
       </figure>
       <div class="hero-copy">
       <h1>6-week <span class="nowrap">hyper-intensive</span> articulation bootcamp</h1>
@@ -1515,9 +1559,9 @@
           <p class="stat-src"><a href="https://www.naceweb.org/talent-acquisition/candidate-selection/what-are-employers-looking-for-when-reviewing-college-students-resumes" target="_blank" rel="noopener">NACE Job Outlook 2025</a></p>
         </li>
         <li class="stat">
-          <span class="stat-num">50%+</span>
-          <p>more worth if you get better at communicating, according to Warren Buffett</p>
-          <p class="stat-src"><a href="https://www.cnbc.com/2018/12/05/warren-buffett-how-to-increase-your-worth-by-50-percent.html" target="_blank" rel="noopener">CNBC</a></p>
+          <span class="stat-num">#1</span>
+          <p>most in-demand skill employers want on LinkedIn: communication</p>
+          <p class="stat-src"><a href="https://www.linkedin.com/business/talent/blog/talent-strategy/linkedin-most-in-demand-hard-and-soft-skills" target="_blank" rel="noopener">LinkedIn Most In-Demand Skills 2024</a></p>
         </li>
         <li class="stat">
           <span class="stat-num">3 in 4</span>
@@ -1874,6 +1918,43 @@
         <p class="sig">see you at the mic. – mona</p>
       </div>
       </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="faq">
+      <h2>questions</h2>
+      <details>
+        <summary>why would I pay when your spinner is free?</summary>
+        <p>The spinner gives you a topic - that's it. The bootcamp helps you learn your speech style, gives you a drill for improving every day, gives you a cohort of people to do it with, and puts you in a live Zoom full of humans every Sunday.</p>
+      </details>
+      <details>
+        <summary>what happens in the sunday live sessions?</summary>
+        <p>we all hop on a big zoom call and practice public speaking together: speaking games, drills, and fun debate rounds. it's public speaking practice with basically no stakes. lots of laughing, real practice thinking on your feet in front of people.</p>
+      </details>
+      <details>
+        <summary>what if I'm really, really shy?</summary>
+        <p>perfect. that's exactly who this is for. I couldn't say my own name at my first meeting. you're in the right place.</p>
+      </details>
+      <details>
+        <summary>do I have to post my videos?</summary>
+        <p>every friday you post your 1-minute impromptu speech in the bootcamp chat (not your public socials), and everyone gives each other feedback. not ready yet? that's okay too. do the rep anyway.</p>
+      </details>
+      <details>
+        <summary>how much time does this take?</summary>
+        <p>about 20 minutes a day, monday to friday: watch my video tip, do the drill, record yourself. fridays you also post your 1-minute speech. saturdays are off. sundays we meet live on zoom.</p>
+      </details>
+      <details>
+        <summary>what if I miss a day?</summary>
+        <p>don't quit. just do the next one. every rep still counts.</p>
+      </details>
+      <details>
+        <summary>is this speech therapy?</summary>
+        <p>no. this is practice and confidence-building, not clinical speech therapy. if you're working through a speech or language disorder, a licensed speech-language pathologist is the right call.</p>
+      </details>
+      <details>
+        <summary>when does it start? how much is it?</summary>
+        <p>doors aren't open yet. <a href="#join">join the waitlist</a> and you'll be the first to know (and get first dibs on a spot).</p>
+      </details>
     </section>
 
     <!-- ================= LAST CALL ================= -->

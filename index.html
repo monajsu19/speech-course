@@ -101,6 +101,7 @@
       main { padding-top: 24px; }
       .hero-grid { display: flex; flex-direction: column; }
       .hero-copy { display: contents; }
+      .hero-grid h1, .hero-grid .hero-points { padding-left: 14px; padding-right: 14px; }
       .hero-grid .signup { order: 2; width: 100%; }
       .signup-label { text-align: center; }
       .hero-figure { order: 3; width: 100%; margin-top: 96px; margin-bottom: 28px; }
@@ -787,14 +788,14 @@
     }
     .rhythm-text p { font-size: 15px; color: var(--muted); }
 
-    /* Mobile: small title-only cards, stacked (weekdays: drill, record, tip) */
+    /* Mobile: stacked text-only cards, no visuals (weekdays: drill, record, tip) */
     .m-only { display: none; }
     @media (max-width: 720px) {
-      .rhythm, .rhythm[data-count] { gap: 10px; }
-      .rhythm-visual, .rhythm-when, .rhythm-text p { display: none; }
+      .rhythm, .rhythm[data-count] { gap: 12px; }
+      .rhythm-visual { display: none; }
       .rhythm-card { border-radius: 12px; }
-      .rhythm-text { padding: 14px 18px; }
-      .rhythm-text b { margin: 0; font-size: 20px; }
+      .rhythm-text { padding: 16px 18px 18px; }
+      .rhythm-text b { font-size: 22px; }
       .rhythm-card:nth-child(1) { order: 3; }
       .m-only { display: inline; }
       .m-hide { display: none; }

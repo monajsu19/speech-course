@@ -96,13 +96,13 @@
     }
 
     .hero-figure { margin-top: 44px; }
-    /* mobile: photo sits below the signup form */
+    /* mobile: heading and points, then photo, then signup form */
     @media (max-width: 859px) {
       .hero-grid { display: flex; flex-direction: column; }
-      .hero-figure { order: 2; width: 100%; margin-top: 64px; }
+      .hero-copy { display: contents; }
+      .hero-figure { order: 2; width: 100%; margin-top: 36px; margin-bottom: 36px; }
+      .hero-grid .signup { order: 3; width: 100%; }
     }
-    @media (max-width: 370px) { .hero-note { font-size: 18px; } }
-    @media (min-width: 860px) and (max-width: 999px) { .hero-figure .hero-note { font-size: 20px; } }
     .hero-journey {
       position: absolute;
       top: -30px;
@@ -1159,6 +1159,19 @@
     .photo-stack img:nth-child(3) { transform: translate(-84px, 56px) rotate(-10deg); }
     .photo-stack img:nth-child(4) { transform: translate(86px, 44px) rotate(9deg); }
     .photo-stack img:nth-child(5) { transform: translate(0, 176px) rotate(-2deg); }
+    /* click (or Enter/Space) a photo to bring it to the front */
+    .photo-stack img {
+      cursor: pointer;
+      transition: scale 0.2s ease, box-shadow 0.2s ease;
+    }
+    .photo-stack img:hover { scale: 1.04; box-shadow: 0 16px 32px rgba(0, 48, 73, 0.36); }
+    .photo-stack img:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .photo-stack img.front { animation: stack-pop 0.3s ease; }
+    @keyframes stack-pop { 50% { scale: 1.08; } }
+    @media (prefers-reduced-motion: reduce) {
+      .photo-stack img { transition: none; }
+      .photo-stack img.front { animation: none; }
+    }
     @media (min-width: 860px) {
       main > section.levelset { max-width: 1000px; display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 48px; align-items: center; }
       .photo-stack { height: 460px; margin: 0; }
@@ -1240,6 +1253,10 @@
     .faq details[open] summary::after { transform: rotate(45deg); }
     .faq summary:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--focus); }
     .faq details p { padding: 0 22px 20px; font-size: 15px; color: var(--muted); }
+    .faq details p.faq-lead { padding-bottom: 8px; }
+    .faq details ul { padding: 0 22px 20px 42px; font-size: 15px; color: var(--muted); }
+    .faq details li + li { margin-top: 4px; }
+    .faq details li b { color: var(--text); font-weight: 600; }
     .faq details a { color: var(--accent); }
     .faq details a:hover { color: var(--accent-hover); }
 
@@ -1473,7 +1490,7 @@
           <span class="hj-card hj-step hj-standup">delivering a 5&nbsp;min standup</span>
         </div>
         </div>
-        <figcaption class="hero-note"><span class="nowrap">sharing everything I've learned</span><br />along the way</figcaption>
+        <figcaption class="hero-note"><span class="nowrap">if I can do it,</span> <span class="nowrap">you can do it too.</span></figcaption>
       </figure>
       <div class="hero-copy">
       <h1>6-week <span class="nowrap">hyper-intensive</span> articulation bootcamp</h1>
@@ -1900,6 +1917,29 @@
         <img class="shot" src="images/proof-learn-vocab.jpg" alt="Instagram video, 128K views: practicing new vocab in a timed speech" width="600" height="1135" loading="lazy" />
         <img src="images/lastcall-3.jpg" alt="Mona smiling mid-speech at Toastmasters in a grey sweater" width="593" height="900" loading="lazy" />
       </div>
+      <script>
+        (function () {
+          var stack = document.querySelector(".photo-stack");
+          if (!stack) return;
+          var topZ = stack.children.length;
+          Array.prototype.forEach.call(stack.querySelectorAll("img"), function (img, i) {
+            img.style.zIndex = i + 1;
+            img.tabIndex = 0;
+            img.setAttribute("role", "button");
+            img.setAttribute("aria-label", "bring to front: " + img.alt);
+            function bringToFront() {
+              img.style.zIndex = ++topZ;
+              img.classList.remove("front");
+              void img.offsetWidth; // restart the pop animation
+              img.classList.add("front");
+            }
+            img.addEventListener("click", bringToFront);
+            img.addEventListener("keydown", function (e) {
+              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); bringToFront(); }
+            });
+          });
+        })();
+      </script>
       <div class="levelset-copy">
       <span class="levelset-label">// let's level set</span>
       <h2>this is not a <em>magic fix</em></h2>
@@ -1924,36 +1964,41 @@
     <section class="faq">
       <h2>questions</h2>
       <details>
-        <summary>why would I pay when your spinner is free?</summary>
-        <p>The spinner gives you a topic - that's it. The bootcamp helps you learn your speech style, gives you a drill for improving every day, gives you a cohort of people to do it with, and puts you in a live Zoom full of humans every Sunday.</p>
+        <summary>when does it start?</summary>
+        <p>doors aren't open yet. <a href="#join">hop on the waitlist</a> to be notified when they open 😊</p>
       </details>
       <details>
-        <summary>what happens in the sunday live sessions?</summary>
-        <p>we all hop on a big zoom call and practice public speaking together: speaking games, drills, and fun debate rounds. it's public speaking practice with basically no stakes. lots of laughing, real practice thinking on your feet in front of people.</p>
+        <summary>how much is it?</summary>
+        <p>pricing comes out when doors open, and the waitlist hears first. <a href="#join">hop on</a> so you don't miss it.</p>
       </details>
       <details>
         <summary>what if I'm really, really shy?</summary>
-        <p>perfect. that's exactly who this is for. I couldn't say my own name at my first meeting. you're in the right place.</p>
+        <p>I was really shy when I first started this whole journey! I could barely get my own name out at my first Toastmasters meeting. everyone here is trying to get better. you're in the right place.</p>
+      </details>
+      <details>
+        <summary>what happens in a sunday live session?</summary>
+        <p>we all hop on a big zoom call and practice public speaking together: speaking games, drills, and fun debate rounds. it's your chance to practice getting over your nerves with basically no stakes.</p>
       </details>
       <details>
         <summary>do I have to post my videos?</summary>
-        <p>every friday you post your 1-minute impromptu speech in the bootcamp chat (not your public socials), and everyone gives each other feedback. not ready yet? that's okay too. do the rep anyway.</p>
+        <p>no, you don't, but it's strongly encouraged! every saturday, you can post the video of your 1-minute speech in the chat, and everyone gives each other feedback. one of the best ways to learn is from watching other people.</p>
       </details>
       <details>
         <summary>how much time does this take?</summary>
-        <p>about 20 minutes a day, monday to friday: watch my video tip, do the drill, record yourself. fridays you also post your 1-minute speech. saturdays are off. sundays we meet live on zoom.</p>
+        <p class="faq-lead">10 to 20 minutes a day:</p>
+        <ul>
+          <li><b>monday – friday:</b> watch my video tip, do the drill, record yourself, speak for 1 minute.</li>
+          <li><b>saturday:</b> speak for 1 minute and post it in the chat for feedback.</li>
+          <li><b>sunday:</b> we meet live on zoom.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>what does this bootcamp do that the free spinner doesn't?</summary>
+        <p>The spinner gives you a topic - that's it. The bootcamp helps you learn your speech style, gives you a drill for improving every day, gives you a cohort of people to do it with, and puts you in a live Zoom full of humans every Sunday.</p>
       </details>
       <details>
         <summary>what if I miss a day?</summary>
         <p>don't quit. just do the next one. every rep still counts.</p>
-      </details>
-      <details>
-        <summary>is this speech therapy?</summary>
-        <p>no. this is practice and confidence-building, not clinical speech therapy. if you're working through a speech or language disorder, a licensed speech-language pathologist is the right call.</p>
-      </details>
-      <details>
-        <summary>when does it start? how much is it?</summary>
-        <p>doors aren't open yet. <a href="#join">join the waitlist</a> and you'll be the first to know (and get first dibs on a spot).</p>
       </details>
     </section>
 

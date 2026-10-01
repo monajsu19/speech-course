@@ -102,6 +102,8 @@
       .hero-grid { display: flex; flex-direction: column; }
       .hero-copy { display: contents; }
       .hero-grid h1, .hero-grid .hero-points { padding-left: 14px; padding-right: 14px; }
+      /* shrink on narrow phones so "articulation bootcamp" always fits on one line */
+      .hero-grid h1 { font-size: min(clamp(36px, 8vw, 58px), calc((100vw - 72px) / 9.6)); }
       .hero-figure { padding-left: 18px; padding-right: 18px; }
       .hero-figure .hero-journey { left: 8px; right: 8px; }
       .hero-figure .hj-side { right: -10px; }
@@ -476,6 +478,10 @@
     .journey-after { list-style: none; display: grid; gap: 22px; }
     .journey-after img { aspect-ratio: 16 / 9; }
     .journey-before p { margin-top: 8px; font-weight: 600; text-align: center; }
+    .journey-before h2 { text-align: center; }
+    @media (max-width: 859px) {
+      .journey-before img { max-width: 300px; margin: 0 auto; }
+    }
     .journey-after p {
       margin-top: 10px;
       text-align: center;
@@ -1426,6 +1432,32 @@
     .stat p { font-size: 17px; line-height: 1.4; }
     .stat .stat-src { margin-top: auto; padding-top: 18px; font-size: 13px; }
     .stat-src a { color: rgba(253, 240, 213, 0.7); }
+    /* mobile: plain-text stats in a left / right / left zig-zag, linked by arrows */
+    @media (max-width: 760px) {
+      .stats { max-width: 460px; gap: 76px; }
+      .stat {
+        position: relative;
+        width: 80%;
+        padding: 0;
+        color: var(--text);
+        background: none;
+        border-radius: 0;
+      }
+      .stat:nth-child(2) { justify-self: end; }
+      .stat-num { margin-bottom: 6px; font-size: 52px; color: var(--accent); }
+      .stat .stat-src { padding-top: 8px; }
+      .stat-src a { color: var(--muted); }
+      .stat:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: calc(100% + 6px);
+        width: 84px;
+        height: 64px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' fill='none' stroke='%23c1121f' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 8 C 46 4, 78 22, 82 66'/%3E%3Cpath d='M68 56 L82 68 L92 52'/%3E%3C/svg%3E") center / contain no-repeat;
+      }
+      .stat:nth-child(1)::after { left: 62%; }
+      .stat:nth-child(2)::after { right: 62%; transform: scaleX(-1); }
+    }
 
     /* ---------- The honest part ---------- */
     .honest {
@@ -1520,7 +1552,7 @@
         <figcaption class="hero-note">I'm going to teach you how to become <span class="nowrap">dangerously articulate</span></figcaption>
       </figure>
       <div class="hero-copy">
-      <h1>6-week <span class="nowrap">hyper-intensive</span> articulation bootcamp</h1>
+      <h1>6-week <span class="nowrap">hyper-intensive</span> <span class="nowrap">articulation bootcamp</span></h1>
       <ul class="hero-points">
         <li>daily 1-minute speaking practice</li>
         <li>daily drills that rewire how you talk</li>

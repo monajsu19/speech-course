@@ -725,6 +725,14 @@
       .weekstrip button { padding: 8px 2px; font-size: 10px; }
       .weekstrip b { font-size: 11px; letter-spacing: 0; }
     }
+    /* mobile: mon–thu on the first row, fri–sun centered on the second */
+    @media (max-width: 720px) {
+      .weekstrip { grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; }
+      .weekstrip li { grid-column: span 2; }
+      .weekstrip li:nth-child(5) { grid-column: 2 / span 2; }
+      .weekstrip button { padding: 9px 4px; font-size: 12px; }
+      .weekstrip b { font-size: 13px; letter-spacing: 0.06em; }
+    }
 
     /* Rhythm cards */
     .rhythm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }

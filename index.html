@@ -96,12 +96,14 @@
     }
 
     .hero-figure { margin-top: 44px; }
-    /* mobile: heading and points, then photo, then signup form */
+    /* mobile: heading and points, then signup form, then photo */
     @media (max-width: 859px) {
+      main { padding-top: 24px; }
       .hero-grid { display: flex; flex-direction: column; }
       .hero-copy { display: contents; }
-      .hero-figure { order: 2; width: 100%; margin-top: 36px; margin-bottom: 36px; }
-      .hero-grid .signup { order: 3; width: 100%; }
+      .hero-grid .signup { order: 2; width: 100%; }
+      .signup-label { text-align: center; }
+      .hero-figure { order: 3; width: 100%; margin-top: 64px; margin-bottom: 28px; }
     }
     .hero-journey {
       position: absolute;

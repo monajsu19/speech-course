@@ -479,8 +479,12 @@
     .journey-after img { aspect-ratio: 16 / 9; }
     .journey-before p { margin-top: 8px; font-weight: 600; text-align: center; }
     .journey-before h2 { text-align: center; }
+    .m-br { display: none; }
     @media (max-width: 859px) {
       .journey-before img { max-width: 300px; margin: 0 auto; }
+      .journey-after li { width: 100%; max-width: 340px; margin: 0 auto; }
+      .journey-after img { aspect-ratio: 5 / 4; }
+      .m-br { display: inline; }
     }
     .journey-after p {
       margin-top: 10px;
@@ -1432,32 +1436,7 @@
     .stat p { font-size: 17px; line-height: 1.4; }
     .stat .stat-src { margin-top: auto; padding-top: 18px; font-size: 13px; }
     .stat-src a { color: rgba(253, 240, 213, 0.7); }
-    /* mobile: plain-text stats in a left / right / left zig-zag, linked by arrows */
-    @media (max-width: 760px) {
-      .stats { max-width: 460px; gap: 76px; }
-      .stat {
-        position: relative;
-        width: 80%;
-        padding: 0;
-        color: var(--text);
-        background: none;
-        border-radius: 0;
-      }
-      .stat:nth-child(2) { justify-self: end; }
-      .stat-num { margin-bottom: 6px; font-size: 52px; color: var(--accent); }
-      .stat .stat-src { padding-top: 8px; }
-      .stat-src a { color: var(--muted); }
-      .stat:not(:last-child)::after {
-        content: "";
-        position: absolute;
-        top: calc(100% + 6px);
-        width: 84px;
-        height: 64px;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' fill='none' stroke='%23c1121f' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 8 C 46 4, 78 22, 82 66'/%3E%3Cpath d='M68 56 L82 68 L92 52'/%3E%3C/svg%3E") center / contain no-repeat;
-      }
-      .stat:nth-child(1)::after { left: 62%; }
-      .stat:nth-child(2)::after { right: 62%; transform: scaleX(-1); }
-    }
+    @media (max-width: 760px) { .stats { display: none; } } /* stats are desktop/tablet only */
 
     /* ---------- The honest part ---------- */
     .honest {
@@ -1545,7 +1524,7 @@
           <img class="hero-photo" src="images/mona-hero.jpg" alt="Mona sitting on the floor, smiling at the camera" width="1050" height="1400" />
         </div>
         <div class="hj-side">
-          <span class="hj-card hj-step hj-abc">featuring on ABC News</span>
+          <span class="hj-card hj-step hj-abc">featured on ABC News</span>
           <span class="hj-card hj-step hj-standup">delivering a 5&nbsp;min standup</span>
         </div>
         </div>
@@ -1659,7 +1638,7 @@
         <path d="M114 30 L131 45 L110 52" />
       </svg>
       <ul class="journey-after">
-        <li><img src="images/journey-toastmasters.jpg" alt="Mona waving to the room while giving a Toastmasters speech" width="800" height="1236" loading="lazy" style="object-position: 50% 28%" /><p>Delivering a 7-min Toastmaster speech</p></li>
+        <li><img src="images/journey-toastmasters.jpg" alt="Mona waving to the room while giving a Toastmasters speech" width="800" height="1236" loading="lazy" style="object-position: 50% 28%" /><p>Delivering a 7-min <br class="m-br" /><span class="nowrap">Toastmaster speech</span></p></li>
         <li><img src="images/journey-abc-news.jpg" alt="Mona being interviewed on ABC News for a segment on improving your public speaking" width="800" height="450" loading="lazy" /><p>Going on ABC News</p></li>
         <li><img src="images/journey-stand-up.jpg" alt="Mona on stage with a microphone doing stand-up comedy" width="800" height="1000" loading="lazy" style="object-position: 50% 38%" /><p>Giving a 5 min stand up set</p></li>
       </ul>

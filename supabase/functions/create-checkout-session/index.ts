@@ -1,0 +1,129 @@
+// Supabase Edge Function that creates a Stripe Checkout Session for the bootcamp.
+// The Stripe secret key lives in Supabase secrets and never reaches the browser.
+//
+// Secrets (Supabase dashboard → Edge Functions → Secrets):
+//   STRIPE_SECRET_KEY  required. sk_test_... while testing, sk_live_... for real sales
+//   SITE_URL           recommended. e.g. https://yoursite.com — used for redirects and CORS
+//   STRIPE_PRICE_ID    optional. A Price from the Stripe dashboard; if unset, $297 USD is used
+
+const STRIPE_API = "https://api.stripe.com/v1";
+const PRODUCT_NAME = "Articulation Bootcamp: Baby Steps";
+const AMOUNT_CENTS = 29700;
+
+const FIELDS = ["name", "email", "line1", "line2", "city", "state", "postal_code", "country"] as const;
+const REQUIRED = FIELDS.filter((k) => k !== "line2");
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+type Fields = Record<(typeof FIELDS)[number], string>;
+
+function siteUrl(req: Request): string {
+  return (Deno.env.get("SITE_URL") || req.headers.get("origin") || "").replace(/\/$/, "");
+}
+
+// Pages opened straight from disk (file://) send Origin "null"
+const LOCAL_ORIGIN_RE = /^(null|https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?)$/;
+
+function allowedOrigin(req: Request): string {
+  const site = Deno.env.get("SITE_URL");
+  if (!site) return "*";
+  const { origin, hostname } = new URL(site);
+  const twin = origin.replace(hostname, hostname.startsWith("www.") ? hostname.slice(4) : `www.${hostname}`);
+  const reqOrigin = req.headers.get("origin") || "";
+  return reqOrigin === twin || LOCAL_ORIGIN_RE.test(reqOrigin) ? reqOrigin : origin;
+}
+
+function corsHeaders(req: Request): Record<string, string> {
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin(req),
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    Vary: "Origin",
+  };
+}
+
+function json(req: Request, status: number, body: unknown): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders(req), "Content-Type": "application/json" },
+  });
+}
+
+async function stripe(path: string, params: Record<string, string>): Promise<any> {
+  const res = await fetch(`${STRIPE_API}${path}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${Deno.env.get("STRIPE_SECRET_KEY")}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams(params).toString(),
+  });
+  const body = await res.json();
+  if (!res.ok) throw new Error(body.error?.message || `Stripe error ${res.status}`);
+  return body;
+}
+
+Deno.serve(async (req: Request) => {
+  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(req) });
+  if (req.method !== "POST") return json(req, 405, { error: "method not allowed" });
+  if (!Deno.env.get("STRIPE_SECRET_KEY")) return json(req, 500, { error: "checkout isn't set up yet" });
+
+  const site = siteUrl(req);
+  if (!site) return json(req, 500, { error: "checkout isn't set up yet" });
+
+  let raw: Record<string, unknown>;
+  try {
+    raw = await req.json();
+  } catch {
+    return json(req, 400, { error: "invalid request" });
+  }
+
+  const f = {} as Fields;
+  for (const key of FIELDS) f[key] = String(raw[key] ?? "").trim().slice(0, 200);
+
+  const missing = REQUIRED.filter((k) => !f[k]);
+  if (missing.length) return json(req, 400, { error: `missing ${missing.join(", ")}` });
+  if (!EMAIL_RE.test(f.email)) return json(req, 400, { error: "that email doesn't look right" });
+  if (raw.agree !== true) return json(req, 400, { error: "please agree to the terms" });
+
+  const agreedAt = new Date().toISOString();
+  const priceId = Deno.env.get("STRIPE_PRICE_ID");
+
+  try {
+    const customer = await stripe("/customers", {
+      name: f.name,
+      email: f.email,
+      "address[line1]": f.line1,
+      "address[line2]": f.line2,
+      "address[city]": f.city,
+      "address[state]": f.state,
+      "address[postal_code]": f.postal_code,
+      "address[country]": f.country,
+      "metadata[terms_accepted_at]": agreedAt,
+    });
+
+    const lineItem: Record<string, string> = priceId
+      ? { "line_items[0][price]": priceId }
+      : {
+          "line_items[0][price_data][currency]": "usd",
+          "line_items[0][price_data][unit_amount]": String(AMOUNT_CENTS),
+          "line_items[0][price_data][product_data][name]": PRODUCT_NAME,
+        };
+
+    const session = await stripe("/checkout/sessions", {
+      mode: "payment",
+      customer: customer.id,
+      ...lineItem,
+      "line_items[0][quantity]": "1",
+      success_url: `${site}/success.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${site}/checkout.html?canceled=1`,
+      "metadata[terms_accepted_at]": agreedAt,
+      "payment_intent_data[metadata][terms_accepted_at]": agreedAt,
+      "payment_intent_data[receipt_email]": f.email,
+    });
+
+    return json(req, 200, { url: session.url });
+  } catch (err) {
+    console.error("checkout session failed:", err);
+    return json(req, 502, { error: "couldn't reach the payment processor" });
+  }
+});

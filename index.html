@@ -1157,6 +1157,35 @@
     .outcomes-section > h2 { text-align: center; line-height: 1.02; margin-bottom: 22px; text-wrap: balance; }
     .outcomes-cta { margin-top: 32px; text-align: center; }
 
+    /* ---------- Offer stack ---------- */
+    .offer-card {
+      margin-top: 40px;
+      padding: 30px 28px 32px;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 14px;
+    }
+    .offer-label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-on-dark);
+    }
+    .offer-label.bonus { margin-top: 26px; color: var(--bg); opacity: 0.8; }
+    .offer-list { list-style: none; }
+    .offer-list li {
+      padding: 13px 0;
+      font-size: 16px;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(102, 155, 188, 0.4);
+    }
+    .offer-list li:last-child { border-bottom: 0; }
+    .offer-cta { margin-top: 26px; text-align: center; }
+    @media (max-width: 520px) { .offer-card { padding: 24px 20px 26px; } }
+
     footer {
       margin-top: 48px;
       padding-bottom: 40px;
@@ -1860,7 +1889,22 @@
         <li><div><b>people who actually keep listening</b><p>openings that hook in 5 seconds, stories with real tension, and endings that land instead of fizzle</p></div></li>
         <li><div><b>way less fear of being judged</b><p>the only fix I've ever found is doing it scared, over and over. we're doing it together</p></div></li>
       </ul>
-      <div class="outcomes-cta"><a class="cta" href="#join">sign me up</a></div>
+      <div class="offer-card" id="offer">
+        <span class="offer-label">the core offer</span>
+        <ul class="offer-list">
+          <li>6 weeks of daily drills: pronunciation, rhythm, pitch &amp; volume, tone &amp; pausing, shadowing, stage presence, storytelling + humor</li>
+          <li>a video tip from me every weekday</li>
+          <li>daily 1-minute speaking practice on a topic I send the group</li>
+          <li>3 live zoom sessions (every other sunday) with speaking games, drills and debate rounds</li>
+        </ul>
+        <span class="offer-label bonus">the bonuses</span>
+        <ul class="offer-list">
+          <li>saturday feedback on your 1-minute speech from the cohort</li>
+          <li>a cohort doing the reps with you, zero judgement</li>
+          <li>a routine you can keep running after week 6</li>
+        </ul>
+        <div class="offer-cta"><a class="cta" href="checkout.html">sign me up</a></div>
+      </div>
     </section>
 
     <!-- ================= THE HONEST PART ================= -->

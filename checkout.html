@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | Articulation Bootcamp: Baby Steps</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fdf0d5;          /* papaya whip */
+      --surface: #fff9ec;
+      --text: #003049;        /* deep space blue */
+      --muted: #3d5a6c;
+      --accent: #c1121f;      /* brick red */
+      --accent-hover: #780000; /* molten lava */
+      --accent-on-dark: #ff5a5f; /* brick red lifted for text on deep space blue */
+      --steel: #669bbc;       /* steel blue: lines and borders only */
+      --focus: rgba(102, 155, 188, 0.45);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 48px 20px 40px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 28px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .back:hover { color: var(--accent-hover); }
+
+    h1, h2 {
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      line-height: 1.05;
+    }
+    h1 { font-size: clamp(36px, 7vw, 52px); color: var(--accent); margin-bottom: 32px; }
+    h2 { font-size: 24px; margin-bottom: 16px; }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+      gap: 36px;
+      align-items: start;
+    }
+    @media (max-width: 819px) {
+      .checkout-grid { grid-template-columns: minmax(0, 1fr); }
+      .summary { order: -1; }
+    }
+
+    /* ---------- Order summary ---------- */
+    .summary {
+      padding: 26px 24px 28px;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 14px;
+    }
+    .summary h2 { color: var(--bg); }
+    .summary-label {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-on-dark);
+    }
+    .summary-label.bonus { margin-top: 18px; color: var(--bg); opacity: 0.8; }
+    .summary ul { list-style: none; }
+    .summary li {
+      padding: 9px 0;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(102, 155, 188, 0.4);
+    }
+    .summary li:last-child { border-bottom: 0; }
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 2px solid var(--accent-on-dark);
+    }
+    .summary-total span { font-family: "Anton", Impact, sans-serif; font-size: 20px; text-transform: uppercase; }
+    .summary-total strong { font-family: "Anton", Impact, sans-serif; font-weight: 400; font-size: 40px; line-height: 1; }
+
+    /* ---------- Form ---------- */
+    .notice {
+      margin-bottom: 20px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--steel);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    .notice[hidden] { display: none; }
+
+    fieldset { border: 0; margin-bottom: 28px; }
+    legend { margin-bottom: 14px; font-family: "Anton", Impact, sans-serif; font-size: 24px; text-transform: uppercase; }
+
+    .row { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); margin-bottom: 14px; }
+    .row.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .row.three { grid-template-columns: 2fr 1fr 1fr; }
+    @media (max-width: 520px) {
+      .row.two, .row.three { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 600; }
+    label .opt { font-weight: 400; color: var(--muted); }
+    input[type="text"], input[type="email"], select {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      font-size: 16px;
+      border: 1px solid var(--steel);
+      border-radius: 10px;
+    }
+    input:focus, select:focus { outline: none; border-color: var(--text); box-shadow: 0 0 0 3px var(--focus); }
+    input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--accent); }
+
+    .agree {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 24px;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--steel);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 400;
+    }
+    .agree input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); }
+    .agree a { color: var(--accent); }
+    .agree a:hover { color: var(--accent-hover); }
+    .agree.invalid { border-color: var(--accent); }
+
+    .pay {
+      display: block;
+      width: 100%;
+      padding: 16px 28px;
+      background: var(--accent);
+      color: var(--bg);
+      font: inherit;
+      font-size: 17px;
+      font-weight: 600;
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .pay:hover { background: var(--accent-hover); }
+    .pay:disabled { opacity: 0.6; cursor: wait; }
+    .secure { margin-top: 12px; font-size: 13px; color: var(--muted); text-align: center; }
+
+    footer {
+      margin-top: 56px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="back" href="index.html#offer">&larr; back to the bootcamp</a>
+    <h1>let's get you in</h1>
+
+    <div class="checkout-grid">
+      <form id="checkout-form" novalidate>
+        <p class="notice" id="notice" role="alert" hidden></p>
+
+        <fieldset>
+          <legend>your info</legend>
+          <div class="row">
+            <div>
+              <label for="name">full name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="email">email address</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>mailing address</legend>
+          <div class="row">
+            <div>
+              <label for="line1">street address</label>
+              <input id="line1" name="line1" type="text" autocomplete="address-line1" required />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="line2">apt, suite, etc. <span class="opt">(optional)</span></label>
+              <input id="line2" name="line2" type="text" autocomplete="address-line2" />
+            </div>
+          </div>
+          <div class="row three">
+            <div>
+              <label for="city">city</label>
+              <input id="city" name="city" type="text" autocomplete="address-level2" required />
+            </div>
+            <div>
+              <label for="state">state / region</label>
+              <input id="state" name="state" type="text" autocomplete="address-level1" required />
+            </div>
+            <div>
+              <label for="postal_code">zip / postal</label>
+              <input id="postal_code" name="postal_code" type="text" autocomplete="postal-code" required />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="country">country</label>
+              <select id="country" name="country" autocomplete="country" required>
+                <option value="US" selected>United States</option>
+                <option value="CA">Canada</option>
+                <option value="GB">United Kingdom</option>
+                <option value="AU">Australia</option>
+                <option value="NZ">New Zealand</option>
+                <option value="IE">Ireland</option>
+                <option value="SG">Singapore</option>
+                <option value="HK">Hong Kong</option>
+                <option value="TW">Taiwan</option>
+                <option value="JP">Japan</option>
+                <option value="KR">South Korea</option>
+                <option value="PH">Philippines</option>
+                <option value="IN">India</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+                <option value="NL">Netherlands</option>
+                <option value="MX">Mexico</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <label class="agree" id="agree-wrap">
+          <input id="agree" name="agree" type="checkbox" required />
+          <span>I have read the <a href="terms.html" target="_blank" rel="noopener">terms and conditions</a> including the refund policy and additional program policies. By selecting, I acknowledge that <strong>all sales are final</strong> and affirm that I have read, understand, and agree to be bound to the terms listed.</span>
+        </label>
+
+        <button class="pay" id="pay" type="submit">continue to payment &middot; $297</button>
+        <p class="secure">you'll enter your card on Stripe's secure checkout next.</p>
+      </form>
+
+      <aside class="summary" aria-labelledby="summary-title">
+        <h2 id="summary-title">articulation bootcamp: baby steps</h2>
+        <span class="summary-label">the core offer</span>
+        <ul>
+          <li>6 weeks of daily drills: pronunciation, rhythm, pitch &amp; volume, tone &amp; pausing, shadowing, stage presence, storytelling + humor</li>
+          <li>a video tip from me every weekday</li>
+          <li>daily 1-minute speaking practice on a topic I send the group</li>
+          <li>3 live zoom sessions (every other sunday) with speaking games, drills and debate rounds</li>
+        </ul>
+        <span class="summary-label bonus">the bonuses</span>
+        <ul>
+          <li>saturday feedback on your 1-minute speech from the cohort</li>
+          <li>a cohort doing the reps with you, zero judgement</li>
+          <li>a routine you can keep running after week 6</li>
+        </ul>
+        <div class="summary-total"><span>total</span><strong>$297</strong></div>
+      </aside>
+    </div>
+
+    <footer>&copy; 2026 JINY LLC &middot; <a href="terms.html">terms</a></footer>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById("checkout-form");
+      var notice = document.getElementById("notice");
+      var pay = document.getElementById("pay");
+      var agree = document.getElementById("agree");
+      var agreeWrap = document.getElementById("agree-wrap");
+      var payLabel = pay.innerHTML;
+
+      function showNotice(msg) {
+        notice.textContent = msg;
+        notice.hidden = false;
+        notice.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      if (new URLSearchParams(location.search).get("canceled")) {
+        showNotice("no worries, you weren't charged. your spot is still here whenever you're ready.");
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        notice.hidden = true;
+
+        var firstBad = null;
+        form.querySelectorAll("input[required]:not([type=checkbox]), select[required]").forEach(function (el) {
+          var bad = !el.value.trim() || !el.checkValidity();
+          el.setAttribute("aria-invalid", bad ? "true" : "false");
+          if (bad && !firstBad) firstBad = el;
+        });
+        agreeWrap.classList.toggle("invalid", !agree.checked);
+
+        if (firstBad) {
+          showNotice("please fill in your name, a valid email, and your full mailing address.");
+          firstBad.focus();
+          return;
+        }
+        if (!agree.checked) {
+          showNotice("please check the box to agree to the terms before continuing.");
+          agree.focus();
+          return;
+        }
+
+        var data = {};
+        new FormData(form).forEach(function (v, k) { data[k] = typeof v === "string" ? v.trim() : v; });
+        data.agree = true;
+
+        pay.disabled = true;
+        pay.textContent = "taking you to payment…";
+
+        fetch("https://jiqunlcxytueqkotswjm.supabase.co/functions/v1/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        })
+          .then(function (res) {
+            return res.json().catch(function () { return {}; }).then(function (body) {
+              if (!res.ok || !body.url) throw new Error(body.error || "something went wrong");
+              location.href = body.url;
+            });
+          })
+          .catch(function (err) {
+            pay.disabled = false;
+            pay.innerHTML = payLabel;
+            showNotice(err.message + ". you weren't charged. please try again in a moment.");
+          });
+      });
+    })();
+  </script>
+</body>
+</html>

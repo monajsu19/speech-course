@@ -59,13 +59,12 @@
 
     .checkout-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+      grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
       gap: 36px;
       align-items: start;
     }
     @media (max-width: 819px) {
       .checkout-grid { grid-template-columns: minmax(0, 1fr); }
-      .summary { order: -1; }
     }
 
     /* ---------- Order summary ---------- */
@@ -142,6 +141,31 @@
     input:focus, select:focus { outline: none; border-color: var(--text); box-shadow: 0 0 0 3px var(--focus); }
     input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--accent); }
 
+    .summary-split { margin-top: 8px; font-size: 14px; text-align: right; opacity: 0.85; }
+
+    .plans { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 18px; }
+    @media (max-width: 520px) { .plans { grid-template-columns: minmax(0, 1fr); } }
+    .plan {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 10px;
+      align-items: start;
+      margin: 0;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--steel);
+      border-radius: 10px;
+      font-weight: 400;
+      cursor: pointer;
+    }
+    .plan input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--accent); }
+    .plan b { display: block; font-size: 15px; font-weight: 600; }
+    .plan span span { display: block; margin-top: 2px; font-size: 13px; color: var(--muted); }
+    .plan:has(input:checked) { border-color: var(--text); box-shadow: 0 0 0 1px var(--text); }
+    .plan:has(input:focus-visible) { box-shadow: 0 0 0 3px var(--focus); }
+    .plan-terms { margin: -6px 0 16px; font-size: 13px; color: var(--muted); }
+    .plan-terms[hidden] { display: none; }
+
     .agree {
       display: grid;
       grid-template-columns: 22px 1fr;
@@ -196,56 +220,75 @@
     <h1>let's get you in</h1>
 
     <div class="checkout-grid">
+      <aside class="summary" aria-labelledby="summary-title">
+        <h2 id="summary-title">articulation bootcamp: baby steps</h2>
+        <span class="summary-label">the core offer</span>
+        <ul>
+          <li>6 weeks of daily drills: pronunciation, rhythm, pitch &amp; volume, tone &amp; pausing, shadowing, stage presence, storytelling + humor</li>
+          <li>a video tip from me every weekday</li>
+          <li>daily 1-minute speaking practice on a topic I send the group</li>
+          <li>3 live zoom sessions (every other sunday) with speaking games, drills and debate rounds</li>
+        </ul>
+        <span class="summary-label bonus">the bonuses</span>
+        <ul>
+          <li>saturday feedback on your 1-minute speech from the cohort</li>
+          <li>a cohort doing the reps with you, zero judgement</li>
+          <li>a routine you can keep running after week 6</li>
+        </ul>
+        <div class="summary-total"><span>total</span><strong>$297</strong></div>
+        <p class="summary-split">or 2 monthly payments of $148.50</p>
+      </aside>
+
       <form id="checkout-form" novalidate>
         <p class="notice" id="notice" role="alert" hidden></p>
 
         <fieldset>
-          <legend>your info</legend>
+          <legend>Your info</legend>
           <div class="row">
             <div>
-              <label for="name">full name</label>
+              <label for="name">Full name</label>
               <input id="name" name="name" type="text" autocomplete="name" required />
             </div>
           </div>
           <div class="row">
             <div>
-              <label for="email">email address</label>
+              <label for="email">Email address</label>
               <input id="email" name="email" type="email" autocomplete="email" required />
             </div>
           </div>
         </fieldset>
 
         <fieldset>
-          <legend>mailing address</legend>
+          <legend>Mailing address</legend>
           <div class="row">
             <div>
-              <label for="line1">street address</label>
+              <label for="line1">Street address</label>
               <input id="line1" name="line1" type="text" autocomplete="address-line1" required />
             </div>
           </div>
           <div class="row">
             <div>
-              <label for="line2">apt, suite, etc. <span class="opt">(optional)</span></label>
+              <label for="line2">Apt, suite, etc. <span class="opt">(optional)</span></label>
               <input id="line2" name="line2" type="text" autocomplete="address-line2" />
             </div>
           </div>
           <div class="row three">
             <div>
-              <label for="city">city</label>
+              <label for="city">City</label>
               <input id="city" name="city" type="text" autocomplete="address-level2" required />
             </div>
             <div>
-              <label for="state">state / region</label>
+              <label for="state">State / region</label>
               <input id="state" name="state" type="text" autocomplete="address-level1" required />
             </div>
             <div>
-              <label for="postal_code">zip / postal</label>
+              <label for="postal_code">Zip / postal</label>
               <input id="postal_code" name="postal_code" type="text" autocomplete="postal-code" required />
             </div>
           </div>
           <div class="row">
             <div>
-              <label for="country">country</label>
+              <label for="country">Country</label>
               <select id="country" name="country" autocomplete="country" required>
                 <option value="US" selected>United States</option>
                 <option value="CA">Canada</option>
@@ -270,8 +313,19 @@
         </fieldset>
 
         <fieldset>
-          <legend>payment</legend>
-          <div id="payment-element"><p class="payment-loading">loading secure payment form…</p></div>
+          <legend>Payment</legend>
+          <div class="plans" role="radiogroup" aria-label="payment plan">
+            <label class="plan">
+              <input type="radio" name="plan" value="full" checked />
+              <span><b>Pay in full &middot; $297</b><span>One payment today</span></span>
+            </label>
+            <label class="plan">
+              <input type="radio" name="plan" value="split" />
+              <span><b>2 payments &middot; $148.50</b><span>$148.50 today, $148.50 in 1 month</span></span>
+            </label>
+          </div>
+          <p class="plan-terms" id="plan-terms" hidden>By choosing 2 payments, you authorize JINY LLC to charge your payment method $148.50 today and $148.50 one month from today. There are no other charges.</p>
+          <div id="payment-element"><p class="payment-loading">Loading secure payment form…</p></div>
         </fieldset>
 
         <label class="agree" id="agree-wrap">
@@ -279,27 +333,10 @@
           <span>I have read the <a href="terms.html" target="_blank" rel="noopener">terms and conditions</a> including the refund policy and additional program policies. By selecting, I acknowledge that <strong>all sales are final</strong> and affirm that I have read, understand, and agree to be bound to the terms listed.</span>
         </label>
 
-        <button class="pay" id="pay" type="submit" disabled>pay $297</button>
-        <p class="secure">payments are encrypted and processed securely by Stripe.</p>
+        <button class="pay" id="pay" type="submit" disabled>Pay $297</button>
+        <p class="secure">Payments are encrypted and processed securely by Stripe.</p>
       </form>
 
-      <aside class="summary" aria-labelledby="summary-title">
-        <h2 id="summary-title">articulation bootcamp: baby steps</h2>
-        <span class="summary-label">the core offer</span>
-        <ul>
-          <li>6 weeks of daily drills: pronunciation, rhythm, pitch &amp; volume, tone &amp; pausing, shadowing, stage presence, storytelling + humor</li>
-          <li>a video tip from me every weekday</li>
-          <li>daily 1-minute speaking practice on a topic I send the group</li>
-          <li>3 live zoom sessions (every other sunday) with speaking games, drills and debate rounds</li>
-        </ul>
-        <span class="summary-label bonus">the bonuses</span>
-        <ul>
-          <li>saturday feedback on your 1-minute speech from the cohort</li>
-          <li>a cohort doing the reps with you, zero judgement</li>
-          <li>a routine you can keep running after week 6</li>
-        </ul>
-        <div class="summary-total"><span>total</span><strong>$297</strong></div>
-      </aside>
     </div>
 
     <footer>&copy; 2026 JINY LLC &middot; <a href="terms.html">terms</a></footer>
@@ -317,7 +354,7 @@
       var pay = document.getElementById("pay");
       var agree = document.getElementById("agree");
       var agreeWrap = document.getElementById("agree-wrap");
-      var payLabel = pay.innerHTML;
+      var cfg = null;
       var stripe, elements;
 
       function showNotice(msg) {
@@ -328,11 +365,39 @@
 
       function resetPay() {
         pay.disabled = false;
-        pay.innerHTML = payLabel;
+        pay.textContent = payLabel();
       }
 
+      function plan() {
+        return form.querySelector("input[name=plan]:checked").value;
+      }
+
+      function dollars(cents) {
+        return "$" + (cents % 100 ? (cents / 100).toFixed(2) : cents / 100);
+      }
+
+      function payLabel() {
+        if (!cfg) return "Pay $297";
+        return plan() === "split" ? "Pay " + dollars(cfg.splitAmount) + " today" : "Pay " + dollars(cfg.amount);
+      }
+
+      // the split plan saves the card for the 2nd charge, which Stripe treats as a subscription
+      function elementsMode() {
+        return plan() === "split"
+          ? { mode: "subscription", amount: cfg.splitAmount }
+          : { mode: "payment", amount: cfg.amount };
+      }
+
+      form.querySelectorAll("input[name=plan]").forEach(function (radio) {
+        radio.addEventListener("change", function () {
+          document.getElementById("plan-terms").hidden = plan() !== "split";
+          if (elements) elements.update(elementsMode());
+          if (!pay.disabled) pay.textContent = payLabel();
+        });
+      });
+
       if (new URLSearchParams(location.search).get("canceled")) {
-        showNotice("that payment didn't go through, and you weren't charged. please try again or use a different payment method.");
+        showNotice("That payment didn't go through, and you weren't charged. Please try again or use a different payment method.");
       }
 
       // styles Stripe's card fields to match the site
@@ -365,12 +430,14 @@
 
       fetch(FN_URL)
         .then(function (res) { return res.json(); })
-        .then(function (cfg) {
-          if (!cfg.publishableKey) throw new Error(cfg.error || "no key");
+        .then(function (body) {
+          if (!body.publishableKey) throw new Error(body.error || "no key");
+          cfg = body;
           stripe = Stripe(cfg.publishableKey);
+          var opts = elementsMode();
           elements = stripe.elements({
-            mode: "payment",
-            amount: cfg.amount,
+            mode: opts.mode,
+            amount: opts.amount,
             currency: cfg.currency,
             appearance: appearance,
             fonts: [{ cssSrc: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" }]
@@ -378,15 +445,21 @@
           var paymentEl = elements.create("payment", {
             layout: "tabs",
             // name, email and address come from the form above
-            fields: { billingDetails: { name: "never", email: "never", address: "never" } }
+            fields: { billingDetails: { name: "never", email: "never", address: "never" } },
+            // Stripe's card wording says "until you cancel"; the 2-payment plan ends on its own,
+            // so #plan-terms shows the accurate authorization instead
+            terms: { card: "never" }
           });
           document.getElementById("payment-element").textContent = "";
           paymentEl.mount("#payment-element");
-          paymentEl.on("ready", function () { pay.disabled = false; });
+          paymentEl.on("ready", function () {
+            pay.disabled = false;
+            pay.textContent = payLabel();
+          });
         })
         .catch(function () {
           document.getElementById("payment-element").textContent = "";
-          showNotice("the payment form didn't load. please refresh the page to try again.");
+          showNotice("The payment form didn't load. Please refresh the page to try again.");
         });
 
       form.addEventListener("submit", function (e) {
@@ -403,12 +476,12 @@
         agreeWrap.classList.toggle("invalid", !agree.checked);
 
         if (firstBad) {
-          showNotice("please fill in your name, a valid email, and your full mailing address.");
+          showNotice("Please fill in your name, a valid email, and your full mailing address.");
           firstBad.focus();
           return;
         }
         if (!agree.checked) {
-          showNotice("please check the box to agree to the terms before continuing.");
+          showNotice("Please check the box to agree to the terms before continuing.");
           agree.focus();
           return;
         }
@@ -418,7 +491,7 @@
         data.agree = true;
 
         pay.disabled = true;
-        pay.textContent = "processing…";
+        pay.textContent = "Processing…";
 
         // check the card fields first so typos don't create a payment
         elements.submit()
@@ -464,7 +537,8 @@
           .catch(function (err) {
             resetPay();
             if (err && err.shown) return; // Stripe already flagged the card field
-            showNotice(err.message.replace(/\.$/, "") + ". you weren't charged. please try again.");
+            var msg = err.message.replace(/\.$/, "");
+            showNotice(msg.charAt(0).toUpperCase() + msg.slice(1) + ". You weren't charged. Please try again.");
           });
       });
     })();

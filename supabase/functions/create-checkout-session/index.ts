@@ -16,12 +16,17 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 type Fields = Record<(typeof FIELDS)[number], string>;
 
-function siteUrl(req: Request): string {
-  return (Deno.env.get("SITE_URL") || req.headers.get("origin") || "").replace(/\/$/, "");
-}
-
 // Pages opened straight from disk (file://) send Origin "null"
 const LOCAL_ORIGIN_RE = /^(null|https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?)$/;
+// Vercel preview deploys of this project
+const PREVIEW_ORIGIN_RE = /^https:\/\/speech-course-[a-z0-9-]+-mona-sus-projects\.vercel\.app$/;
+
+// Send buyers back to the site they started on (live, preview, or local), else SITE_URL
+function siteUrl(req: Request): string {
+  const reqOrigin = req.headers.get("origin") || "";
+  if (reqOrigin.startsWith("http") && allowedOrigin(req) === reqOrigin) return reqOrigin;
+  return (Deno.env.get("SITE_URL") || reqOrigin).replace(/\/$/, "");
+}
 
 function allowedOrigin(req: Request): string {
   const site = Deno.env.get("SITE_URL");
@@ -29,7 +34,8 @@ function allowedOrigin(req: Request): string {
   const { origin, hostname } = new URL(site);
   const twin = origin.replace(hostname, hostname.startsWith("www.") ? hostname.slice(4) : `www.${hostname}`);
   const reqOrigin = req.headers.get("origin") || "";
-  return reqOrigin === twin || LOCAL_ORIGIN_RE.test(reqOrigin) ? reqOrigin : origin;
+  const ok = reqOrigin === origin || reqOrigin === twin || LOCAL_ORIGIN_RE.test(reqOrigin) || PREVIEW_ORIGIN_RE.test(reqOrigin);
+  return ok ? reqOrigin : origin;
 }
 
 function corsHeaders(req: Request): Record<string, string> {

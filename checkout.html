@@ -75,6 +75,7 @@
       color: var(--bg);
       border-radius: 14px;
     }
+    @media (min-width: 820px) { .summary { position: sticky; top: 24px; } }
     .summary h2 { color: var(--bg); }
     .summary-label {
       display: block;
@@ -177,6 +178,9 @@
     .pay:disabled { opacity: 0.6; cursor: wait; }
     .secure { margin-top: 12px; font-size: 13px; color: var(--muted); text-align: center; }
 
+    #payment-element { min-height: 140px; }
+    .payment-loading { padding: 18px 0; font-size: 14px; color: var(--muted); }
+
     footer {
       margin-top: 56px;
       font-size: 13px;
@@ -265,13 +269,18 @@
           </div>
         </fieldset>
 
+        <fieldset>
+          <legend>payment</legend>
+          <div id="payment-element"><p class="payment-loading">loading secure payment form…</p></div>
+        </fieldset>
+
         <label class="agree" id="agree-wrap">
           <input id="agree" name="agree" type="checkbox" required />
           <span>I have read the <a href="terms.html" target="_blank" rel="noopener">terms and conditions</a> including the refund policy and additional program policies. By selecting, I acknowledge that <strong>all sales are final</strong> and affirm that I have read, understand, and agree to be bound to the terms listed.</span>
         </label>
 
-        <button class="pay" id="pay" type="submit">continue to payment &middot; $297</button>
-        <p class="secure">you'll enter your card on Stripe's secure checkout next.</p>
+        <button class="pay" id="pay" type="submit" disabled>pay $297</button>
+        <p class="secure">payments are encrypted and processed securely by Stripe.</p>
       </form>
 
       <aside class="summary" aria-labelledby="summary-title">
@@ -296,14 +305,20 @@
     <footer>&copy; 2026 JINY LLC &middot; <a href="terms.html">terms</a></footer>
   </main>
 
+  <script src="https://js.stripe.com/v3/"></script>
   <script>
     (function () {
+      var FN_URL = "https://jiqunlcxytueqkotswjm.supabase.co/functions/v1/create-payment-intent";
+      // Stripe can only send buyers back to a real web address, not a file on disk
+      var SITE = /^https?:/.test(location.protocol) ? location.origin : "https://www.babystepstothemic.com";
+
       var form = document.getElementById("checkout-form");
       var notice = document.getElementById("notice");
       var pay = document.getElementById("pay");
       var agree = document.getElementById("agree");
       var agreeWrap = document.getElementById("agree-wrap");
       var payLabel = pay.innerHTML;
+      var stripe, elements;
 
       function showNotice(msg) {
         notice.textContent = msg;
@@ -311,12 +326,72 @@
         notice.scrollIntoView({ behavior: "smooth", block: "center" });
       }
 
-      if (new URLSearchParams(location.search).get("canceled")) {
-        showNotice("no worries, you weren't charged. your spot is still here whenever you're ready.");
+      function resetPay() {
+        pay.disabled = false;
+        pay.innerHTML = payLabel;
       }
+
+      if (new URLSearchParams(location.search).get("canceled")) {
+        showNotice("that payment didn't go through, and you weren't charged. please try again or use a different payment method.");
+      }
+
+      // styles Stripe's card fields to match the site
+      var appearance = {
+        theme: "stripe",
+        variables: {
+          colorPrimary: "#c1121f",
+          colorBackground: "#fff9ec",
+          colorText: "#003049",
+          colorTextSecondary: "#3d5a6c",
+          colorTextPlaceholder: "#3d5a6c",
+          colorDanger: "#c1121f",
+          colorIcon: "#003049",
+          fontFamily: "Inter, system-ui, sans-serif",
+          fontSizeBase: "16px",
+          borderRadius: "10px",
+          spacingUnit: "4px"
+        },
+        rules: {
+          ".Label": { fontSize: "14px", fontWeight: "600", marginBottom: "6px" },
+          ".Input": { border: "1px solid #669bbc", boxShadow: "none", padding: "12px 14px" },
+          ".Input:focus": { borderColor: "#003049", boxShadow: "0 0 0 3px rgba(102, 155, 188, 0.45)" },
+          ".Input--invalid": { borderColor: "#c1121f", boxShadow: "none" },
+          ".Tab": { border: "1px solid #669bbc", boxShadow: "none" },
+          ".Tab:hover": { borderColor: "#003049" },
+          ".Tab--selected, .Tab--selected:hover": { borderColor: "#003049", boxShadow: "0 0 0 1px #003049" },
+          ".AccordionItem": { border: "1px solid #669bbc", boxShadow: "none" }
+        }
+      };
+
+      fetch(FN_URL)
+        .then(function (res) { return res.json(); })
+        .then(function (cfg) {
+          if (!cfg.publishableKey) throw new Error(cfg.error || "no key");
+          stripe = Stripe(cfg.publishableKey);
+          elements = stripe.elements({
+            mode: "payment",
+            amount: cfg.amount,
+            currency: cfg.currency,
+            appearance: appearance,
+            fonts: [{ cssSrc: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" }]
+          });
+          var paymentEl = elements.create("payment", {
+            layout: "tabs",
+            // name, email and address come from the form above
+            fields: { billingDetails: { name: "never", email: "never", address: "never" } }
+          });
+          document.getElementById("payment-element").textContent = "";
+          paymentEl.mount("#payment-element");
+          paymentEl.on("ready", function () { pay.disabled = false; });
+        })
+        .catch(function () {
+          document.getElementById("payment-element").textContent = "";
+          showNotice("the payment form didn't load. please refresh the page to try again.");
+        });
 
       form.addEventListener("submit", function (e) {
         e.preventDefault();
+        if (!stripe || !elements) return;
         notice.hidden = true;
 
         var firstBad = null;
@@ -343,23 +418,53 @@
         data.agree = true;
 
         pay.disabled = true;
-        pay.textContent = "taking you to payment…";
+        pay.textContent = "processing…";
 
-        fetch("https://jiqunlcxytueqkotswjm.supabase.co/functions/v1/create-checkout-session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        })
-          .then(function (res) {
-            return res.json().catch(function () { return {}; }).then(function (body) {
-              if (!res.ok || !body.url) throw new Error(body.error || "something went wrong");
-              location.href = body.url;
+        // check the card fields first so typos don't create a payment
+        elements.submit()
+          .then(function (result) {
+            if (result.error) throw { shown: true };
+            return fetch(FN_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data)
             });
           })
+          .then(function (res) {
+            return res.json().catch(function () { return {}; }).then(function (body) {
+              if (!res.ok || !body.clientSecret) throw new Error(body.error || "something went wrong");
+              return stripe.confirmPayment({
+                elements: elements,
+                clientSecret: body.clientSecret,
+                redirect: "if_required",
+                confirmParams: {
+                  return_url: SITE + "/success.html",
+                  payment_method_data: {
+                    billing_details: {
+                      name: data.name,
+                      email: data.email,
+                      address: {
+                        line1: data.line1,
+                        line2: data.line2 || null,
+                        city: data.city,
+                        state: data.state,
+                        postal_code: data.postal_code,
+                        country: data.country
+                      }
+                    }
+                  }
+                }
+              });
+            });
+          })
+          .then(function (result) {
+            if (result.error) throw new Error(result.error.message);
+            location.href = "success.html";
+          })
           .catch(function (err) {
-            pay.disabled = false;
-            pay.innerHTML = payLabel;
-            showNotice(err.message + ". you weren't charged. please try again in a moment.");
+            resetPay();
+            if (err && err.shown) return; // Stripe already flagged the card field
+            showNotice(err.message.replace(/\.$/, "") + ". you weren't charged. please try again.");
           });
       });
     })();

@@ -1,10 +1,13 @@
-// Supabase Edge Function that creates a Stripe Checkout Session for the bootcamp.
+// Supabase Edge Function behind the embedded Stripe payment form on checkout.html.
 // The Stripe secret key lives in Supabase secrets and never reaches the browser.
 //
+//   GET   returns the publishable key, so test/live keys are switched in one place
+//   POST  saves the buyer as a Stripe customer and creates a $297 PaymentIntent
+//
 // Secrets (Supabase dashboard → Edge Functions → Secrets):
-//   STRIPE_SECRET_KEY  required. sk_test_... while testing, sk_live_... for real sales
-//   SITE_URL           recommended. e.g. https://yoursite.com — used for redirects and CORS
-//   STRIPE_PRICE_ID    optional. A Price from the Stripe dashboard; if unset, $297 USD is used
+//   STRIPE_SECRET_KEY       required. rk_/sk_test_... while testing, rk_/sk_live_... for real sales
+//   STRIPE_PUBLISHABLE_KEY  required. pk_test_... or pk_live_..., same mode as the secret key
+//   SITE_URL                recommended. e.g. https://www.yoursite.com, used for CORS
 
 const STRIPE_API = "https://api.stripe.com/v1";
 const PRODUCT_NAME = "Articulation Bootcamp: Baby Steps";
@@ -21,13 +24,6 @@ const LOCAL_ORIGIN_RE = /^(null|https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?)$/;
 // Vercel preview deploys of this project
 const PREVIEW_ORIGIN_RE = /^https:\/\/speech-course-[a-z0-9-]+-mona-sus-projects\.vercel\.app$/;
 
-// Send buyers back to the site they started on (live, preview, or local), else SITE_URL
-function siteUrl(req: Request): string {
-  const reqOrigin = req.headers.get("origin") || "";
-  if (reqOrigin.startsWith("http") && allowedOrigin(req) === reqOrigin) return reqOrigin;
-  return (Deno.env.get("SITE_URL") || reqOrigin).replace(/\/$/, "");
-}
-
 function allowedOrigin(req: Request): string {
   const site = Deno.env.get("SITE_URL");
   if (!site) return "*";
@@ -41,7 +37,7 @@ function allowedOrigin(req: Request): string {
 function corsHeaders(req: Request): Record<string, string> {
   return {
     "Access-Control-Allow-Origin": allowedOrigin(req),
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     Vary: "Origin",
   };
@@ -70,11 +66,14 @@ async function stripe(path: string, params: Record<string, string>): Promise<any
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(req) });
-  if (req.method !== "POST") return json(req, 405, { error: "method not allowed" });
-  if (!Deno.env.get("STRIPE_SECRET_KEY")) return json(req, 500, { error: "checkout isn't set up yet" });
 
-  const site = siteUrl(req);
-  if (!site) return json(req, 500, { error: "checkout isn't set up yet" });
+  const publishableKey = Deno.env.get("STRIPE_PUBLISHABLE_KEY");
+  if (!Deno.env.get("STRIPE_SECRET_KEY") || !publishableKey) {
+    return json(req, 500, { error: "checkout isn't set up yet" });
+  }
+
+  if (req.method === "GET") return json(req, 200, { publishableKey, amount: AMOUNT_CENTS, currency: "usd" });
+  if (req.method !== "POST") return json(req, 405, { error: "method not allowed" });
 
   let raw: Record<string, unknown>;
   try {
@@ -92,7 +91,6 @@ Deno.serve(async (req: Request) => {
   if (raw.agree !== true) return json(req, 400, { error: "please agree to the terms" });
 
   const agreedAt = new Date().toISOString();
-  const priceId = Deno.env.get("STRIPE_PRICE_ID");
 
   try {
     const customer = await stripe("/customers", {
@@ -107,29 +105,19 @@ Deno.serve(async (req: Request) => {
       "metadata[terms_accepted_at]": agreedAt,
     });
 
-    const lineItem: Record<string, string> = priceId
-      ? { "line_items[0][price]": priceId }
-      : {
-          "line_items[0][price_data][currency]": "usd",
-          "line_items[0][price_data][unit_amount]": String(AMOUNT_CENTS),
-          "line_items[0][price_data][product_data][name]": PRODUCT_NAME,
-        };
-
-    const session = await stripe("/checkout/sessions", {
-      mode: "payment",
+    const intent = await stripe("/payment_intents", {
+      amount: String(AMOUNT_CENTS),
+      currency: "usd",
       customer: customer.id,
-      ...lineItem,
-      "line_items[0][quantity]": "1",
-      success_url: `${site}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${site}/checkout.html?canceled=1`,
+      description: PRODUCT_NAME,
+      receipt_email: f.email,
+      "automatic_payment_methods[enabled]": "true",
       "metadata[terms_accepted_at]": agreedAt,
-      "payment_intent_data[metadata][terms_accepted_at]": agreedAt,
-      "payment_intent_data[receipt_email]": f.email,
     });
 
-    return json(req, 200, { url: session.url });
+    return json(req, 200, { clientSecret: intent.client_secret });
   } catch (err) {
-    console.error("checkout session failed:", err);
+    console.error("payment intent failed:", err);
     return json(req, 502, { error: "couldn't reach the payment processor" });
   }
 });

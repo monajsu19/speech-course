@@ -74,6 +74,12 @@
 
   <canvas id="party" aria-hidden="true"></canvas>
   <script>
+    // redirect-based methods (Klarna, bank, etc.) land here even when they fail
+    if (new URLSearchParams(location.search).get("redirect_status") === "failed") {
+      location.replace("checkout.html?canceled=1");
+    }
+  </script>
+  <script>
     (function () {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       var canvas = document.getElementById("party");

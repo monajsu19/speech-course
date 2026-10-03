@@ -95,10 +95,12 @@
     .hero-note {
       margin-top: 14px;
       color: var(--text);
-      font-family: "DM Serif Display", Georgia, serif;
-      font-style: italic;
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
       font-size: 20px;
-      line-height: 1.25;
+      line-height: 1.1;
       text-align: center;
     }
 
@@ -408,7 +410,7 @@
     .rewired h2 { font-size: clamp(34px, 6.5vw, 50px); line-height: 1.02; margin-bottom: 22px; }
     .rewired h2 span { display: block; }
     .rewired h2, .rewired p { text-wrap: balance; }
-    /* same serif italic as "you got years of math class" */
+    /* same serif italic as the untaught headline */
     .rewired-line1 {
       color: var(--text);
       font-family: "DM Serif Display", Georgia, serif;
@@ -587,6 +589,7 @@
       .journey-deck-hint { display: block; width: 70%; max-width: 280px; margin: 2px 4% 0 auto; text-align: center; font-size: 13px; color: var(--muted); }
       .m-br { display: inline; }
     }
+    .journey-before p,
     .journey-after p {
       margin-top: 10px;
       text-align: center;
@@ -605,6 +608,8 @@
         align-items: center;
       }
       .journey-arrow { width: 130px; margin: 0; transform: none; }
+      /* desktop: the photo caption already says it, so drop the big repeat */
+      .journey-before .journey-big { display: none; }
     }
 
     /* ---------- Tried everything ---------- */
@@ -612,24 +617,23 @@
     .tried h2, .tried > p { max-width: 640px; margin-left: auto; margin-right: auto; }
     .tried h2 { max-width: 1000px; text-align: center; font-size: clamp(34px, 6.5vw, 50px); line-height: 1.02; margin-bottom: 22px; text-wrap: balance; }
     .tried > p { font-size: 17px; margin-bottom: 20px; text-align: center; }
+    /* same type as "the roadmap" heading, with an arrow pointing down into it */
     .tried-bridge {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 14px;
-      margin: 20px 0 -48px;
-      color: var(--accent);
-    }
-    .tried-arrow { flex: none; width: 70px; height: 112px; }
-    .tried-bridge p {
-      max-width: 300px;
+      margin: 40px auto 0;
+      max-width: 640px;
+      text-align: center;
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      font-size: clamp(34px, 6.5vw, 50px);
+      line-height: 1.05;
+      color: var(--text);
       text-wrap: balance;
-      font-family: "DM Serif Display", Georgia, serif;
-      font-style: italic;
-      font-size: clamp(20px, 3vw, 26px);
-      line-height: 1.15;
-      transform: rotate(-3deg);
     }
+    .tried-bridge-list { display: inline-grid; gap: 6px; margin: 10px auto; list-style: none; text-align: left; color: var(--accent); }
+    .tried-bridge-list li::before { content: "- "; }
+    .tried-bridge-arrow { display: block; width: 80px; height: 80px; margin: 18px auto 0; color: var(--accent); transform: scaleX(-1); }
     /* Fanned, overlapping stack: first card (most views) sits on top */
     .proof-shots {
       --overlap: 64px;
@@ -684,8 +688,9 @@
       border-radius: 999px;
     }
     @media (max-width: 720px) {
-      .proof-shots { --overlap: 36px; --per-row: 4; padding-left: 14px; padding-right: 14px; }
-      .proof-shots li:nth-child(5) { margin-left: 0; }
+      /* mobile: just the top five, in a single row */
+      .proof-shots { --overlap: 30px; --per-row: 5; flex-wrap: nowrap; padding-left: 14px; padding-right: 14px; }
+      .proof-shots li:nth-child(n+6) { display: none; }
       .proof-shots p { font-size: 12px; padding: 3px 8px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -755,6 +760,8 @@
 
     /* ---------- How it works: roadmap + weekly rhythm with mockups ---------- */
     main > section.how-section { max-width: 1000px; }
+    /* the bridge arrow points straight down into the roadmap, so keep them close */
+    main > section.tried + section.how-section { margin-top: 28px; }
     .how-section > h2 { text-align: center; }
     .how-section > h2 { font-size: clamp(34px, 6.5vw, 50px); line-height: 1.02; margin-bottom: 22px; text-wrap: balance; }
     .how-sub {
@@ -905,6 +912,8 @@
     .roadmap span { padding: 0 16px; }
     .roadmap span:last-child { padding-bottom: 15px; }
     .roadmap li:not(.open) span { display: none; }
+    /* mobile: drop the "+ daily 1 min speaking practice" line */
+    @media (max-width: 859px) { .roadmap span.roadmap-plus { display: none; } }
     @media (prefers-reduced-motion: reduce) {
       .roadmap b::after { transition: none; }
     }
@@ -1270,6 +1279,17 @@
       .photo-stack img { transition: none; }
       .photo-stack img.front { animation: none; }
     }
+    /* mobile only: "if I can do it" line between the photo stack and the level-set copy */
+    .levelset-shout {
+      margin: 0 auto 36px;
+      color: var(--text);
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 1.25;
+      text-align: center;
+    }
+    @media (min-width: 860px) { .levelset-shout { display: none; } }
     /* mobile: inset the copy a little more, same as the hero text */
     @media (max-width: 859px) { .levelset-copy { padding-left: 14px; padding-right: 14px; } }
     @media (min-width: 860px) {
@@ -1345,28 +1365,13 @@
     .faq details a:hover { color: var(--accent-hover); }
 
     /* ---------- Level set ---------- */
-    .levelset-label {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
     .levelset h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 18px; }
-    .levelset h2 em {
-      font-family: "DM Serif Display", Georgia, serif;
-      font-style: italic;
-      font-weight: 400;
-      font-size: 1em;
-      text-transform: none;
-      letter-spacing: 0;
-      color: var(--accent);
-    }
+    /* "let's be fr," in red on its own line, "this isn't a magic fix." below it */
+    .levelset-fr { display: block; color: var(--accent); }
     .levelset-copy > p { font-size: 17px; color: var(--muted); }
     .levelset-copy > p + p { margin-top: 16px; }
     .levelset-copy > p em { color: var(--text); }
+    .levelset-copy > p b { color: var(--text); }
     .levelset-copy > p.levelset-lead { font-size: 18px; color: var(--text); }
     .levelset-copy > p + .levelset-list { margin-top: 8px; }
     .levelset-list { list-style: none; display: grid; gap: 10px; font-size: 18px; color: var(--text); }
@@ -1391,7 +1396,8 @@
       text-transform: none;
       letter-spacing: 0;
     }
-    .untaught h2 span { display: block; color: var(--accent); }
+    .untaught h2 em { color: var(--accent); }
+    .untaught h2 span { display: block; margin-top: 0.9em; color: var(--text); }
     .untaught-lead { max-width: 620px; margin: 0 auto; font-size: 18px; color: var(--muted); text-wrap: balance; }
 
 
@@ -1509,8 +1515,20 @@
 
     <!-- ================= UNTAUGHT ================= -->
     <section class="untaught" aria-labelledby="untaught-title">
-      <h2 id="untaught-title"><em>you got years of math class</em> <span>no one taught you how to talk</span></h2>
-      <p class="untaught-lead">but how you speak determines so much about your job, your relationships, &amp; how you feel about yourself</p>
+      <h2 id="untaught-title">
+        <em>In January,<br /> I was tired of not showing up the way I wanted to socially.</em>
+        <span>so I made a commitment to train my speech &amp; document it online</span>
+      </h2>
+      <ul class="proof-shots">
+        <li><img src="images/proof-random-topic.jpg" alt="Instagram video, 7.2M views: day 11 of 30 of talking for 1 minute on a random topic" width="600" height="1135" loading="lazy" /><p>7.2M views</p></li>
+        <li><img src="images/proof-shadowing-day-23.jpg" alt="Instagram video, 844K views: day 23 of 100 of shadowing to get better at speaking" width="600" height="1135" loading="lazy" /><p>844K views</p></li>
+        <li><img src="images/proof-learn-vocab.jpg" alt="Instagram video, 128K views: practicing new vocab in a 30-second timed speech" width="600" height="1135" loading="lazy" /><p>128K views</p></li>
+        <li><img src="images/proof-shadowing-day-1-vs-30.jpg" alt="Instagram video, 127K views: day 1 vs day 30 of shadowing to get better at speaking" width="600" height="1123" loading="lazy" /><p>127K views</p></li>
+        <li><img src="images/proof-ten-word-sentences.jpg" alt="Instagram video, 67K views: trying the 10-words-per-sentence exercise to stop rambling" width="600" height="1135" loading="lazy" /><p>67K views</p></li>
+        <li><img src="images/proof-pen-in-mouth.jpg" alt="Instagram video, 51.4K views: day 27 of 100 of reading with a pen in my mouth to improve articulation" width="600" height="1135" loading="lazy" /><p>51.4K views</p></li>
+        <li><img src="images/proof-reading-out-loud.jpg" alt="Instagram video, 39.2K views: day 27 of 100 of reading out loud to get better at speaking" width="600" height="1124" loading="lazy" /><p>39.2K views</p></li>
+        <li><img src="images/proof-tongue-twisters.jpg" alt="Instagram video, 34K views: the tongue twisters final boss" width="600" height="1130" loading="lazy" /><p>34K views</p></li>
+      </ul>
     </section>
 
     <!-- ================= JOURNEY ================= -->
@@ -1518,7 +1536,7 @@
       <div class="journey-before">
         <h2><span class="journey-lead"><span class="nowrap">I went from being</span></span> <span class="journey-big">scared to speak up in meetings</span></h2>
         <img src="images/journey-meeting.jpg" alt="Mona at her desk in headphones, on a work call" width="800" height="1418" loading="lazy" />
-        <p>Me on a work call <br class="m-br" />last year 😭</p>
+        <p>Scared to speak up in meetings 😭</p>
       </div>
       <div class="journey-arrow">
         <svg viewBox="0 0 140 90" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1544,7 +1562,7 @@
         <button type="button" aria-label="ABC News" aria-controls="journey-after" aria-current="false"></button>
         <button type="button" aria-label="stand-up set" aria-controls="journey-after" aria-current="false"></button>
       </div>
-      <p class="journey-deck-hint">swipe or tap the photo</p>
+      <p class="journey-deck-hint">swipe</p>
       <script>
         (function () {
           var deck = document.getElementById("journey-after");
@@ -1615,38 +1633,20 @@
       </script>
     </section>
 
-    <!-- ================= REWIRED ================= -->
-    <section class="rewired">
-      <h2><span class="rewired-line1">speech is just</span> <span class="rewired-line2">muscle memory</span></h2>
-      <p>I spent the past year <em>rewiring</em> how I talk &amp; I'm gonna teach you how to:</p>
-      <ul class="rewired-learn">
-        <li>speak with the right rhythm, tone and pitch</li>
-        <li>speak in public without losing people</li>
-        <li>overcome the fear of judgement</li>
-      </ul>
-      <div class="rewired-cta"><a class="cta" href="#join">get in <span aria-hidden="true">→</span></a></div>
-    </section>
-
     <!-- ================= TRIED EVERYTHING ================= -->
     <section class="tried">
-      <h2>I tried (a lot of) things</h2>
-      <p>I tried every speech exercise I could get my hands on. pens in my mouth, tongue twisters, shadowing, reading out loud</p>
-      <ul class="proof-shots">
-        <li><img src="images/proof-random-topic.jpg" alt="Instagram video, 7.2M views: day 11 of 30 of talking for 1 minute on a random topic" width="600" height="1135" loading="lazy" /><p>7.2M views</p></li>
-        <li><img src="images/proof-shadowing-day-23.jpg" alt="Instagram video, 844K views: day 23 of 100 of shadowing to get better at speaking" width="600" height="1135" loading="lazy" /><p>844K views</p></li>
-        <li><img src="images/proof-learn-vocab.jpg" alt="Instagram video, 128K views: practicing new vocab in a 30-second timed speech" width="600" height="1135" loading="lazy" /><p>128K views</p></li>
-        <li><img src="images/proof-shadowing-day-1-vs-30.jpg" alt="Instagram video, 127K views: day 1 vs day 30 of shadowing to get better at speaking" width="600" height="1123" loading="lazy" /><p>127K views</p></li>
-        <li><img src="images/proof-ten-word-sentences.jpg" alt="Instagram video, 67K views: trying the 10-words-per-sentence exercise to stop rambling" width="600" height="1135" loading="lazy" /><p>67K views</p></li>
-        <li><img src="images/proof-pen-in-mouth.jpg" alt="Instagram video, 51.4K views: day 27 of 100 of reading with a pen in my mouth to improve articulation" width="600" height="1135" loading="lazy" /><p>51.4K views</p></li>
-        <li><img src="images/proof-reading-out-loud.jpg" alt="Instagram video, 39.2K views: day 27 of 100 of reading out loud to get better at speaking" width="600" height="1124" loading="lazy" /><p>39.2K views</p></li>
-        <li><img src="images/proof-tongue-twisters.jpg" alt="Instagram video, 34K views: the tongue twisters final boss" width="600" height="1130" loading="lazy" /><p>34K views</p></li>
-      </ul>
       <div class="tried-bridge">
-        <svg class="tried-arrow" viewBox="0 0 100 160" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M38 6 C 78 26, 80 66, 50 72 C 24 77, 26 46, 50 52 C 80 60, 66 116, 48 148" />
-          <path d="M33 134 L48 150 L61 132" />
+        <p>I've condensed all the</p>
+        <ul class="tried-bridge-list">
+          <li>drills that worked</li>
+          <li>tips I've picked up</li>
+          <li>mindset shifts</li>
+        </ul>
+        <p>into a 6-week course</p>
+        <svg class="tried-bridge-arrow" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M112 14 C 84 6, 52 14, 56 38 C 59 56, 84 52, 78 36 C 72 20, 40 30, 26 56 C 18 72, 16 88, 20 108" />
+          <path d="M8 94 L20 110 L33 97" />
         </svg>
-        <p>I condensed the drills that worked into&nbsp;6&nbsp;weeks</p>
       </div>
     </section>
 
@@ -1657,8 +1657,8 @@
       <div class="roadmap-wrap">
       <svg class="roadmap-path" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="0 9" /></svg>
       <ol class="roadmap">
-        <li><b>pronunciation drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>practice warming up your mouth + tongue muscles before speaking for clearer sounds, and gain awareness of which syllables you tend to mumble</span></li>
-        <li><b>rhythm, pitch &amp; volume drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>add vocal variety by injecting rhythm into your speech, varying the speed at which you say things, and changing up your volume (whispering to pull people in vs projecting your voice in large rooms)</span></li>
+        <li><b>pronunciation drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>warm up your mouth muscles for clean sounds and gain awareness of which syllables you mumble</span></li>
+        <li><b>rhythm, pitch &amp; volume drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>add vocal variety with rhythm in your speech. vary your speed of speech and change your volume</span></li>
         <li><b>tone &amp; pausing drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>learn how to use your voice to elicit different emotions and how to pause effectively</span></li>
         <li><b>shadowing drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>copy a speaker you admire: their pace, their energy, the way they land a point. this was the first exercise I did on my page, and it’s quite helpful</span></li>
         <li><b>stage presence and audience engagement tips</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>we’ll work on how to look and feel confident when public speaking, get over the fear of being judged, and speak in a way that keeps the audience’s attention</span></li>
@@ -1697,11 +1697,13 @@
             path.setAttribute("d", d);
           }
 
+          // every card starts open; tap a title to collapse it
           items.forEach(function (li) {
             var title = li.querySelector("b");
             title.setAttribute("role", "button");
             title.setAttribute("tabindex", "0");
-            title.setAttribute("aria-expanded", "false");
+            title.setAttribute("aria-expanded", "true");
+            li.classList.add("open");
           });
 
           function toggle(li) {
@@ -1726,7 +1728,7 @@
         })();
       </script>
 
-      <h3 class="how-sub">what you get</h3>
+      <h3 class="how-sub">weekly schedule</h3>
 
       <div class="rhythm" id="rhythm">
         <article class="rhythm-card">
@@ -1743,9 +1745,9 @@
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every day, mon – friday</span>
+            <span class="rhythm-when">mon, tue, wed, thur, fri</span>
             <b>a tip from me</b>
-            <p>a prerecorded video from me based on what's been helpful for me this past year</p>
+            <p>a pre-recorded video from me - an exercise that's worked, a mindset shift, a public speaking trick</p>
           </div>
         </article>
 
@@ -1762,7 +1764,7 @@
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every day, mon – friday</span>
+            <span class="rhythm-when">mon, tue, wed, thur, fri</span>
             <b>a drill</b>
             <p>a quick drill that targets that week's skill</p>
           </div>
@@ -1780,7 +1782,7 @@
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every day, mon – saturday</span>
+            <span class="rhythm-when">mon, tue, wed, thur, fri, sat</span>
             <b>record 1 minute of <span class="m-hide">speaking</span><span class="m-only">speech</span></b>
             <p>speak for 1 min on a topic I'll send in the group chat</p>
           </div>
@@ -1808,7 +1810,7 @@
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every saturday</span>
+            <span class="rhythm-when">saturday</span>
             <b>post + get feedback</b>
             <p>post your 1 min speech and we'll give each other feedback</p>
           </div>
@@ -1830,9 +1832,9 @@
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every other sunday</span>
+            <span class="rhythm-when">sunday, 3 times</span>
             <b>live session</b>
-            <p>we will hop on a big zoom call to practice speaking with (basically) no stakes. there may be games and debates in store 👀</p>
+            <p>big zoom call to practice public speaking with (basically) no stakes w/ fun games + debates 👀</p>
           </div>
         </article>
       </div>
@@ -1857,11 +1859,10 @@
       <div class="story about-grid">
         <img class="about-photo" src="images/honest-mona.jpg" alt="Mona taking a selfie on a rooftop, shading her eyes from the sun" width="750" height="1000" loading="lazy" />
         <div class="story-text">
-          <p>In January, I made a New Year's resolution: <b>stop being scared of public speaking</b>. I was so tired of not showing up the way I wanted to - both at work and in day to day.</p>
-          <p>I joined toastmasters and blacked out on my first speech. <b>I gave myself a 30-day challenge</b>: speak for 1 min a day on a random topic.</p>
-          <p>the series went viral. I kept training and stumbled into a community of <b>300K+ people</b> who want to improve their articulation!</p>
-          <p>most people want to improve their speech, but very few people actually take action.</p>
-          <p class="about-shout">if I can do it,<br />you can do it too</p>
+          <p>This year, I made a New Year's resolution: <b>stop being scared of public speaking</b>. I was so tired of not showing up the way I wanted to - both at work and in day to day.</p>
+          <p>I started <b>giving speeches at Toastmasters every week</b> while trying (a billion) articulation drills at home.</p>
+          <p>10 months later, <b>I’ve truly improved so much as a speaker</b>. <b>My confidence has also skyrocketed</b>. I still get nervous to public speak but now I know I can deliver.</p>
+          <p class="about-shout">I’m going to teach you (almost) everything I know about speech</p>
         </div>
       </div>
     </section>
@@ -1898,11 +1899,11 @@
           });
         })();
       </script>
+      <p class="levelset-shout">if I can do it,<br />you can do it too</p>
       <div class="levelset-copy">
-      <span class="levelset-label">// let's level set</span>
-      <h2>this is not a <em>magic fix</em></h2>
-      <p>you've been unconsciously training the way you talk your whole life. 6 weeks won't undo all of it</p>
-      <p>what this bootcamp will do is kickstart your journey of intentionally training your communication skills. you’ll gain awareness of your speech patterns, and I promise you’ll hear a big difference at the end of it.</p>
+      <h2><span class="levelset-fr">but let's be fr,</span> this isn't a magic fix.</h2>
+      <p>you've been <b>unconsciously training the way you talk your whole life</b>. 6 weeks won't undo all of it</p>
+      <p>what this bootcamp will do is <b>kickstart your journey of intentionally training your communication skills</b>. you’ll gain awareness of your speech patterns, and I promise you’ll hear a big difference at the end of it.</p>
       <div class="levelset-cta"><a class="cta" href="#join">sign me up</a></div>
       </div>
     </section>
@@ -1952,7 +1953,9 @@
     <!-- ================= P.S. CARD ================= -->
     <section class="ps-section">
       <div class="ps">
-        <p>when I first started, I wasn’t even sure you could actually improve your speech. but this past year, I proved to myself (and hopefully to anyone who’s followed along) that speech is very much trainable. you just need to take action.</p>
+        <p>when I first started, I wasn’t even sure you could actually improve your speech.</p>
+        <p>I proved to myself (and hopefully to anyone who’s followed along) that speech is very much trainable.</p>
+        <p>it's time to get in on the action</p>
         <p class="sig">see you at the mic. – mona</p>
         <div class="ps-cta"><a class="cta" href="#join">sign me up</a></div>
       </div>

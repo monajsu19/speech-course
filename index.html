@@ -99,7 +99,8 @@
       font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 0.01em;
-      font-size: 20px;
+      /* two lines, each sized to fit the column without wrapping */
+      font-size: min(24px, calc((100vw - 60px) / 15));
       line-height: 1.1;
       text-align: center;
     }
@@ -213,7 +214,7 @@
       .hero-grid .hero-points { display: grid; margin-left: 0; }
       .hero-grid .signup { margin-left: 0; }
       .hero-figure { order: 2; max-width: none; margin: 44px 0 0; }
-      .hero-note { font-size: 22px; }
+      .hero-note { font-size: min(25px, calc(clamp(280px, 34vw, 380px) / 13.2)); }
       .hero-journey { left: -44px; right: -12px; top: -34px; }
       .hj-card { font-size: 17px; flex-basis: 160px; }
       .hj-side { right: -12px; width: 160px; top: 64px; gap: 24px; }
@@ -498,7 +499,7 @@
         flex-direction: column;
         width: 52%;
         max-width: 220px;
-        margin: 40px auto 0 3%;
+        margin: 96px auto 0 3%;
         padding: 10px 10px 14px;
         background: #fff;
         border-radius: 8px;
@@ -1437,7 +1438,7 @@
           <span class="hj-card hj-step hj-standup">delivering a 5&nbsp;min standup</span>
         </div>
         </div>
-        <figcaption class="hero-note">I'm going to teach you how to become <span class="nowrap">dangerously articulate</span></figcaption>
+        <figcaption class="hero-note"><span class="nowrap">I'm going to teach you how to</span><br /><span class="nowrap">become dangerously articulate</span></figcaption>
       </figure>
       <div class="hero-copy">
       <h1>6-week <span class="nowrap">hyper-intensive</span> <span class="nowrap">articulation bootcamp</span></h1>
@@ -1449,7 +1450,7 @@
         <li>weekly speech feedback from a cohort doing the reps with you</li>
       </ul>
 
-      <p class="hero-note hero-note-m">I'm going to teach you how to become <span class="nowrap">dangerously articulate</span></p>
+      <p class="hero-note hero-note-m"><span class="nowrap">I'm going to teach you how to</span><br /><span class="nowrap">become dangerously articulate</span></p>
 
       <div class="signup">
         <p class="signup-label">hop on the waitlist</p>

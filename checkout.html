@@ -92,6 +92,8 @@
       border-bottom: 1px solid rgba(102, 155, 188, 0.4);
     }
     .summary li:last-child { border-bottom: 0; }
+    .summary li b { display: block; font-size: 15px; font-weight: 600; }
+    .summary li p { margin-top: 2px; font-size: 14px; opacity: 0.85; }
     .summary-total {
       display: flex;
       justify-content: space-between;
@@ -223,15 +225,16 @@
         <h2 id="summary-title">articulation bootcamp: baby steps</h2>
         <span class="summary-label">what's included</span>
         <ul>
-          <li>daily 1-minute speaking practice on a new topic each day</li>
-          <li>30 daily drills that rewire how you talk: pronunciation, rhythm, pitch, tone, pausing, shadowing, stage presence, storytelling</li>
-          <li>30 video tips from me, one every weekday, covering what to notice and how to fix it</li>
-          <li>3 live zooms (every other sunday) to practice public speaking with games, drills and debates</li>
-          <li>6 rounds of real feedback on your saturday recording from the cohort</li>
-          <li>a cohort doing the reps with you, with zero judgement</li>
+          <li><b>36 speeches on camera</b><p>do the reps of speaking for 1 min on a topic 6x/week</p></li>
+          <li><b>30 articulation drills + tips from me</b><p>every exercise that's worked for me this past year</p></li>
+          <li><b>6 rounds of feedback from the cohort</b><p>get feedback from each other on what you’ve done well + what to improve</p></li>
+          <li><b>3 live zooms</b><p>practice public speaking with fun games + debates w/ no stakes</p></li>
+          <li><b>10-minute daily speaking routine</b><p>the routine that I (try to) do every day so you can continue to practice after 6 weeks</p></li>
+          <li><b>correct your speech habits</b><p>gain awareness of your filler words, mumbles, pace + learn how to correct them</p></li>
+          <li><b>hear a difference in your speech</b><p>I promise you'll hear a difference in how you speak from day 1 to day 42</p></li>
         </ul>
         <div class="summary-total"><span>total</span><strong>$297</strong></div>
-        <p class="summary-split">or 2 monthly payments of $148.50</p>
+        <p class="summary-split">or 2 monthly payments of $165</p>
       </aside>
 
       <form id="checkout-form" novalidate>
@@ -316,10 +319,10 @@
             </label>
             <label class="plan">
               <input type="radio" name="plan" value="split" />
-              <span><b>2 payments &middot; $148.50</b><span>$148.50 today, $148.50 in 1 month</span></span>
+              <span><b>2 payments &middot; $165</b><span>$165 today, $165 in 1 month</span></span>
             </label>
           </div>
-          <p class="plan-terms" id="plan-terms" hidden>By choosing 2 payments, you authorize JINY LLC to charge your payment method $148.50 today and $148.50 one month from today. There are no other charges.</p>
+          <p class="plan-terms" id="plan-terms" hidden>By choosing 2 payments, you authorize JINY LLC to charge your payment method $165 today and $165 one month from today. There are no other charges.</p>
           <div id="payment-element"><p class="payment-loading">Loading secure payment form…</p></div>
         </fieldset>
 
@@ -390,6 +393,15 @@
           if (!pay.disabled) pay.textContent = payLabel();
         });
       });
+
+      // landing page pricing cards link here with ?plan=full or ?plan=split
+      var chosen = Array.prototype.find.call(form.querySelectorAll("input[name=plan]"), function (radio) {
+        return radio.value === new URLSearchParams(location.search).get("plan");
+      });
+      if (chosen && !chosen.checked) {
+        chosen.checked = true;
+        chosen.dispatchEvent(new Event("change"));
+      }
 
       if (new URLSearchParams(location.search).get("canceled")) {
         showNotice("That payment didn't go through, and you weren't charged. Please try again or use a different payment method.");

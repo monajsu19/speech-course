@@ -4,7 +4,7 @@
 //   GET   returns the publishable key and plan amounts, so test/live keys are switched in one place
 //   POST  saves the buyer as a Stripe customer, then either
 //           plan "full":  a $297 PaymentIntent
-//           plan "split": a monthly $148.50 subscription that cancels itself after the 2nd payment
+//           plan "split": a monthly $165 subscription that cancels itself after the 2nd payment
 //
 // Secrets (Supabase dashboard → Edge Functions → Secrets):
 //   STRIPE_SECRET_KEY       required. rk_/sk_test_... while testing, rk_/sk_live_... for real sales
@@ -18,7 +18,7 @@ const PRODUCT_ID = "articulation-bootcamp-baby-steps";
 const PRODUCT_NAME = "Articulation Bootcamp: Baby Steps";
 const AMOUNT_CENTS = 29700;
 const SPLIT_COUNT = 2;
-const SPLIT_CENTS = AMOUNT_CENTS / SPLIT_COUNT; // 14850
+const SPLIT_CENTS = 16500; // $165 each, $330 total: the split plan costs more than paying in full
 
 const FIELDS = ["name", "email", "line1", "line2", "city", "state", "postal_code", "country"] as const;
 const REQUIRED = FIELDS.filter((k) => k !== "line2");

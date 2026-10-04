@@ -14,7 +14,7 @@
   <meta name="twitter:description" content="A hyper-intensive 6-week articulation bootcamp. Train your speaking muscle memory, sound more confident and engaging, and stop being scared to speak up. Join the waitlist." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Inter:ital,wght@0,400;0,500;0,600;1,700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #fdf0d5;          /* papaya whip */
@@ -734,10 +734,10 @@
     }
     .story p.about-shout {
       margin: 26px 0 10px;
-      font-family: "Anton", Impact, "Arial Narrow", sans-serif;
-      font-size: clamp(34px, 6vw, 50px);
-      line-height: 1.05;
-      text-transform: uppercase;
+      font-size: clamp(22px, 3.4vw, 28px);
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.25;
       color: var(--text);
     }
     .about-photo {
@@ -1229,6 +1229,44 @@
     @media (max-width: 520px) { main > section.outcomes-section { margin-top: 104px; } }
     .outcomes-section > h2 { text-align: center; line-height: 1.02; margin-bottom: 22px; text-wrap: balance; }
     .outcomes-cta { margin-top: 32px; text-align: center; }
+
+    /* ---------- Before / after videos ---------- */
+    main > section.difference { max-width: 760px; }
+    .difference > h2 { text-align: center; line-height: 1.02; margin-bottom: 28px; text-wrap: balance; }
+    .compare {
+      display: grid;
+      grid-template-columns: minmax(0, 240px) auto minmax(0, 240px);
+      justify-content: center;
+      align-items: start;
+      gap: 12px;
+    }
+    .compare figure { margin: 0; }
+    /* day 30 sits a bit lower than day 1, with the arrow leading down to it */
+    .compare figure:last-child { margin-top: 56px; }
+    .compare-arrow { align-self: center; width: clamp(48px, 11vw, 96px); color: var(--accent); }
+    .compare-arrow svg { display: block; width: 100%; }
+    .compare video {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      aspect-ratio: 9 / 16;
+      object-fit: cover;
+      background: var(--text);
+      border-radius: 14px;
+      box-shadow: 0 14px 30px rgba(0, 48, 73, 0.25);
+    }
+    .compare figcaption {
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--muted);
+    }
+    .compare figure:last-child figcaption { color: var(--accent); }
+    @media (max-width: 520px) { .compare { gap: 6px; } .compare figure:last-child { margin-top: 36px; } }
 
     footer {
       margin-top: 48px;
@@ -1848,9 +1886,11 @@
       <ul class="outcomes">
         <li><div><b>36 speeches on camera</b><p>you'll do the reps of speaking for 1 min on a topic. everyone in the cohort does the same topic, so you have extra accountability to show up</p></div></li>
         <li><div><b>30 articulation drills + tips from me</b><p>I'll share every exercise that's worked for me this past year, to help you add vocal variety, avoid going blank, and overcome your fear of public speaking</p></div></li>
+        <li><div><b>6 rounds of feedback from the cohort</b><p>get feedback from each other on what you’ve done well + what to improve</p></div></li>
+        <li><div><b>3 live zooms</b><p>practice public speaking with fun games + debates w/ no stakes</p></div></li>
         <li><div><b>10-minute daily speaking routine</b><p>I'll share what I (try to) do every day to help train my speech muscles, so you can keep practicing long after the bootcamp ends</p></div></li>
         <li><div><b>correct your speech habits</b><p>gain awareness of your filler words, the words you tend to mumble, and when you speak too fast or too slow</p></div></li>
-        <li><div><b>hear the difference from week 1 to week 6</b><p>I promise you'll notice a difference in how you speak! you've (prob) never intentionally trained your speech before, so you'll pick up on lots of things you didn't even realize</p></div></li>
+        <li><div><b>hear a difference in your speech</b><p>I promise you'll notice a difference in how you speak! you've (prob) never intentionally trained your speech before, so you'll pick up on lots of things you didn't even realize</p></div></li>
       </ul>
       <div class="outcomes-cta"><a class="cta" href="#join">sign me up</a></div>
     </section>
@@ -1862,10 +1902,32 @@
         <img class="about-photo" src="images/honest-mona.jpg" alt="Mona taking a selfie on a rooftop, shading her eyes from the sun" width="750" height="1000" loading="lazy" />
         <div class="story-text">
           <p>This year, I made a New Year's resolution: <b>stop being scared of public speaking</b>. I was so tired of not showing up the way I wanted to - both at work and in day to day.</p>
-          <p>I started <b>giving speeches at Toastmasters every week</b> while trying (a billion) articulation drills at home.</p>
-          <p>10 months later, <b>I’ve truly improved so much as a speaker</b>. <b>My confidence has also skyrocketed</b>. I still get nervous to public speak but now I know I can deliver.</p>
+          <p>I started <b>giving speeches at Toastmasters every week</b> while trying (a billion) articulation drills at home. I started posting my progress online and have somehow built a community of <b>300k+ people who all want to improve their speech</b>!</p>
+          <p>10 months later, <b>I’ve truly improved so much as a speaker</b>. <b>My confidence has also skyrocketed</b>.</p>
+          <p>I’ve condensed everything I’ve learned into this bootcamp - all the best drills and tips. This is your chance to hold yourself accountable and commit to training your speech!</p>
           <p class="about-shout">I’m going to teach you (almost) everything I know about speech</p>
         </div>
+      </div>
+    </section>
+
+    <!-- ================= DAY 1 VS DAY 30 ================= -->
+    <section class="difference">
+      <h2>see the difference after 30 days of practice</h2>
+      <div class="compare">
+        <figure>
+          <video src="videos/day-1-of-30.mp4" poster="images/day-1-of-30-poster.jpg" controls playsinline preload="none" width="720" height="1280"></video>
+          <figcaption>day 1</figcaption>
+        </figure>
+        <div class="compare-arrow">
+          <svg viewBox="0 0 140 90" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 62 C 26 18, 70 10, 74 40 C 77 64, 46 66, 50 46 C 55 22, 98 22, 130 44" />
+            <path d="M114 30 L131 45 L110 52" />
+          </svg>
+        </div>
+        <figure>
+          <video src="videos/day-30-of-30.mp4" poster="images/day-30-of-30-poster.jpg" controls playsinline preload="none" width="720" height="1280"></video>
+          <figcaption>day 30</figcaption>
+        </figure>
       </div>
     </section>
 

@@ -3,11 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Articulation Bootcamp: Baby Steps</title>
+  <title>6-week Articulation Bootcamp</title>
   <meta name="description" content="A hyper-intensive 6-week articulation bootcamp. Train your speaking muscle memory, sound more confident and engaging, and stop being scared to speak up. Join the waitlist." />
+  <!-- link previews (iMessage, Slack, social) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="6-week Articulation Bootcamp" />
+  <meta property="og:description" content="A hyper-intensive 6-week articulation bootcamp. Train your speaking muscle memory, sound more confident and engaging, and stop being scared to speak up. Join the waitlist." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6-week Articulation Bootcamp" />
+  <meta name="twitter:description" content="A hyper-intensive 6-week articulation bootcamp. Train your speaking muscle memory, sound more confident and engaging, and stop being scared to speak up. Join the waitlist." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #fdf0d5;          /* papaya whip */
@@ -88,15 +95,19 @@
     .hero-note {
       margin-top: 14px;
       color: var(--text);
-      font-family: "DM Serif Display", Georgia, serif;
-      font-style: italic;
-      font-size: 20px;
-      line-height: 1.25;
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      /* two lines, each sized to fit the column without wrapping */
+      font-size: min(24px, calc((100vw - 60px) / 15));
+      line-height: 1.1;
       text-align: center;
     }
 
     .hero-figure { margin-top: 44px; }
-    /* mobile: heading and points, then signup form, then photo */
+    .hero-note-m { display: none; }
+    /* mobile: photo, then heading and points, then the "dangerously articulate" line, then signup form */
     @media (max-width: 859px) {
       main { padding-top: 24px; }
       .hero-grid { display: flex; flex-direction: column; }
@@ -107,9 +118,12 @@
       .hero-figure { padding-left: 18px; padding-right: 18px; }
       .hero-figure .hero-journey { left: 8px; right: 8px; }
       .hero-figure .hj-side { right: -10px; }
+      .hero-pill { display: none; }
+      .hero-figure { order: -1; width: 100%; margin-top: 40px; margin-bottom: 32px; }
+      .hero-figure .hero-note { display: none; }
+      .hero-note-m { display: block; order: 1; margin: 4px 14px 20px; }
       .hero-grid .signup { order: 2; width: 100%; }
       .signup-label { text-align: center; }
-      .hero-figure { order: 3; width: 100%; margin-top: 96px; margin-bottom: 28px; }
     }
     .hero-journey {
       position: absolute;
@@ -200,7 +214,7 @@
       .hero-grid .hero-points { display: grid; margin-left: 0; }
       .hero-grid .signup { margin-left: 0; }
       .hero-figure { order: 2; max-width: none; margin: 44px 0 0; }
-      .hero-note { font-size: 22px; }
+      .hero-note { font-size: min(25px, calc(clamp(280px, 34vw, 380px) / 13.2)); }
       .hero-journey { left: -44px; right: -12px; top: -34px; }
       .hj-card { font-size: 17px; flex-basis: 160px; }
       .hj-side { right: -12px; width: 160px; top: 64px; gap: 24px; }
@@ -226,13 +240,20 @@
       text-align: left;
       font-size: 18px;
     }
-    .hero-points li {
+    /* square bullets: the hero list sets the style for every bulleted list on the page */
+    .hero-points li,
+    .rewired-learn li,
+    .levelset-list li,
+    .faq details ul li {
       display: grid;
       grid-template-columns: 10px 1fr;
       gap: 12px;
       align-items: baseline;
     }
-    .hero-points li::before {
+    .hero-points li::before,
+    .rewired-learn li::before,
+    .levelset-list li::before,
+    .faq details ul li::before {
       content: "";
       width: 10px;
       height: 10px;
@@ -336,9 +357,9 @@
     /* ---------- Proof strip ---------- */
     .proof {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-      max-width: 800px;
+      max-width: 640px;
       margin: 48px auto 0;
       text-align: center;
     }
@@ -376,7 +397,6 @@
     }
     .proof.animate div:nth-child(2), .proof.animate div:nth-child(2)::before { transition-delay: 0.12s; }
     .proof.animate div:nth-child(3), .proof.animate div:nth-child(3)::before { transition-delay: 0.24s; }
-    .proof.animate div:nth-child(4), .proof.animate div:nth-child(4)::before { transition-delay: 0.36s; }
     .proof.animate.in div { opacity: 1; transform: none; }
     .proof.animate.in div::before { transform: scaleX(1); }
 
@@ -391,11 +411,27 @@
     .rewired h2 { font-size: clamp(34px, 6.5vw, 50px); line-height: 1.02; margin-bottom: 22px; }
     .rewired h2 span { display: block; }
     .rewired h2, .rewired p { text-wrap: balance; }
-    .rewired-line1 { color: var(--text); }
+    /* same serif italic as the untaught headline */
+    .rewired-line1 {
+      color: var(--text);
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.05;
+      margin-bottom: 0.2em;
+      text-transform: none;
+      letter-spacing: 0;
+    }
     .rewired-line2 { color: var(--accent); }
-    .rewired p { font-size: clamp(18px, 2.6vw, 24px); font-weight: 600; }
+    .rewired p {
+      font-family: "DM Serif Display", Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(20px, 2.8vw, 26px);
+      line-height: 1.25;
+    }
     .rewired p em {
       font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
       font-weight: 400;
       color: var(--accent);
     }
@@ -407,40 +443,10 @@
       text-align: left;
       display: grid;
       gap: 10px;
-      font-size: clamp(14px, 1.8vw, 17px);
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      font-size: 18px;
       color: var(--text);
-      opacity: 0.85;
     }
-    /* Hanging indent: wrapped lines line up with the text, not the dot (dot 7px + gap 12px) */
-    .rewired-learn li { padding-left: 19px; text-indent: -19px; }
-    .rewired-learn li::before {
-      content: "";
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      margin-right: 12px;
-      vertical-align: 0.15em;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-    .rewired-cta {
-      display: inline-block;
-      margin-top: 36px;
-      padding: 18px 36px;
-      font-size: 17px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--bg);
-      background: var(--accent);
-      border-radius: 10px;
-      transition: background 0.15s;
-    }
-    .rewired-cta:hover { background: var(--accent-hover); }
+    .rewired-cta { margin-top: 36px; }
 
     /* ---------- Journey: scared in meetings -> on stage ---------- */
     main > section.journey { max-width: 1000px; }
@@ -466,25 +472,125 @@
       margin-bottom: 8px;
     }
     .journey-big { display: block; font-size: clamp(44px, 9vw, 64px); line-height: 1; }
-    .journey-arrow {
-      display: block;
-      width: 96px;
-      margin: 20px auto;
-      color: var(--accent);
-      transform: rotate(90deg);
+    /* desktop arrow between "before" and "after", with a handwritten note above it (hidden on mobile, which has its own) */
+    .journey-arrow { display: block; color: var(--accent); text-align: center; }
+    .journey-arrow svg { display: block; width: 100%; }
+    .journey-arrow p {
+      margin-top: 8px;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-style: italic;
+      font-size: 20px;
+      line-height: 1.1;
+      transform: rotate(-4deg);
     }
     .journey-after { list-style: none; display: grid; gap: 22px; }
     .journey-after img { aspect-ratio: 16 / 9; }
     .journey-before p { margin-top: 8px; font-weight: 600; text-align: center; }
     .journey-before h2 { text-align: center; }
     .m-br { display: none; }
+    .journey-dots, .journey-deck-hint, .journey-arrow-m { display: none; }
+    /* mobile: the three "after" photos become a stack of polaroids. swipe or tap to flick the top one to the back */
     @media (max-width: 859px) {
-      .journey-before img { max-width: 300px; margin: 0 auto; }
-      .journey-after li { width: 100%; max-width: 340px; margin: 0 auto; }
-      .journey-after img { aspect-ratio: 5 / 4; }
-      .journey-after li:nth-child(2) img { aspect-ratio: 16 / 9; } /* ABC News: keep the full banner visible */
+      /* small "before" photo on the left, arrow curving down-right to the stack */
+      /* "before" polaroid on the left, styled like the stack: photo, then "scared to speak up in meetings" as the caption */
+      .journey-before {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 52%;
+        max-width: 220px;
+        margin: 96px auto 0 3%;
+        padding: 10px 10px 14px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 10px 24px rgba(0, 48, 73, 0.16), 0 1px 3px rgba(0, 48, 73, 0.12);
+        transform: rotate(2deg);
+      }
+      .journey-before img { width: 100%; margin: 0; border-radius: 4px; }
+      .journey-before h2 { order: 2; margin: 10px 0 0; text-align: center; }
+      .journey-before .journey-big { font-size: 20px; line-height: 1.1; }
+      .journey-before > p { display: none; }
+      /* "I went from being" floats just above the polaroid, kept level */
+      .journey-before .journey-lead {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        margin: 0;
+        white-space: nowrap;
+        font-size: clamp(22px, 6.4vw, 26px);
+        transform: rotate(-2deg);
+      }
+      .journey-arrow { display: none; }
+      .journey-arrow-m {
+        display: block;
+        width: 40%;
+        max-width: 170px;
+        margin: -48% 6% 0 auto;
+        color: var(--accent);
+        text-align: center;
+      }
+      .journey-arrow-m p {
+        font-family: "DM Serif Display", Georgia, serif;
+        font-style: italic;
+        font-size: clamp(17px, 4.8vw, 20px);
+        line-height: 1.1;
+        transform: rotate(-4deg);
+      }
+      .journey-arrow-m svg { display: block; width: 82%; margin: 2px 0 0 4%; transform: scaleX(-1); }
+      .journey-after { gap: 0; width: 70%; max-width: 280px; margin: 24px 4% 0 auto; }
+      .journey-after li {
+        grid-area: 1 / 1;
+        padding: 10px 10px 14px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 10px 24px rgba(0, 48, 73, 0.16), 0 1px 3px rgba(0, 48, 73, 0.12);
+        transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
+        touch-action: pan-y;
+        user-select: none;
+        -webkit-user-select: none;
+        cursor: grab;
+      }
+      .journey-after li[data-pos="0"] { z-index: 3; transform: rotate(-2deg); }
+      .journey-after li[data-pos="1"] { z-index: 2; transform: translate(12px, 6px) rotate(4deg); }
+      .journey-after li[data-pos="2"] { z-index: 1; transform: translate(-10px, 12px) rotate(-6deg); }
+      .journey-after li.dragging { transition: none; cursor: grabbing; }
+      .journey-after img { aspect-ratio: 5 / 4; border-radius: 4px; pointer-events: none; -webkit-user-drag: none; }
+      .journey-after p { font-size: 20px; }
+      /* ABC News: show the full banner, letterboxed on a blurred copy of itself */
+      .journey-abc { position: relative; overflow: hidden; border-radius: 4px; aspect-ratio: 5 / 4; }
+      .journey-abc::before {
+        content: "";
+        position: absolute;
+        inset: -24px;
+        background: url("images/journey-abc-news.jpg") center / cover;
+        filter: blur(18px) saturate(1.1);
+      }
+      .journey-after .journey-abc img { position: relative; height: 100%; aspect-ratio: auto; object-fit: contain; border-radius: 0; }
+      .journey-dots { display: flex; justify-content: center; gap: 4px; width: 70%; max-width: 280px; margin: 22px 4% 0 auto; }
+      .journey-dots button {
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        border: 0;
+        background: none;
+        cursor: pointer;
+      }
+      .journey-dots button::before {
+        content: "";
+        display: block;
+        width: 8px;
+        height: 8px;
+        margin: auto;
+        border-radius: 50%;
+        background: rgba(102, 155, 188, 0.5);
+        transition: background 0.2s, transform 0.2s;
+      }
+      .journey-dots button[aria-current="true"]::before { background: var(--accent); transform: scale(1.25); }
+      .journey-dots button:focus-visible { outline: 3px solid var(--focus); outline-offset: 0; border-radius: 50%; }
+      .journey-deck-hint { display: block; width: 70%; max-width: 280px; margin: 2px 4% 0 auto; text-align: center; font-size: 13px; color: var(--muted); }
       .m-br { display: inline; }
     }
+    .journey-before p,
     .journey-after p {
       margin-top: 10px;
       text-align: center;
@@ -503,6 +609,8 @@
         align-items: center;
       }
       .journey-arrow { width: 130px; margin: 0; transform: none; }
+      /* desktop: the photo caption already says it, so drop the big repeat */
+      .journey-before .journey-big { display: none; }
     }
 
     /* ---------- Tried everything ---------- */
@@ -510,24 +618,23 @@
     .tried h2, .tried > p { max-width: 640px; margin-left: auto; margin-right: auto; }
     .tried h2 { max-width: 1000px; text-align: center; font-size: clamp(34px, 6.5vw, 50px); line-height: 1.02; margin-bottom: 22px; text-wrap: balance; }
     .tried > p { font-size: 17px; margin-bottom: 20px; text-align: center; }
+    /* same type as "the roadmap" heading, with an arrow pointing down into it */
     .tried-bridge {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 14px;
-      margin: 20px 0 -48px;
-      color: var(--accent);
-    }
-    .tried-arrow { flex: none; width: 70px; height: 112px; }
-    .tried-bridge p {
-      max-width: 300px;
+      margin: 40px auto 0;
+      max-width: 640px;
+      text-align: center;
+      font-family: "Anton", Impact, sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      font-size: clamp(34px, 6.5vw, 50px);
+      line-height: 1.05;
+      color: var(--text);
       text-wrap: balance;
-      font-family: "DM Serif Display", Georgia, serif;
-      font-style: italic;
-      font-size: clamp(20px, 3vw, 26px);
-      line-height: 1.15;
-      transform: rotate(-3deg);
     }
+    .tried-bridge-list { display: inline-grid; gap: 6px; margin: 10px auto; list-style: none; text-align: left; color: var(--accent); }
+    .tried-bridge-list li::before { content: "- "; }
+    .tried-bridge-arrow { display: block; width: 80px; height: 80px; margin: 18px auto 0; color: var(--accent); transform: scaleX(-1); }
     /* Fanned, overlapping stack: first card (most views) sits on top */
     .proof-shots {
       --overlap: 64px;
@@ -582,8 +689,9 @@
       border-radius: 999px;
     }
     @media (max-width: 720px) {
-      .proof-shots { --overlap: 36px; --per-row: 4; padding-left: 14px; padding-right: 14px; }
-      .proof-shots li:nth-child(5) { margin-left: 0; }
+      /* mobile: just the top five, in a single row */
+      .proof-shots { --overlap: 30px; --per-row: 5; flex-wrap: nowrap; padding-left: 14px; padding-right: 14px; }
+      .proof-shots li:nth-child(n+6) { display: none; }
       .proof-shots p { font-size: 12px; padding: 3px 8px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -611,10 +719,9 @@
     .outcomes p { color: var(--muted); font-size: 15px; }
 
     /* ---------- Story ---------- */
-    main > section.about, main > section.honest { max-width: 820px; }
+    main > section.about { max-width: 820px; }
     .story p { margin-bottom: 14px; font-size: 16px; }
     .story p:last-child { margin-bottom: 0; }
-    .story .sign { font-weight: 600; }
     .story a { color: var(--accent); text-decoration: none; }
     .story a:hover { color: var(--accent-hover); }
     .about-hi {
@@ -625,6 +732,14 @@
       line-height: 1.05;
       color: var(--text);
     }
+    .story p.about-shout {
+      margin: 26px 0 10px;
+      font-family: "Anton", Impact, "Arial Narrow", sans-serif;
+      font-size: clamp(34px, 6vw, 50px);
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: var(--text);
+    }
     .about-photo {
       display: block;
       width: 100%;
@@ -633,14 +748,21 @@
       margin: 0 auto 24px;
       border-radius: 12px;
     }
+    /* mobile: inset the copy a little more, same as the hero text */
+    @media (max-width: 859px) { .about-hi, .story-text { padding-left: 14px; padding-right: 14px; } }
+    @media (max-width: 859px) { .story p.about-shout { text-align: center; } }
     @media (min-width: 860px) {
       main > section.about { max-width: 1000px; }
       .about-grid { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 36px; align-items: start; }
+      /* line the greeting up with the text column (photo 280px + gap 36px) */
+      .about-hi { padding-left: 316px; }
       .about-photo { max-width: none; margin: 0; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 32px); }
     }
 
     /* ---------- How it works: roadmap + weekly rhythm with mockups ---------- */
     main > section.how-section { max-width: 1000px; }
+    /* the bridge arrow points straight down into the roadmap, so keep them close */
+    main > section.tried + section.how-section { margin-top: 28px; }
     .how-section > h2 { text-align: center; }
     .how-section > h2 { font-size: clamp(34px, 6.5vw, 50px); line-height: 1.02; margin-bottom: 22px; text-wrap: balance; }
     .how-sub {
@@ -688,7 +810,6 @@
       background: var(--text);
       border-radius: 999px;
     }
-    .roadmap li:nth-child(n+5)::before { background: var(--accent); }
     .roadmap b {
       display: block;
       margin-bottom: 6px;
@@ -701,80 +822,109 @@
     .roadmap span { display: block; font-size: 14px; color: var(--muted); }
     .roadmap span.roadmap-plus { margin-bottom: 6px; font-weight: 600; color: var(--accent); }
     .roadmap-note { margin-top: 14px; text-align: center; font-size: 14px; color: var(--muted); }
-    @media (max-width: 760px) { .roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 480px) { .roadmap { grid-template-columns: 1fr; } }
-
-    /* Week strip */
-    .weekstrip {
-      list-style: none;
+    /* weeks sit on a dotted path that winds left, right, left... tap a week to open its description */
+    .roadmap-wrap { position: relative; max-width: 560px; margin: 0 auto; }
+    .roadmap { position: relative; z-index: 1; grid-template-columns: 1fr; gap: 40px; }
+    .roadmap-path {
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+      color: var(--steel);
+    }
+    .roadmap li {
       display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      gap: 6px;
-      max-width: 720px;
-      margin: 0 auto 24px;
+      grid-template-columns: 52px minmax(0, 1fr);
+      column-gap: 12px;
+      align-items: start;
+      padding: 0;
+      background: none;
+      border: 0;
+      border-radius: 0;
+      isolation: isolate;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .roadmap li:nth-child(even) { grid-template-columns: minmax(0, 1fr) 52px; }
+    /* the node on the path */
+    .roadmap li::before {
+      grid-column: 1;
+      grid-row: 1 / span 3;
+      display: grid;
+      place-content: center;
+      width: 52px;
+      height: 52px;
+      margin: 0;
+      padding: 0;
+      border-radius: 50%;
+      border: 4px solid var(--bg);
+      content: "week\A" counter(wk);
+      white-space: pre;
       text-align: center;
+      font-size: 11px;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
     }
-    .weekstrip li { display: flex; }
-    .weekstrip button {
-      flex: 1;
-      padding: 10px 4px;
-      border-radius: 10px;
+    .roadmap li:nth-child(even)::before { grid-column: 2; }
+    /* the card behind the title and description */
+    .roadmap li::after {
+      content: "";
+      grid-column: 2;
+      grid-row: 1 / span 3;
+      align-self: stretch;
+      z-index: -1;
       background: var(--surface);
-      border: 1px solid rgba(102, 155, 188, 0.5);
-      font: inherit;
-      font-size: 12px;
-      line-height: 1.25;
-      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: border-color 0.15s;
     }
-    .weekstrip button { cursor: pointer; transition: background 0.15s, border-color 0.15s, transform 0.15s; }
-    .weekstrip button:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .weekstrip button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-    .weekstrip b { display: block; font-size: 13px; color: var(--text); text-transform: uppercase; letter-spacing: 0.06em; }
-    .weekstrip button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-    .weekstrip button[aria-pressed="true"] b { color: var(--bg); }
-    /* nudge: unselected days pulse in a left-to-right wave until the first tap */
-    .weekstrip.nudge button[aria-pressed="false"] { animation: day-pulse 2.4s ease-in-out infinite; }
-    .weekstrip.nudge li:nth-child(2) button { animation-delay: 0.12s; }
-    .weekstrip.nudge li:nth-child(3) button { animation-delay: 0.24s; }
-    .weekstrip.nudge li:nth-child(4) button { animation-delay: 0.36s; }
-    .weekstrip.nudge li:nth-child(5) button { animation-delay: 0.48s; }
-    .weekstrip.nudge li:nth-child(6) button { animation-delay: 0.6s; }
-    .weekstrip.nudge li:nth-child(7) button { animation-delay: 0.72s; }
-    @keyframes day-pulse {
-      0%, 60%, 100% { border-color: rgba(102, 155, 188, 0.5); box-shadow: 0 0 0 0 rgba(193, 18, 31, 0); }
-      25% { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.18); }
+    .roadmap li:nth-child(even)::after,
+    .roadmap li:nth-child(even) > * { grid-column: 1; }
+    .roadmap li > * { grid-column: 2; }
+    /* explicit rows: the card pseudo-element fills column 2, so auto-placement would push text below it */
+    .roadmap b { grid-row: 1; }
+    .roadmap span.roadmap-plus { grid-row: 2; }
+    .roadmap span:last-child { grid-row: 3; }
+    .roadmap li.open::after { border-color: var(--accent); }
+    .roadmap b {
+      position: relative;
+      margin: 0;
+      padding: 15px 42px 15px 16px;
+      font-size: 19px;
+      border-radius: 14px;
     }
-    .weekstrip-hint { margin: -12px 0 20px; text-align: center; font-size: 13px; color: var(--muted); }
-    @media (max-width: 520px) {
-      .weekstrip { gap: 4px; }
-      .weekstrip button { padding: 8px 2px; font-size: 10px; }
-      .weekstrip b { font-size: 11px; letter-spacing: 0; }
+    .roadmap b:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+    .roadmap b::after {
+      content: "+";
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--accent);
+      transition: transform 0.2s;
     }
-    /* mobile: mon–thu on the first row, fri–sun centered on the second */
-    @media (max-width: 720px) {
-      .weekstrip { grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; }
-      .weekstrip li { grid-column: span 2; }
-      .weekstrip li:nth-child(5) { grid-column: 2 / span 2; }
-      .weekstrip button { padding: 9px 4px; font-size: 12px; }
-      .weekstrip b { font-size: 13px; letter-spacing: 0.06em; }
+    .roadmap li.open b { padding-bottom: 6px; }
+    .roadmap li.open b::after { transform: rotate(45deg); }
+    .roadmap span { padding: 0 16px; }
+    .roadmap span:last-child { padding-bottom: 15px; }
+    .roadmap li:not(.open) span { display: none; }
+    /* mobile: drop the "+ daily 1 min speaking practice" line */
+    @media (max-width: 859px) { .roadmap span.roadmap-plus { display: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .roadmap b::after { transition: none; }
     }
 
     /* Rhythm cards */
-    .rhythm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    .rhythm[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .rhythm[data-count="1"] { grid-template-columns: minmax(0, 480px); justify-content: center; }
-    @media (max-width: 720px) { .rhythm, .rhythm[data-count] { grid-template-columns: 1fr; } }
-    .rhythm-card[hidden] { display: none; }
-    .rhythm.switching .rhythm-card { animation: card-in 0.35s ease both; }
-    .rhythm.switching .rhythm-card:nth-child(2) { animation-delay: 0.05s; }
-    .rhythm.switching .rhythm-card:nth-child(3) { animation-delay: 0.1s; }
-    .rhythm.switching .rhythm-card:nth-child(4) { animation-delay: 0.15s; }
-    @keyframes card-in { from { opacity: 0; transform: translateY(10px); } }
-    @media (prefers-reduced-motion: reduce) {
-      .rhythm.switching .rhythm-card { animation: none; }
-      .weekstrip button { transition: none; }
-      .weekstrip.nudge button[aria-pressed="false"] { animation: none; }
-    }
+    /* 5 cards: 3 weekday cards on top, saturday + sunday centered below */
+    .rhythm { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+    .rhythm-card { grid-column: span 2; }
+    .rhythm-card:nth-child(4) { grid-column: 2 / span 2; }
+    @media (max-width: 720px) { .rhythm { grid-template-columns: 1fr; } .rhythm-card, .rhythm-card:nth-child(4) { grid-column: auto; } }
     .rhythm-card {
       display: flex;
       flex-direction: column;
@@ -813,15 +963,14 @@
     }
     .rhythm-text p { font-size: 15px; color: var(--muted); }
 
-    /* Mobile: stacked text-only cards, no visuals (weekdays: drill, record, tip) */
+    /* Mobile: stacked text-only cards, no visuals */
     .m-only { display: none; }
     @media (max-width: 720px) {
-      .rhythm, .rhythm[data-count] { gap: 12px; }
+      .rhythm { gap: 12px; }
       .rhythm-visual { display: none; }
       .rhythm-card { border-radius: 12px; }
       .rhythm-text { padding: 16px 18px 18px; }
       .rhythm-text b { font-size: 22px; }
-      .rhythm-card:nth-child(1) { order: 3; }
       .m-only { display: inline; }
       .m-hide { display: none; }
     }
@@ -906,9 +1055,10 @@
     /* Mockup: daily tip video slot */
     .tip-video {
       position: relative;
-      width: 142px;
-      aspect-ratio: 9 / 16;
-      border-radius: 18px;
+      width: 100%;
+      max-width: 280px;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
       overflow: hidden;
       background: var(--text);
       box-shadow: 0 14px 30px rgba(0, 48, 73, 0.25);
@@ -918,9 +1068,9 @@
     .tip-play {
       position: absolute;
       inset: 50% auto auto 50%;
-      width: 54px;
-      height: 54px;
-      margin: -27px 0 0 -27px;
+      width: 32px;
+      height: 32px;
+      margin: -16px 0 0 -16px;
       display: grid;
       place-items: center;
       border-radius: 50%;
@@ -1063,92 +1213,6 @@
     }
     .mz-bar .leave { width: 40px; border-radius: 13px; background: var(--accent); }
 
-    /* ---------- Dare: deep space blue card ---------- */
-    main > section.dare {
-      max-width: 1000px;
-      text-align: center;
-      padding: 56px 48px;
-      color: var(--text);
-    }
-    @media (max-width: 520px) { main > section.dare { padding: 40px 22px; } }
-    .dare { display: grid; gap: 40px; align-items: center; }
-    @media (min-width: 820px) {
-      main > section.dare { grid-template-columns: 1.15fr 1fr; text-align: left; }
-    }
-    .dare h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 18px; text-wrap: balance; }
-    .dare h2 em {
-      display: block;
-      margin-top: 4px;
-      font-family: "DM Serif Display", Georgia, serif;
-      font-style: italic;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: 0;
-      color: var(--accent);
-    }
-    .dare p { font-size: clamp(17px, 2.2vw, 20px); text-wrap: balance; }
-    .dare-cta { margin-top: 28px; }
-    .dare-visual { position: relative; width: 100%; max-width: 360px; margin: 0 auto; padding-top: 34px; }
-    .dare-bell {
-      position: absolute;
-      top: 0;
-      right: -14px;
-      z-index: 1;
-      width: 170px;
-      transform: rotate(-12deg);
-      filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3));
-    }
-    .workout {
-      padding: 24px 24px 20px;
-      color: var(--text);
-      text-align: left;
-      background: var(--bg);
-      border-radius: 16px;
-      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.3);
-      transform: rotate(2deg);
-    }
-    .workout-label {
-      display: block;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-    .workout-title {
-      display: block;
-      margin: 2px 0 12px;
-      font-family: "Anton", Impact, sans-serif;
-      font-weight: 400;
-      font-size: 30px;
-      line-height: 1.1;
-      text-transform: uppercase;
-    }
-    .workout ul { list-style: none; }
-    .workout li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 0;
-      font-size: 14px;
-      border-top: 1px dashed rgba(102, 155, 188, 0.7);
-    }
-    .workout li::before {
-      content: "";
-      flex: none;
-      width: 16px;
-      height: 16px;
-      border: 2px solid var(--text);
-      border-radius: 4px;
-    }
-    .workout li.done::before {
-      border-color: var(--accent);
-      background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23fdf0d5' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
-    }
-    .workout li.done span:first-child { text-decoration: line-through; text-decoration-color: var(--accent); }
-    .workout li span:first-child { flex: 1; }
-    .workout li span:last-child { font-weight: 600; color: var(--muted); white-space: nowrap; }
-
     /* ---------- Final CTA ---------- */
     .cta {
       display: inline-block;
@@ -1204,8 +1268,6 @@
     footer a { color: var(--muted); }
     footer a:hover { color: var(--accent); }
 
-    /* ---------- Last call + p.s. ---------- */
-    main > section.lastcall { max-width: 1000px; }
     /* Fanned stack of speaking photos, left of the level-set copy on desktop */
     .photo-stack {
       position: relative;
@@ -1247,29 +1309,27 @@
       .photo-stack img { transition: none; }
       .photo-stack img.front { animation: none; }
     }
-    @media (min-width: 860px) {
-      main > section.levelset { max-width: 1000px; display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 48px; align-items: center; }
-      .photo-stack { height: 460px; margin: 0; }
-    }
-    .lastcall {
-      padding: 52px 36px 44px;
+    /* mobile only: "if I can do it" line between the photo stack and the level-set copy */
+    .levelset-shout {
+      margin: 0 auto 36px;
       color: var(--text);
-      border-radius: 20px;
-      text-align: center;
-    }
-    .lastcall h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 28px; }
-    .lastcall h2 em {
-      display: block;
       font-family: "DM Serif Display", Georgia, serif;
       font-style: italic;
-      font-weight: 400;
-      font-size: 1em;
-      text-transform: none;
-      letter-spacing: 0;
+      font-size: 24px;
+      line-height: 1.25;
+      text-align: center;
     }
+    @media (min-width: 860px) { .levelset-shout { display: none; } }
+    /* mobile: inset the copy a little more, same as the hero text */
+    @media (max-width: 859px) { .levelset-copy { padding-left: 14px; padding-right: 14px; } }
+    @media (min-width: 860px) {
+      main > section.levelset { max-width: 1000px; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 48px; align-items: center; }
+      .photo-stack { order: 2; height: 460px; margin: 0; }
+    }
+    /* ---------- P.S. card: the page's closing note ---------- */
     .ps {
       max-width: 580px;
-      margin: 28px 0 0;
+      margin: 0 auto;
       padding: 26px 28px;
       border: 2px solid var(--text);
       color: var(--text);
@@ -1278,6 +1338,7 @@
       transform: rotate(-1.5deg);
     }
     .ps p { font-size: 16px; opacity: 0.88; }
+    .ps-cta { margin-top: 20px; text-align: center; }
     .ps p + p { margin-top: 12px; }
     .ps .sig {
       margin-top: 16px;
@@ -1289,7 +1350,6 @@
       opacity: 1;
     }
     @media (max-width: 520px) {
-      .lastcall { padding: 40px 22px 32px; }
       .ps { padding: 22px 20px; }
     }
 
@@ -1328,103 +1388,26 @@
     .faq summary:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--focus); }
     .faq details p { padding: 0 22px 20px; font-size: 15px; color: var(--muted); }
     .faq details p.faq-lead { padding-bottom: 8px; }
-    .faq details ul { padding: 0 22px 20px 42px; font-size: 15px; color: var(--muted); }
+    .faq details ul { list-style: none; display: grid; gap: 6px; padding: 0 22px 20px 22px; font-size: 15px; color: var(--muted); }
     .faq details li + li { margin-top: 4px; }
     .faq details li b { color: var(--text); font-weight: 600; }
     .faq details a { color: var(--accent); }
     .faq details a:hover { color: var(--accent-hover); }
 
     /* ---------- Level set ---------- */
-    .levelset-label {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
     .levelset h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 18px; }
-    .levelset h2 em {
-      font-family: "DM Serif Display", Georgia, serif;
-      font-style: italic;
-      font-weight: 400;
-      font-size: 1em;
-      text-transform: none;
-      letter-spacing: 0;
-      color: var(--accent);
-    }
+    /* "let's be fr," in red on its own line, "this isn't a magic fix." below it */
+    .levelset-fr { display: block; color: var(--accent); }
     .levelset-copy > p { font-size: 17px; color: var(--muted); }
     .levelset-copy > p + p { margin-top: 16px; }
     .levelset-copy > p em { color: var(--text); }
+    .levelset-copy > p b { color: var(--text); }
+    .levelset-copy > p.levelset-lead { font-size: 18px; color: var(--text); }
     .levelset-copy > p + .levelset-list { margin-top: 8px; }
-    .levelset-list { list-style: none; font-size: 17px; color: var(--muted); }
-    .levelset-list li { position: relative; padding-left: 22px; }
-    .levelset-list li + li { margin-top: 6px; }
-    .levelset-list li::before {
-      content: "";
-      position: absolute;
-      left: 4px;
-      top: 0.62em;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
+    .levelset-list { list-style: none; display: grid; gap: 10px; font-size: 18px; color: var(--text); }
     .levelset-list + p { margin-top: 16px; }
-
-    /* ---------- Spinner vs bootcamp ---------- */
-    main > section.vs-section { max-width: 760px; text-align: center; }
-    .vs-section h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 14px; }
-    .vs-section h2 em {
-      font-family: "DM Serif Display", Georgia, serif;
-      font-style: italic;
-      font-weight: 400;
-      font-size: 1em;
-      text-transform: none;
-      letter-spacing: 0;
-      color: var(--accent);
-    }
-    .vs-lead { max-width: 620px; margin: 0 auto; font-size: 17px; color: var(--muted); }
-    .vs-lead a { color: var(--accent); text-decoration: none; }
-    .vs-lead a:hover { color: var(--accent-hover); }
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-    }
-    .vs {
-      width: 100%;
-      margin: 32px auto 0;
-      border-collapse: separate;
-      border-spacing: 0;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      text-align: left;
-    }
-    .vs th, .vs td { padding: 14px 18px; border-bottom: 1px solid rgba(102, 155, 188, 0.35); }
-    .vs tbody tr:last-child td { border-bottom: 0; }
-    .vs thead th {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-align: center;
-    }
-    .vs thead th.us { color: var(--bg); background: var(--text); }
-    .vs td:not(:first-child) { width: 22%; text-align: center; font-size: 18px; font-weight: 700; }
-    .vs td.us { background: rgba(102, 155, 188, 0.2); color: var(--text); }
-    .vs td.no { color: var(--muted); opacity: 0.5; font-weight: 400; }
-    @media (max-width: 520px) {
-      .vs th, .vs td { padding: 11px 10px; font-size: 14px; }
-      .vs thead th { font-size: 10px; letter-spacing: 0.06em; }
-    }
+    .levelset-cta { margin-top: 24px; }
+    @media (max-width: 859px) { .levelset-cta { text-align: center; } }
 
     /* ---------- Untaught: stat cards ---------- */
     main > section.untaught {
@@ -1443,93 +1426,21 @@
       text-transform: none;
       letter-spacing: 0;
     }
-    .untaught h2 span { display: block; color: var(--accent); }
+    .untaught h2 em { color: var(--accent); }
+    .untaught h2 span { display: block; margin-top: 0.9em; color: var(--text); }
     .untaught-lead { max-width: 620px; margin: 0 auto; font-size: 18px; color: var(--muted); text-wrap: balance; }
-    .stats {
-      list-style: none;
-      margin-top: 32px;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      text-align: left;
-    }
-    @media (max-width: 760px) { .stats { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; } }
-    .stat {
-      display: flex;
-      flex-direction: column;
-      padding: 26px 24px 22px;
-      color: var(--text);
-      border: 2px solid var(--text);
-      border-radius: 18px;
-    }
-    .stat-num {
-      display: block;
-      margin-bottom: 10px;
-      font-family: "Anton", Impact, sans-serif;
-      font-size: 60px;
-      line-height: 1;
-      color: var(--text);
-    }
-    .stat p { font-size: 17px; line-height: 1.4; }
-    .stat .stat-src { margin-top: auto; padding-top: 18px; font-size: 13px; }
-    .stat-src a { color: var(--muted); }
-    @media (max-width: 760px) { .stats { display: none; } } /* stats are desktop/tablet only */
 
-    /* ---------- The honest part ---------- */
-    .honest {
-      padding: 44px 36px;
-      border: 2px solid var(--text);
-      color: var(--text);
-      border-radius: 20px;
-    }
-    .honest h2 { font-size: clamp(34px, 6.5vw, 50px); margin-bottom: 22px; }
-    .honest h2 em {
-      display: block;
-      font-family: "DM Serif Display", Georgia, serif;
-      font-style: italic;
-      font-weight: 400;
-      font-size: 1em;
-      line-height: 1;
-      text-transform: none;
-      letter-spacing: 0;
-    }
-    .honest p { font-size: 17px; opacity: 0.88; }
-    .honest p + p { margin-top: 16px; }
-    .honest strong { opacity: 1; font-weight: 600; }
-    .honest p.honest-shout {
-      margin: 26px 0 8px;
-      font-family: "Anton", Impact, "Arial Narrow", sans-serif;
-      font-size: clamp(36px, 7vw, 56px);
-      line-height: 1.05;
-      text-transform: uppercase;
-      color: var(--text);
-      opacity: 1;
-    }
-    .honest-photo {
-      display: block;
-      width: 100%;
-      max-width: 280px;
-      height: auto;
-      margin: 28px auto 0;
-      border-radius: 14px;
-      border: 4px solid var(--text);
-      transform: rotate(2.5deg);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
-    }
-    @media (min-width: 760px) {
-      main > section.honest { max-width: 940px; }
-      .honest { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 44px; align-items: center; padding-right: 48px; }
-      .honest-photo { margin: 0; }
-    }
-    @media (max-width: 520px) {
-      .honest { padding: 32px 22px; }
-    }
 
     @media (max-width: 520px) {
-      .proof { grid-template-columns: repeat(2, 1fr); }
+      .proof { grid-template-columns: repeat(3, 1fr); gap: 6px; }
       .how { grid-template-columns: 1fr; }
     }
   </style>
+  <!-- Vercel Web Analytics (page views) -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
   <div class="topbar">the waitlist is open <span aria-hidden="true">·</span> <b>doors open soon</b></div>
@@ -1556,17 +1467,19 @@
           <span class="hj-card hj-step hj-standup">delivering a 5&nbsp;min standup</span>
         </div>
         </div>
-        <figcaption class="hero-note">I'm going to teach you how to become <span class="nowrap">dangerously articulate</span></figcaption>
+        <figcaption class="hero-note"><span class="nowrap">I'm going to teach you how to</span><br /><span class="nowrap">become dangerously articulate</span></figcaption>
       </figure>
       <div class="hero-copy">
       <h1>6-week <span class="nowrap">hyper-intensive</span> <span class="nowrap">articulation bootcamp</span></h1>
       <ul class="hero-points">
-        <li>daily 1-minute speaking practice</li>
         <li>daily drills that rewire how you talk</li>
-        <li>daily tips to sharpen your pronunciation, pacing and delivery</li>
+        <li>daily 1-minute speaking practice</li>
+        <li>daily tips to sharpen your pronunciation, pacing, and delivery</li>
         <li>3 live zooms to practice public speaking</li>
-        <li>real feedback from a cohort doing the reps with you</li>
+        <li>weekly speech feedback from a cohort doing the reps with you</li>
       </ul>
+
+      <p class="hero-note hero-note-m"><span class="nowrap">I'm going to teach you how to</span><br /><span class="nowrap">become dangerously articulate</span></p>
 
       <div class="signup">
         <p class="signup-label">hop on the waitlist</p>
@@ -1593,7 +1506,6 @@
       <div class="proof">
         <div><strong data-count="300" data-suffix="K+">300K+</strong><span>followers across platforms</span></div>
         <div><strong>ABC News</strong><span>feature</span></div>
-        <div><strong>1 year</strong><span>of speech training documented online</span></div>
         <div><strong data-count="1.2" data-decimals="1" data-suffix="M+">1.2M+</strong><span>visitors on random topic spinner website</span></div>
       </div>
       <script>
@@ -1631,63 +1543,12 @@
       </script>
     </header>
 
-    <!-- ================= UNTAUGHT: STAT CARDS ================= -->
+    <!-- ================= UNTAUGHT ================= -->
     <section class="untaught" aria-labelledby="untaught-title">
-      <h2 id="untaught-title"><em>you got years of math class</em> <span>no one taught you how to talk</span></h2>
-      <p class="untaught-lead">and yet how you speak is the skill that quietly decides your promotion, your first date, &amp; your friendships</p>
-      <ul class="stats">
-        <li class="stat">
-          <span class="stat-num">2 in 3</span>
-          <p>employers look for verbal communication skills when hiring new grads</p>
-          <p class="stat-src"><a href="https://www.naceweb.org/talent-acquisition/candidate-selection/what-are-employers-looking-for-when-reviewing-college-students-resumes" target="_blank" rel="noopener">NACE Job Outlook 2025</a></p>
-        </li>
-        <li class="stat">
-          <span class="stat-num">#1</span>
-          <p>most in-demand skill employers want on LinkedIn: communication</p>
-          <p class="stat-src"><a href="https://www.linkedin.com/business/talent/blog/talent-strategy/linkedin-most-in-demand-hard-and-soft-skills" target="_blank" rel="noopener">LinkedIn Most In-Demand Skills 2024</a></p>
-        </li>
-        <li class="stat">
-          <span class="stat-num">3 in 4</span>
-          <p>people get nervous speaking in front of others. you're very much not the only one</p>
-          <p class="stat-src"><a href="https://www.teleprompter.com/blog/public-speaking-statistics" target="_blank" rel="noopener">roundup of public speaking surveys</a></p>
-        </li>
-      </ul>
-    </section>
-
-    <!-- ================= JOURNEY ================= -->
-    <section class="journey">
-      <div class="journey-before">
-        <h2><span class="journey-lead"><span class="nowrap">I went from being</span></span> <span class="journey-big">scared to speak up in meetings</span></h2>
-        <img src="images/journey-meeting.jpg" alt="Mona at her desk in headphones, on a work call" width="800" height="1418" loading="lazy" />
-        <p>Me on a work call last year 😭</p>
-      </div>
-      <svg class="journey-arrow" viewBox="0 0 140 90" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M6 62 C 26 18, 70 10, 74 40 C 77 64, 46 66, 50 46 C 55 22, 98 22, 130 44" />
-        <path d="M114 30 L131 45 L110 52" />
-      </svg>
-      <ul class="journey-after">
-        <li><img src="images/journey-toastmasters.jpg" alt="Mona waving to the room while giving a Toastmasters speech" width="800" height="1236" loading="lazy" style="object-position: 50% 28%" /><p>Delivering a 7-min <br class="m-br" /><span class="nowrap">Toastmaster speech</span></p></li>
-        <li><img src="images/journey-abc-news.jpg" alt="Mona being interviewed on ABC News for a segment on improving your public speaking" width="800" height="450" loading="lazy" /><p>Going on ABC News</p></li>
-        <li><img src="images/journey-stand-up.jpg" alt="Mona on stage with a microphone doing stand-up comedy" width="800" height="1000" loading="lazy" style="object-position: 50% 38%" /><p>Giving a 5 min stand up set</p></li>
-      </ul>
-    </section>
-
-    <!-- ================= REWIRED ================= -->
-    <section class="rewired">
-      <h2><span class="rewired-line1">Speech isn't talent.</span> <span class="rewired-line2">It's muscle memory.</span></h2>
-      <p>I spent the past year <em>rewiring</em> how I talk &amp; I'm gonna teach you how to:</p>
-      <ul class="rewired-learn">
-        <li>speak with the right rhythm, tone and pitch</li>
-        <li>speak in public without losing people</li>
-        <li>overcome the fear of judgement</li>
-      </ul>
-      <a class="rewired-cta" href="#join">get in <span aria-hidden="true">→</span></a>
-    </section>
-
-    <!-- ================= TRIED EVERYTHING ================= -->
-    <section class="tried">
-      <h2>I tried (a lot of) things</h2>
-      <p>I tried every speech exercise I could get my hands on. pens in my mouth, tongue twisters, shadowing, reading out loud</p>
+      <h2 id="untaught-title">
+        <em>In January,<br /> I was tired of not showing up the way I wanted to socially.</em>
+        <span>so I made a commitment to train my speech &amp; document it online</span>
+      </h2>
       <ul class="proof-shots">
         <li><img src="images/proof-random-topic.jpg" alt="Instagram video, 7.2M views: day 11 of 30 of talking for 1 minute on a random topic" width="600" height="1135" loading="lazy" /><p>7.2M views</p></li>
         <li><img src="images/proof-shadowing-day-23.jpg" alt="Instagram video, 844K views: day 23 of 100 of shadowing to get better at speaking" width="600" height="1135" loading="lazy" /><p>844K views</p></li>
@@ -1698,63 +1559,229 @@
         <li><img src="images/proof-reading-out-loud.jpg" alt="Instagram video, 39.2K views: day 27 of 100 of reading out loud to get better at speaking" width="600" height="1124" loading="lazy" /><p>39.2K views</p></li>
         <li><img src="images/proof-tongue-twisters.jpg" alt="Instagram video, 34K views: the tongue twisters final boss" width="600" height="1130" loading="lazy" /><p>34K views</p></li>
       </ul>
-      <div class="tried-bridge">
-        <svg class="tried-arrow" viewBox="0 0 100 160" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M38 6 C 78 26, 80 66, 50 72 C 24 77, 26 46, 50 52 C 80 60, 66 116, 48 148" />
-          <path d="M33 134 L48 150 L61 132" />
+    </section>
+
+    <!-- ================= JOURNEY ================= -->
+    <section class="journey">
+      <div class="journey-before">
+        <h2><span class="journey-lead"><span class="nowrap">I went from being</span></span> <span class="journey-big">scared to speak up in meetings</span></h2>
+        <img src="images/journey-meeting.jpg" alt="Mona at her desk in headphones, on a work call" width="800" height="1418" loading="lazy" />
+        <p>Scared to speak up in meetings 😭</p>
+      </div>
+      <div class="journey-arrow">
+        <svg viewBox="0 0 140 90" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 62 C 26 18, 70 10, 74 40 C 77 64, 46 66, 50 46 C 55 22, 98 22, 130 44" />
+          <path d="M114 30 L131 45 L110 52" />
         </svg>
-        <p>I condensed the drills that worked into&nbsp;6&nbsp;weeks</p>
+        <p>to doing the unthinkable</p>
+      </div>
+      <div class="journey-arrow-m">
+        <p>to doing the unthinkable</p>
+        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M112 14 C 84 6, 52 14, 56 38 C 59 56, 84 52, 78 36 C 72 20, 40 30, 26 56 C 18 72, 16 88, 20 108" />
+          <path d="M8 94 L20 110 L33 97" />
+        </svg>
+      </div>
+      <ul class="journey-after" id="journey-after" aria-label="where I am now">
+        <li data-pos="0"><img src="images/journey-toastmasters.jpg" alt="Mona waving to the room while giving a Toastmasters speech" width="800" height="1236" loading="lazy" style="object-position: 50% 28%" /><p>Delivering a 7-min <br class="m-br" /><span class="nowrap">Toastmaster speech</span></p></li>
+        <li data-pos="1"><div class="journey-abc"><img src="images/journey-abc-news.jpg" alt="Mona being interviewed on ABC News for a segment on improving your public speaking" width="800" height="450" loading="lazy" /></div><p>Going on ABC News</p></li>
+        <li data-pos="2"><img src="images/journey-stand-up.jpg" alt="Mona on stage with a microphone doing stand-up comedy" width="800" height="1000" loading="lazy" style="object-position: 50% 38%" /><p>Giving a 5 min stand up set</p></li>
+      </ul>
+      <div class="journey-dots" role="group" aria-label="choose a photo">
+        <button type="button" aria-label="Toastmaster speech" aria-controls="journey-after" aria-current="true"></button>
+        <button type="button" aria-label="ABC News" aria-controls="journey-after" aria-current="false"></button>
+        <button type="button" aria-label="stand-up set" aria-controls="journey-after" aria-current="false"></button>
+      </div>
+      <p class="journey-deck-hint">swipe</p>
+      <script>
+        (function () {
+          var deck = document.getElementById("journey-after");
+          var dots = document.querySelectorAll(".journey-dots button");
+          if (!deck || !dots.length) return;
+          var cards = Array.prototype.slice.call(deck.children);
+          var order = cards.slice(); // order[0] is the card on top
+          var mobile = window.matchMedia("(max-width: 859px)");
+          var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+          var busy = false;
+
+          function render() {
+            order.forEach(function (card, pos) { card.dataset.pos = pos; });
+            var top = cards.indexOf(order[0]);
+            dots.forEach(function (dot, i) { dot.setAttribute("aria-current", i === top ? "true" : "false"); });
+          }
+
+          // flick the top card off to one side, then tuck it in at the back of the stack
+          function next(dir, done) {
+            var card = order[0];
+            order.push(order.shift());
+            if (reduced.matches) { card.style.transform = ""; render(); if (done) done(); return; }
+            busy = true;
+            card.classList.remove("dragging");
+            card.style.transform = "translateX(" + dir * 120 + "%) rotate(" + dir * 16 + "deg)";
+            setTimeout(function () {
+              render();
+              card.style.transform = "";
+              setTimeout(function () { busy = false; if (done) done(); }, 200);
+            }, 220);
+          }
+
+          var startX = 0, startY = 0, dx = 0, active = null;
+          deck.addEventListener("pointerdown", function (e) {
+            if (!mobile.matches || busy || e.target.closest("li") !== order[0]) return;
+            active = order[0];
+            startX = e.clientX; startY = e.clientY; dx = 0;
+            active.classList.add("dragging");
+            active.setPointerCapture(e.pointerId);
+          });
+          deck.addEventListener("pointermove", function (e) {
+            if (!active) return;
+            dx = e.clientX - startX;
+            active.style.transform = "translateX(" + dx + "px) rotate(" + (dx / 18 - 2) + "deg)";
+          });
+          function release(e) {
+            if (!active) return;
+            var card = active;
+            active = null;
+            var moved = Math.abs(dx) > 6 || Math.abs(e.clientY - startY) > 6;
+            if (Math.abs(dx) > 60) return next(dx > 0 ? 1 : -1);
+            if (!moved && e.type === "pointerup") return next(-1);
+            card.classList.remove("dragging");
+            card.style.transform = "";
+          }
+          deck.addEventListener("pointerup", release);
+          deck.addEventListener("pointercancel", release);
+
+          dots.forEach(function (dot, i) {
+            dot.addEventListener("click", function () {
+              if (busy) return;
+              (function step() { if (order[0] !== cards[i]) next(-1, step); })();
+            });
+          });
+
+          render();
+        })();
+      </script>
+    </section>
+
+    <!-- ================= TRIED EVERYTHING ================= -->
+    <section class="tried">
+      <div class="tried-bridge">
+        <p>I've condensed all the</p>
+        <ul class="tried-bridge-list">
+          <li>drills that worked</li>
+          <li>tips I've picked up</li>
+          <li>mindset shifts</li>
+        </ul>
+        <p>into a 6-week course</p>
+        <svg class="tried-bridge-arrow" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M112 14 C 84 6, 52 14, 56 38 C 59 56, 84 52, 78 36 C 72 20, 40 30, 26 56 C 18 72, 16 88, 20 108" />
+          <path d="M8 94 L20 110 L33 97" />
+        </svg>
       </div>
     </section>
 
     <!-- ================= HOW IT WORKS ================= -->
     <section class="how-section">
-      <h2>how it works</h2>
+      <h2>the roadmap</h2>
 
+      <div class="roadmap-wrap">
+      <svg class="roadmap-path" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="0 9" /></svg>
       <ol class="roadmap">
-        <li><b>pronunciation drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>say goodbye to mumbling. every word comes out crisp and clear, and people stop asking you to repeat yourself</span></li>
-        <li><b>rhythm, pitch &amp; volume drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>a flat voice becomes one people actually want to keep listening to</span></li>
-        <li><b>tone &amp; pausing drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>slow down, let a moment breathe, and make your words easy to follow</span></li>
-        <li><b>shadowing drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>copy a speaker you admire: their pace, their energy, the way they land a point</span></li>
-        <li><b>stage presence &amp; audience engagement</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>time to take it public. walking up to the front stops feeling like a big deal</span></li>
-        <li><b>storytelling + humor</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>make people remember what you said, and finish talking in a way that feels like you</span></li>
+        <li><b>pronunciation drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>warm up your mouth muscles for clean sounds and gain awareness of which syllables you mumble</span></li>
+        <li><b>rhythm, pitch &amp; volume drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>add vocal variety with rhythm in your speech. vary your speed of speech and change your volume</span></li>
+        <li><b>tone &amp; pausing drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>learn how to use your voice to elicit different emotions and how to pause effectively</span></li>
+        <li><b>shadowing drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>copy a speaker you admire: their pace, their energy, the way they land a point. this was the first exercise I did on my page, and it’s quite helpful</span></li>
+        <li><b>stage presence and audience engagement tips</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>we’ll work on how to look and feel confident when public speaking, get over the fear of being judged, and speak in a way that keeps the audience’s attention</span></li>
+        <li><b>storytelling &amp; humor tips</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>I’ll teach you what I know about keeping an audience engaged, plus a few humor tips I learned in my (very short) stand-up comedy endeavor</span></li>
       </ol>
+      </div>
+      <script>
+        (function () {
+          var wrap = document.querySelector(".roadmap-wrap");
+          if (!wrap) return;
+          var list = wrap.querySelector(".roadmap");
+          var path = wrap.querySelector(".roadmap-path path");
+          var items = Array.prototype.slice.call(list.children);
+          var NODE = 26; // half the node width
 
-      <h3 class="how-sub">what you get <em>every week</em></h3>
+          // dotted line: straight down from each node, then an S-bend through the gap to the next node
+          function draw() {
+            var box = wrap.getBoundingClientRect();
+            var pts = items.map(function (li, i) {
+              var r = li.getBoundingClientRect();
+              return {
+                x: (i % 2 ? r.right - NODE : r.left + NODE) - box.left,
+                y: r.top + NODE - box.top,
+                bottom: r.bottom - box.top
+              };
+            });
+            var d = "M" + pts[0].x + " " + pts[0].y;
+            for (var i = 1; i < pts.length; i++) {
+              var a = pts[i - 1], b = pts[i];
+              var mid = (a.bottom + b.y - NODE) / 2;
+              var bend = Math.min(18, (b.y - a.bottom) / 2);
+              d += " V" + (mid - bend) +
+                " C" + a.x + " " + (mid + bend * 0.6) + " " + b.x + " " + (mid - bend * 0.6) + " " + b.x + " " + (mid + bend) +
+                " V" + b.y;
+            }
+            path.setAttribute("d", d);
+          }
 
-      <ol class="weekstrip" aria-label="the weekly schedule">
-        <li><button type="button" data-day="mon" aria-pressed="true" aria-controls="rhythm"><b>mon</b>tip · drill · record</button></li>
-        <li><button type="button" data-day="tue" aria-pressed="false" aria-controls="rhythm"><b>tue</b>tip · drill · record</button></li>
-        <li><button type="button" data-day="wed" aria-pressed="false" aria-controls="rhythm"><b>wed</b>tip · drill · record</button></li>
-        <li><button type="button" data-day="thu" aria-pressed="false" aria-controls="rhythm"><b>thu</b>tip · drill · record</button></li>
-        <li><button type="button" data-day="fri" aria-pressed="false" aria-controls="rhythm"><b>fri</b>tip · drill · record</button></li>
-        <li><button type="button" data-day="sat" aria-pressed="false" aria-controls="rhythm"><b>sat</b>post for feedback</button></li>
-        <li><button type="button" data-day="sun" aria-pressed="false" aria-controls="rhythm"><b>sun</b>live session (every other)</button></li>
-      </ol>
-      <p class="weekstrip-hint" hidden>tap a day to see what's on it</p>
+          // every card starts open; tap a title to collapse it
+          items.forEach(function (li) {
+            var title = li.querySelector("b");
+            title.setAttribute("role", "button");
+            title.setAttribute("tabindex", "0");
+            title.setAttribute("aria-expanded", "true");
+            li.classList.add("open");
+          });
 
-      <div class="rhythm" id="rhythm" aria-live="polite">
-        <article class="rhythm-card" data-days="mon tue wed thu fri">
+          function toggle(li) {
+            var open = li.classList.toggle("open");
+            li.querySelector("b").setAttribute("aria-expanded", open ? "true" : "false");
+            draw();
+          }
+
+          items.forEach(function (li) {
+            li.addEventListener("click", function () { toggle(li); });
+            li.querySelector("b").addEventListener("keydown", function (e) {
+              if (e.key !== "Enter" && e.key !== " ") return;
+              e.preventDefault();
+              toggle(li);
+            });
+          });
+
+          if (window.ResizeObserver) new ResizeObserver(draw).observe(list);
+          window.addEventListener("resize", draw);
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+          draw();
+        })();
+      </script>
+
+      <h3 class="how-sub">weekly schedule</h3>
+
+      <div class="rhythm" id="rhythm">
+        <article class="rhythm-card">
           <div class="rhythm-visual">
             <div class="tip-video">
               <!--
                 ===== DAILY TIP VIDEO =====
                 Drop the video into images/ (or a videos/ folder) and swap the <img> + play button below for:
-                <video src="videos/daily-tip.mp4" poster="images/mona-hero.jpg" controls playsinline preload="none"></video>
+                <video src="videos/daily-tip.mp4" poster="images/daily-tip-preview.jpg" controls playsinline preload="none"></video>
               -->
-              <img src="images/mona-hero.jpg" alt="Mona recording a daily speaking tip" width="1050" height="1400" loading="lazy" />
-              <span class="tip-play" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></span>
+              <img src="images/daily-tip-preview.jpg" alt="Mona recording a daily speaking tip" width="960" height="536" loading="lazy" />
+              <span class="tip-play" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></span>
               <span class="tip-tag">daily tip</span>
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every day, mon – friday</span>
+            <span class="rhythm-when">mon, tue, wed, thur, fri</span>
             <b>a tip from me</b>
-            <p>a prerecorded video on the exact thing we're working on, plus the drill or mindset shift that actually worked for me</p>
+            <p>a pre-recorded video from me - an exercise that's worked, a mindset shift, a public speaking trick</p>
           </div>
         </article>
 
-        <article class="rhythm-card" data-days="mon tue wed thu fri">
+        <article class="rhythm-card">
           <div class="rhythm-visual" aria-hidden="true">
             <div class="mock-drill">
               <span class="md-label">week 1 · pronunciation</span>
@@ -1767,13 +1794,13 @@
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every day, mon – friday</span>
+            <span class="rhythm-when">mon, tue, wed, thur, fri</span>
             <b>a drill</b>
-            <p>a quick drill that targets that week's skill, so it starts to become muscle memory</p>
+            <p>a quick drill that targets that week's skill</p>
           </div>
         </article>
 
-        <article class="rhythm-card" data-days="mon tue wed thu fri">
+        <article class="rhythm-card">
           <div class="rhythm-visual" aria-hidden="true">
             <div class="mock-phone">
               <div class="mp-screen">
@@ -1785,13 +1812,13 @@
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every day, mon – friday</span>
+            <span class="rhythm-when">mon, tue, wed, thur, fri, sat</span>
             <b>record 1 minute of <span class="m-hide">speaking</span><span class="m-only">speech</span></b>
-            <p>hit record and speak for 1 minute on a topic I'll send in the group. everyone speaks on the same topic</p>
+            <p>speak for 1 min on a topic I'll send in the group chat</p>
           </div>
         </article>
 
-        <article class="rhythm-card" data-days="sat">
+        <article class="rhythm-card">
           <div class="rhythm-visual" aria-hidden="true">
             <div class="mock-chat">
               <div class="mc-head"># saturday-feedback <span>· the cohort</span></div>
@@ -1813,13 +1840,13 @@
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every saturday</span>
+            <span class="rhythm-when">saturday</span>
             <b>post + get feedback</b>
-            <p>post your 1-minute impromptu speech in the group chat, and we'll give each other feedback on how to improve our speech</p>
+            <p>post your 1 min speech and we'll give each other feedback</p>
           </div>
         </article>
 
-        <article class="rhythm-card" data-days="sun">
+        <article class="rhythm-card">
           <div class="rhythm-visual" aria-hidden="true">
             <div class="mock-zoom">
               <div class="mz-top"><span class="mz-live">live · sunday session</span><span>24 people</span></div>
@@ -1835,61 +1862,23 @@
             </div>
           </div>
           <div class="rhythm-text">
-            <span class="rhythm-when">every other sunday</span>
+            <span class="rhythm-when">sunday, 3 times</span>
             <b>live session</b>
-            <p>every other sunday, we hop on a big zoom call and practice public speaking for real. there may be games and debates in store 👀</p>
+            <p>big zoom call to practice public speaking with (basically) no stakes w/ fun games + debates 👀</p>
           </div>
         </article>
       </div>
-      <script>
-        (function () {
-          var strip = document.querySelector(".weekstrip");
-          var rhythm = document.getElementById("rhythm");
-          if (!strip || !rhythm) return;
-          var buttons = strip.querySelectorAll("button[data-day]");
-          var cards = rhythm.querySelectorAll(".rhythm-card");
-          var hint = document.querySelector(".weekstrip-hint");
-          if (hint) hint.hidden = false;
-          strip.classList.add("nudge");
-
-          function show(day, animate) {
-            var count = 0;
-            buttons.forEach(function (btn) {
-              btn.setAttribute("aria-pressed", btn.dataset.day === day ? "true" : "false");
-            });
-            cards.forEach(function (card) {
-              var on = card.dataset.days.split(" ").indexOf(day) !== -1;
-              card.hidden = !on;
-              if (on) count++;
-            });
-            rhythm.dataset.count = count;
-            if (animate) {
-              rhythm.classList.remove("switching");
-              void rhythm.offsetWidth;
-              rhythm.classList.add("switching");
-            }
-          }
-
-          buttons.forEach(function (btn) {
-            btn.addEventListener("click", function () {
-              strip.classList.remove("nudge");
-              show(btn.dataset.day, true);
-            });
-          });
-          show("mon", false);
-        })();
-      </script>
     </section>
 
     <!-- ================= OUTCOMES ================= -->
     <section class="outcomes-section">
       <h2>what you'll leave with</h2>
       <ul class="outcomes">
-        <li><div><b>a mouth on autopilot (the good kind)</b><p>6 weeks of reps until speaking clearly is your default, not something you have to think about</p></div></li>
-        <li><div><b>ears for your own habits</b><p>the ums. the trailing off. the speed-talking when you're nervous. you'll start catching them mid-sentence</p></div></li>
-        <li><div><b>confidence without a script</b><p>simple frameworks and the power of a pause, so a surprise question doesn't send you spiraling</p></div></li>
-        <li><div><b>people who actually keep listening</b><p>openings that hook in 5 seconds, stories with real tension, and endings that land instead of fizzle</p></div></li>
-        <li><div><b>way less fear of being judged</b><p>the only fix I've ever found is doing it scared, over and over. we're doing it together</p></div></li>
+        <li><div><b>36 speeches on camera</b><p>you'll do the reps of speaking for 1 min on a topic. everyone in the cohort does the same topic, so you have extra accountability to show up</p></div></li>
+        <li><div><b>30 articulation drills + tips from me</b><p>I'll share every exercise that's worked for me this past year, to help you add vocal variety, avoid going blank, and overcome your fear of public speaking</p></div></li>
+        <li><div><b>10-minute daily speaking routine</b><p>I'll share what I (try to) do every day to help train my speech muscles, so you can keep practicing long after the bootcamp ends</p></div></li>
+        <li><div><b>correct your speech habits</b><p>gain awareness of your filler words, the words you tend to mumble, and when you speak too fast or too slow</p></div></li>
+        <li><div><b>hear the difference from week 1 to week 6</b><p>I promise you'll notice a difference in how you speak! you've (prob) never intentionally trained your speech before, so you'll pick up on lots of things you didn't even realize</p></div></li>
       </ul>
       <div class="offer-card" id="offer">
         <span class="offer-label">what's included</span>
@@ -1905,85 +1894,16 @@
       </div>
     </section>
 
-    <!-- ================= THE HONEST PART ================= -->
-    <section class="honest">
-      <div class="honest-copy">
-      <h2>there's nothing special <em>about me</em></h2>
-      <p>I'm not a born speaker. in january I sat in the very back row of my first toastmasters meeting and could barely get my own name out</p>
-      <p>what I <strong>did</strong> do is practice. a lot. badly at first. then a little less badly</p>
-      <p>tons of people want to get over their fear of speaking. very few actually do something about it. this is me doing something about it, and dragging you along with me</p>
-      <p class="honest-shout">if I can do it,<br />you can do it too</p>
-      </div>
-      <img class="honest-photo" src="images/about-mona-cake.jpg" alt="Mona smiling and holding a cake that says 100K" width="900" height="1197" loading="lazy" />
-    </section>
-
-    <!-- ================= SPINNER VS BOOTCAMP ================= -->
-    <section class="vs-section">
-      <h2>my spinner is free<br /><em>here's what it can't do</em></h2>
-      <p class="vs-lead">1.2M+ people have used my <a href="https://speechtopicgen.com" target="_blank" rel="noopener">free random topic spinner</a>. but it can't tell you what you're doing wrong or how to fix it</p>
-      <table class="vs">
-        <thead>
-          <tr><th scope="col"><span class="sr-only">what you get</span></th><th scope="col">free spinner</th><th scope="col" class="us">the bootcamp</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>a random topic to talk about</td><td aria-label="yes">✓</td><td class="us" aria-label="yes">✓</td></tr>
-          <tr><td>knowing your speech style</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
-          <tr><td>improve pronunciation</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
-          <tr><td>improve rhythm, tone, pitch</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
-          <tr><td>a daily video from me:<br>what to notice + a drill to fix it</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
-          <tr><td>weekly feedback from real people</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
-          <tr><td>low-stakes live sessions with humans</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
-          <tr><td>a before/after that proves it worked</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
-          <tr><td>a crew keeping you accountable</td><td class="no" aria-label="no">✕</td><td class="us" aria-label="yes">✓</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- ================= STORY / CREDIBILITY ================= -->
+    <!-- ================= STORY: HI, I'M MONA ================= -->
     <section class="about">
       <p class="about-hi">hi, I'm mona 👋</p>
       <div class="story about-grid">
         <img class="about-photo" src="images/honest-mona.jpg" alt="Mona taking a selfie on a rooftop, shading her eyes from the sun" width="750" height="1000" loading="lazy" />
         <div class="story-text">
-          <p>this january I made one new year's resolution: stop being scared of public speaking. I was so tired of not showing up the way I wanted to socially - both at work and in day to day</p>
-          <p>so I joined toastmasters and blacked out on my first impromptu speech. then I gave myself a 30-day challenge: one 1-minute speech a day on a random topic, posted online</p>
-          <p>I built a <a href="https://speechtopicgen.com" target="_blank" rel="noopener">free random topic spinner</a> so anyone could do the same thing. <b>1.2M+ visitors</b> later, it got me noticed by <a href="https://abcnews.com/video/134706341/" target="_blank" rel="noopener"><b>ABC News</b></a></p>
-          <p>along the way, I've somehow stumbled into a community of <b>300K+ followers</b> - all people who want to improve their articulation!</p>
-          <p>most recently, I took on the public speaking final boss and took a stand-up class. I went to a few open mics and ultimately performed for <b>80+ people</b> at the student showcase. ikkk I still can't believe it and will not be doing it again anytime soon lol</p>
-          <p>the point is, I <b>committed to taking action to get better at speaking</b> and I did it! speech is a trainable skill and all it takes is a bit of dedication</p>
-          <p>I still get nervous before public speaking. but I'm not letting fear decide how I show up anymore, and <b>I don't want it deciding for you either</b></p>
-          <p class="sign">— Mona, aka @babystepstothemic</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= DARE ================= -->
-    <section class="dare">
-      <div class="dare-copy">
-        <h2>train your articulation <em>like you train at the gym</em></h2>
-        <p>there's zero judgement. we're all here to get better</p>
-        <div class="dare-cta"><a class="cta" href="#join">sign me up</a></div>
-      </div>
-      <div class="dare-visual" aria-hidden="true">
-        <svg class="dare-bell" viewBox="0 0 220 90" fill="none">
-          <rect x="30" y="39" width="160" height="12" rx="6" fill="#003049"/>
-          <rect x="12" y="14" width="22" height="62" rx="6" fill="#c1121f"/>
-          <rect x="36" y="22" width="16" height="46" rx="5" fill="#003049"/>
-          <rect x="186" y="14" width="22" height="62" rx="6" fill="#c1121f"/>
-          <rect x="168" y="22" width="16" height="46" rx="5" fill="#003049"/>
-          <rect x="0" y="36" width="12" height="18" rx="4" fill="#003049"/>
-          <rect x="208" y="36" width="12" height="18" rx="4" fill="#003049"/>
-        </svg>
-        <div class="workout">
-          <span class="workout-label">today's workout</span>
-          <b class="workout-title">voice day 💪</b>
-          <ul>
-            <li class="done"><span>warm-up: lip trills</span><span>2 min</span></li>
-            <li class="done"><span>tongue twisters</span><span>3 × 10</span></li>
-            <li class="done"><span>shadowing set</span><span>3 × 1 min</span></li>
-            <li><span>1-min impromptu</span><span>1 rep</span></li>
-            <li><span>cool-down: watch it back</span><span>no cringing</span></li>
-          </ul>
+          <p>This year, I made a New Year's resolution: <b>stop being scared of public speaking</b>. I was so tired of not showing up the way I wanted to - both at work and in day to day.</p>
+          <p>I started <b>giving speeches at Toastmasters every week</b> while trying (a billion) articulation drills at home.</p>
+          <p>10 months later, <b>I’ve truly improved so much as a speaker</b>. <b>My confidence has also skyrocketed</b>. I still get nervous to public speak but now I know I can deliver.</p>
+          <p class="about-shout">I’m going to teach you (almost) everything I know about speech</p>
         </div>
       </div>
     </section>
@@ -2020,23 +1940,12 @@
           });
         })();
       </script>
+      <p class="levelset-shout">if I can do it,<br />you can do it too</p>
       <div class="levelset-copy">
-      <span class="levelset-label">// let's level set</span>
-      <h2>this is not a <em>magic fix</em></h2>
-      <p>you've been unconsciously training the way you talk your whole life. 6 weeks won't undo all of it</p>
-      <p>what 6 weeks <em>can</em> do:</p>
-      <ul class="levelset-list">
-        <li>start intentionally training your speech</li>
-        <li>gain awareness of speech patterns through daily drills + reps</li>
-        <li>hear the difference in your own recordings from week 1 to week 6</li>
-        <li>leave with a routine you can run on your own</li>
-      </ul>
-      <p>it's the kickstart. the rest of the journey is yours</p>
-      <div class="ps">
-        <p>I know the feeling. heart pounding, face hot, rehearsing one sentence in your head for so long the moment passes. I lived there for years</p>
-        <p>here's the whole secret: no one is judging you as hard as you're judging you. the rest is just reps</p>
-        <p class="sig">see you at the mic. – mona</p>
-      </div>
+      <h2><span class="levelset-fr">but let's be fr,</span> this isn't a magic fix.</h2>
+      <p>you've been <b>unconsciously training the way you talk your whole life</b>. 6 weeks won't undo all of it</p>
+      <p>what this bootcamp will do is <b>kickstart your journey of intentionally training your communication skills</b>. you’ll gain awareness of your speech patterns, and I promise you’ll hear a big difference at the end of it.</p>
+      <div class="levelset-cta"><a class="cta" href="#join">sign me up</a></div>
       </div>
     </section>
 
@@ -2063,9 +1972,9 @@
         <summary>how much time does this take?</summary>
         <p class="faq-lead">10 to 20 minutes a day:</p>
         <ul>
-          <li><b>monday – friday:</b> watch my video tip, do the drill, record yourself, speak for 1 minute.</li>
-          <li><b>saturday:</b> speak for 1 minute and post it in the chat for feedback.</li>
-          <li><b>every other sunday:</b> we meet live on zoom (3 sessions total).</li>
+          <li><span><b>monday – friday:</b> watch my video tip, do the drill, record yourself, speak for 1 minute.</span></li>
+          <li><span><b>saturday:</b> speak for 1 minute and post it in the chat for feedback.</span></li>
+          <li><span><b>every other sunday:</b> we meet live on zoom (3 sessions total).</span></li>
         </ul>
       </details>
       <details>
@@ -2082,10 +1991,15 @@
       </details>
     </section>
 
-    <!-- ================= LAST CALL ================= -->
-    <section class="lastcall">
-      <h2><span class="lastcall-line">you can keep <em>swallowing your ideas.</em></span> or you can start speaking up</h2>
-      <a class="cta" href="#join">I'm in 🎤</a>
+    <!-- ================= P.S. CARD ================= -->
+    <section class="ps-section">
+      <div class="ps">
+        <p>when I first started, I wasn’t even sure you could actually improve your speech.</p>
+        <p>I proved to myself (and hopefully to anyone who’s followed along) that speech is very much trainable.</p>
+        <p>it's time to get in on the action</p>
+        <p class="sig">see you at the mic. – mona</p>
+        <div class="ps-cta"><a class="cta" href="#join">sign me up</a></div>
+      </div>
     </section>
 
     <footer>&copy; 2026 JINY LLC &middot; <a href="terms.html">terms</a></footer>

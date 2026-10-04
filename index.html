@@ -1055,9 +1055,10 @@
     /* Mockup: daily tip video slot */
     .tip-video {
       position: relative;
-      width: 142px;
-      aspect-ratio: 9 / 16;
-      border-radius: 18px;
+      width: 100%;
+      max-width: 280px;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
       overflow: hidden;
       background: var(--text);
       box-shadow: 0 14px 30px rgba(0, 48, 73, 0.25);
@@ -1067,9 +1068,9 @@
     .tip-play {
       position: absolute;
       inset: 50% auto auto 50%;
-      width: 54px;
-      height: 54px;
-      margin: -27px 0 0 -27px;
+      width: 32px;
+      height: 32px;
+      margin: -16px 0 0 -16px;
       display: grid;
       place-items: center;
       border-radius: 50%;
@@ -1738,10 +1739,10 @@
               <!--
                 ===== DAILY TIP VIDEO =====
                 Drop the video into images/ (or a videos/ folder) and swap the <img> + play button below for:
-                <video src="videos/daily-tip.mp4" poster="images/mona-hero.jpg" controls playsinline preload="none"></video>
+                <video src="videos/daily-tip.mp4" poster="images/daily-tip-preview.jpg" controls playsinline preload="none"></video>
               -->
-              <img src="images/mona-hero.jpg" alt="Mona recording a daily speaking tip" width="1050" height="1400" loading="lazy" />
-              <span class="tip-play" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></span>
+              <img src="images/daily-tip-preview.jpg" alt="Mona recording a daily speaking tip" width="960" height="536" loading="lazy" />
+              <span class="tip-play" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></span>
               <span class="tip-tag">daily tip</span>
             </div>
           </div>

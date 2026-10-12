@@ -403,6 +403,13 @@
         chosen.dispatchEvent(new Event("change"));
       }
 
+      // waitlist emails link here with ?email={{EmailAddress}} so the field is already filled in
+      var prefillEmail = new URLSearchParams(location.search).get("email");
+      if (prefillEmail && !form.elements.email.value) {
+        // an unencoded "+" in the link arrives as a space, so put it back
+        form.elements.email.value = prefillEmail.trim().replace(/ /g, "+");
+      }
+
       if (new URLSearchParams(location.search).get("canceled")) {
         showNotice("That payment didn't go through, and you weren't charged. Please try again or use a different payment method.");
       }
@@ -539,7 +546,8 @@
           })
           .then(function (result) {
             if (result.error) throw new Error(result.error.message);
-            location.href = "success.html";
+            // same query string Stripe adds after redirect-based methods, so success.html can mark the order paid
+            location.href = "success.html?payment_intent=" + encodeURIComponent(result.paymentIntent.id);
           })
           .catch(function (err) {
             resetPay();

@@ -2,14 +2,18 @@
 // The Stripe secret key lives in Supabase secrets and never reaches the browser.
 //
 //   GET   returns the publishable key and plan amounts, so test/live keys are switched in one place
-//   POST  saves the buyer as a Stripe customer, then either
+//   POST  saves the buyer as a Stripe customer and a pending row in public.checkout_orders, then either
 //           plan "full":  a $297 PaymentIntent
 //           plan "split": a monthly $165 subscription that cancels itself after the 2nd payment
+//   POST  { action: "confirm", paymentIntent: "pi_..." } from success.html: checks the payment with
+//         Stripe and marks the order paid (stripe-webhook does the same if the buyer closes the tab)
 //
 // Secrets (Supabase dashboard → Edge Functions → Secrets):
 //   STRIPE_SECRET_KEY       required. rk_/sk_test_... while testing, rk_/sk_live_... for real sales
 //   STRIPE_PUBLISHABLE_KEY  required. pk_test_... or pk_live_..., same mode as the secret key
 //   SITE_URL                recommended. e.g. https://www.yoursite.com, used for CORS
+
+import { insertOrder, recordPaymentResult, updateOrderByCustomer } from "../_shared/orders.ts";
 
 const STRIPE_API = "https://api.stripe.com/v1";
 // Pinned so response shapes (e.g. invoice.confirmation_secret) don't shift under us
@@ -63,15 +67,15 @@ class StripeError extends Error {
   }
 }
 
-async function stripe(path: string, params: Record<string, string>): Promise<any> {
+async function stripe(path: string, params?: Record<string, string>): Promise<any> {
   const res = await fetch(`${STRIPE_API}${path}`, {
-    method: "POST",
+    method: params ? "POST" : "GET",
     headers: {
       Authorization: `Bearer ${Deno.env.get("STRIPE_SECRET_KEY")}`,
       "Content-Type": "application/x-www-form-urlencoded",
       "Stripe-Version": STRIPE_VERSION,
     },
-    body: new URLSearchParams(params).toString(),
+    body: params ? new URLSearchParams(params).toString() : undefined,
   });
   const body = await res.json();
   if (!res.ok) throw new StripeError(body.error?.message || `Stripe error ${res.status}`, body.error?.code);
@@ -87,7 +91,7 @@ async function ensureProduct(): Promise<void> {
   }
 }
 
-async function createSplitPlan(customerId: string, agreedAt: string): Promise<string> {
+async function createSplitPlan(customerId: string, agreedAt: string): Promise<{ id: string; secret: string }> {
   await ensureProduct();
 
   // Payments land now and in one month; ending two weeks after the 2nd payment
@@ -114,7 +118,7 @@ async function createSplitPlan(customerId: string, agreedAt: string): Promise<st
 
   const secret = sub.latest_invoice?.confirmation_secret?.client_secret;
   if (!secret) throw new Error(`subscription ${sub.id} has no payment to confirm`);
-  return secret;
+  return { id: sub.id, secret };
 }
 
 Deno.serve(async (req: Request) => {
@@ -143,6 +147,18 @@ Deno.serve(async (req: Request) => {
     return json(req, 400, { error: "invalid request" });
   }
 
+  if (raw.action === "confirm") {
+    const id = String(raw.paymentIntent ?? "");
+    if (!/^pi_[A-Za-z0-9]+$/.test(id)) return json(req, 400, { error: "invalid payment" });
+    try {
+      const status = await recordPaymentResult(await stripe(`/payment_intents/${id}`));
+      return json(req, 200, { status });
+    } catch (err) {
+      console.error("confirm failed:", err);
+      return json(req, 502, { error: "couldn't check the payment" });
+    }
+  }
+
   const f = {} as Fields;
   for (const key of FIELDS) f[key] = String(raw[key] ?? "").trim().slice(0, 200);
 
@@ -167,8 +183,20 @@ Deno.serve(async (req: Request) => {
       "metadata[terms_accepted_at]": agreedAt,
     });
 
+    // Saved before charging so abandoned checkouts are captured too
+    await insertOrder({
+      ...f,
+      line2: f.line2 || null,
+      plan,
+      amount_cents: plan === "split" ? SPLIT_CENTS * SPLIT_COUNT : AMOUNT_CENTS,
+      terms_accepted_at: agreedAt,
+      stripe_customer_id: customer.id,
+    });
+
     if (plan === "split") {
-      return json(req, 200, { clientSecret: await createSplitPlan(customer.id, agreedAt) });
+      const sub = await createSplitPlan(customer.id, agreedAt);
+      await updateOrderByCustomer(customer.id, { stripe_subscription_id: sub.id });
+      return json(req, 200, { clientSecret: sub.secret });
     }
 
     const intent = await stripe("/payment_intents", {
@@ -182,6 +210,7 @@ Deno.serve(async (req: Request) => {
       "metadata[plan]": "full",
     });
 
+    await updateOrderByCustomer(customer.id, { stripe_payment_intent_id: intent.id });
     return json(req, 200, { clientSecret: intent.client_secret });
   } catch (err) {
     console.error("payment intent failed:", err);

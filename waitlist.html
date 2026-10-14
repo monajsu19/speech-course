@@ -115,26 +115,24 @@
 
     .hero-figure { margin-top: 44px; }
     .hero-note-m { display: none; }
-    /* mobile: explain the offer and show the waitlist form before the supporting photo */
+    /* mobile: photo, then heading and points, then the "dangerously articulate" line, then signup form */
     @media (max-width: 859px) {
       main { padding-top: 24px; }
       .hero-grid { display: flex; flex-direction: column; }
       .hero-copy { display: contents; }
-      .hero-grid h1, .hero-grid .hero-start, .hero-grid .hero-points { width: 100%; max-width: 560px; margin-left: auto; margin-right: auto; padding-left: 14px; padding-right: 14px; text-align: left; }
-      .hero-grid h1 { order: -4; font-size: clamp(40px, 10vw, 54px); margin-bottom: 12px; }
-      .hero-grid .hero-start { order: -3; margin-top: 0; margin-bottom: 16px; font: 500 14px/1.4 "Inter", system-ui, sans-serif; color: var(--muted); }
-      .hero-grid .hero-points { order: -2; gap: 8px; margin-bottom: 20px; font-size: 15px; }
-      .hero-grid .signup { order: -1; width: calc(100% - 28px); max-width: 520px; }
+      .hero-grid h1, .hero-grid .hero-points { padding-left: 14px; padding-right: 14px; }
+      .hero-grid .hero-start { width: 100%; max-width: 560px; margin-left: auto; margin-right: auto; padding: 0 14px; text-align: left; }
+      /* shrink on narrow phones so "articulation bootcamp" always fits on one line */
+      .hero-grid h1 { font-size: min(clamp(36px, 8vw, 58px), calc((100vw - 72px) / 9.6)); }
       .hero-figure { padding-left: 18px; padding-right: 18px; }
       .hero-figure .hero-journey { left: 8px; right: 8px; }
       .hero-figure .hj-side { right: -10px; }
       .hero-pill { display: none; }
-      .hero-figure { order: 0; width: 100%; margin-top: 30px; margin-bottom: 8px; }
-      .hero-figure .hero-photo { height: 250px; }
+      .hero-figure { order: -1; width: 100%; margin-top: 40px; margin-bottom: 32px; }
       .hero-figure .hero-note { display: none; }
-      .hero-note-m { display: none; }
-      .signup-label { text-align: left; font-size: 17px; font-weight: 700; }
-      .signup-explainer { font-size: 13px; }
+      .hero-note-m { display: block; order: 1; margin: 4px 14px 20px; }
+      .hero-grid .signup { order: 2; width: 100%; }
+      .signup-label { text-align: center; }
     }
     .hero-journey {
       position: absolute;
@@ -325,7 +323,6 @@
       font-weight: 500;
       color: var(--text);
     }
-    .signup-explainer { margin: 0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.45; }
     .signup .btn-primary {
       height: 48px !important;
       margin-top: 4px !important; /* the embed already adds 8px under the input */
@@ -1542,7 +1539,7 @@
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-  <div class="topbar"><b>6 weeks · starts Oct 26.</b> Join the waitlist for enrollment details</div>
+  <div class="topbar"><b>We start Oct 26.</b> Hop on the waitlist for info on how to sign up</div>
   <main>
     <!-- ================= HERO ================= -->
     <header class="hero" id="join">
@@ -1569,19 +1566,20 @@
         <figcaption class="hero-note"><span class="nowrap">I'm going to teach you how to</span><br /><span class="nowrap">become dangerously articulate</span></figcaption>
       </figure>
       <div class="hero-copy">
-      <h1>6-week articulation bootcamp</h1>
-      <p class="hero-start">practice speaking more clearly and feel more confident speaking up</p>
+      <h1>6-week <span class="nowrap">hyper-intensive</span> <span class="nowrap">articulation bootcamp</span></h1>
+      <p class="hero-start">start date: Oct 26th</p>
       <ul class="hero-points">
-        <li>daily speech practice + short drills</li>
+        <li>daily drills that rewire how you talk</li>
+        <li>daily 1-minute speaking practice</li>
+        <li>daily tips to sharpen your pronunciation, pacing, and delivery</li>
+        <li>live zooms to practice public speaking</li>
         <li>a community of like-minded people supporting each other</li>
-        <li>live Zoom sessions</li>
       </ul>
 
       <p class="hero-note hero-note-m"><span class="nowrap">I'm going to teach you how to</span><br /><span class="nowrap">become dangerously articulate</span></p>
 
       <div class="signup">
-        <p class="signup-label">get first access to enrollment</p>
-        <p class="signup-explainer">Join the waitlist for signup details when doors open. The bootcamp is $297 or 2 payments of $165.</p>
+        <p class="signup-label">hop on the waitlist</p>
         <!-- EmailOctopus waitlist form (placeholder and button text are set below once it renders) -->
         <script>
           (function () {
@@ -1591,16 +1589,13 @@
               if (!input) return;
               input.placeholder = "you@example.com";
               var button = box.querySelector('[type="submit"]');
-              if (button) {
-                if ("value" in button) button.value = "get enrollment details";
-                else button.textContent = "get enrollment details";
-              }
+              if (button) button.value = "I'm in";
               obs.disconnect();
             }).observe(box, { childList: true, subtree: true });
           })();
         </script>
         <script async src="https://eocampaign1.com/form/344f1aea-bd0d-11f1-991f-39819b1d3e3d.js" data-form="344f1aea-bd0d-11f1-991f-39819b1d3e3d"></script>
-        <p class="doors-note">we start oct 26th · doors close oct 25th</p>
+        <p class="doors-note">doors close oct 25th</p>
       </div>
 
       </div>

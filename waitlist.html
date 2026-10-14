@@ -139,7 +139,8 @@
       .hero-grid h1, .hero-grid .hero-eyebrow, .hero-grid .hero-lede, .hero-grid .hero-points { padding-left: 14px; padding-right: 14px; }
       /* two lines, sized so each fits the screen without wrapping */
       .hero-grid h1 { font-size: min(72px, calc((100vw - 72px) / 7.7)); }
-      .hero-grid .hero-eyebrow { order: -2; margin-bottom: 14px; font-size: min(13px, calc((100vw - 72px) / 23.5)); }
+      /* phones: the banner names the bootcamp, so the eyebrow is hidden */
+      .hero-grid .hero-eyebrow { display: none; }
       .hero-figure { padding-left: 18px; padding-right: 18px; }
       .hero-figure .hero-journey { left: 8px; right: 8px; }
       .hero-figure .hj-side { right: -10px; }
@@ -220,34 +221,35 @@
     @media (min-width: 860px) {
       .hero-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) clamp(280px, 34vw, 380px);
-        gap: 56px;
+        grid-template-columns: clamp(280px, 34vw, 380px) minmax(0, 1fr);
+        gap: 20px 56px;
         align-items: center;
       }
-      /* center the pill over the left (text) column only */
-      .hero-pill {
-        display: block;
-        width: fit-content;
-        margin-left: auto;
-        margin-right: auto;
-        transform: translateX(calc((clamp(280px, 34vw, 380px) + 56px) / -2));
-      }
-      .hero-grid h1 { font-size: min(66px, calc((min(1000px, 100vw) - 96px - clamp(280px, 34vw, 380px)) / 7.4)); }
-      .hero-figure { order: 2; max-width: none; margin: 44px 0 0; }
-      .hero-journey { left: -44px; right: -12px; top: -34px; }
+      /* headline and intro run across the top; the photo (left) and the rest of the copy (right) sit underneath */
+      .hero-grid h1, .hero-grid .hero-eyebrow, .hero-grid .hero-lede { grid-column: 1 / -1; }
+      .hero-grid .hero-lede { max-width: 640px; margin-bottom: 0; font-size: 18px; }
+      .hero-grid .hero-eyebrow { margin-bottom: 0; }
+      .topbar-phone { display: none; }
+      .hero h1 > * { display: inline; }
+      .hero-pill { display: block; width: fit-content; margin-left: auto; margin-right: auto; }
+      .hero-grid h1 { max-width: none; margin-bottom: 0; font-size: min(68px, calc((min(1000px, 100vw) - 40px) / 14.4)); }
+      .hero-figure { max-width: none; margin: 44px 0 0; }
+      .hero-copy { margin-top: 44px; } /* same offset as the photo, so the two line up on their middles */
+      .hero-photo-frame .hero-photo { transform: scale(1.1) translate(4.5%, 0); }
+      .hero-journey { left: -12px; right: -32px; top: -34px; }
       .hj-card { font-size: 17px; flex-basis: 160px; }
-      .hj-side { right: -12px; width: 160px; top: 64px; gap: 24px; }
+      .hj-side { right: -32px; width: 160px; top: 64px; gap: 24px; }
       .hj-step { flex-basis: auto; }
       .hero-photo {
         height: auto;
-        aspect-ratio: 4 / 5;
-        object-position: 40% 30%;
+        /* square crop that keeps the top of the photo and trims the bottom */
+        aspect-ratio: 1 / 1;
+        object-position: 40% 32%;
       }
     }
 
     @media (min-width: 1100px) {
-      .hero-journey { right: -44px; }
-      .hj-side { right: -44px; }
+      .hero-journey { left: -44px; }
     }
 
     .hero-points {
@@ -1584,12 +1586,15 @@
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-  <div class="topbar"><b>We start Oct 26.</b> Hop on the waitlist for info on how to sign up</div>
+  <div class="topbar topbar-phone">the 6-week articulation bootcamp</div>
   <main>
     <!-- ================= HERO ================= -->
     <header class="hero" id="join">
       <span class="hero-pill">baby steps to the mic</span>
       <div class="hero-grid">
+      <p class="hero-eyebrow">the 6-week articulation bootcamp</p>
+      <h1><span>let’s get</span> <em>dangerously</em> <span>articulate.</span></h1>
+      <p class="hero-lede">a 6-week hands-on bootcamp for daily speech practice to stop shrinking your voice, speak with conviction, and make people listen.</p>
       <figure class="hero-figure">
         <div class="hero-journey">
           <span class="hj-card hj-from">I went from<br />blacking out<br />on stage</span>
@@ -1610,9 +1615,6 @@
         </div>
       </figure>
       <div class="hero-copy">
-      <p class="hero-eyebrow">the 6-week articulation bootcamp</p>
-      <h1><span>let’s get</span> <em>dangerously</em> <span>articulate.</span></h1>
-      <p class="hero-lede">a hands-on bootcamp for daily speech practice to stop shrinking your voice, speak with conviction, and make people listen.</p>
       <ul class="hero-points">
         <li>daily speech practice + drills from me</li>
         <li>feedback and a real community doing the reps</li>
@@ -1620,7 +1622,7 @@
       </ul>
 
       <div class="signup">
-        <p class="signup-label">hop on the waitlist</p>
+        <p class="signup-label">hop on the waitlist to get enrollment info</p>
         <!-- EmailOctopus waitlist form (placeholder and button text are set below once it renders) -->
         <script>
           (function () {
@@ -1636,7 +1638,7 @@
           })();
         </script>
         <script async src="https://eocampaign1.com/form/344f1aea-bd0d-11f1-991f-39819b1d3e3d.js" data-form="344f1aea-bd0d-11f1-991f-39819b1d3e3d"></script>
-        <p class="doors-note">doors close oct 25th</p>
+        <p class="doors-note">we start october 26<br />doors close oct 25th</p>
       </div>
 
       </div>

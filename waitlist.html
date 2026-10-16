@@ -1704,8 +1704,487 @@
       </script>
     </header>
 
+    <!-- ================= UNTAUGHT ================= -->
+    <section class="untaught" aria-labelledby="untaught-title">
+      <h2 id="untaught-title">
+        <em>In January,<br /> I was tired of not showing up the way I wanted to socially.</em>
+        <span>so I made a commitment to train my speech &amp; document it online</span>
+      </h2>
+      <ul class="proof-shots">
+        <li><img src="images/proof-random-topic.jpg" alt="Instagram video, 7.2M views: day 11 of 30 of talking for 1 minute on a random topic" width="600" height="1135" loading="lazy" /><p>7.2M views</p></li>
+        <li><img src="images/proof-shadowing-day-23.jpg" alt="Instagram video, 844K views: day 23 of 100 of shadowing to get better at speaking" width="600" height="1135" loading="lazy" /><p>844K views</p></li>
+        <li><img src="images/proof-learn-vocab.jpg" alt="Instagram video, 128K views: practicing new vocab in a 30-second timed speech" width="600" height="1135" loading="lazy" /><p>128K views</p></li>
+        <li><img src="images/proof-shadowing-day-1-vs-30.jpg" alt="Instagram video, 127K views: day 1 vs day 30 of shadowing to get better at speaking" width="600" height="1123" loading="lazy" /><p>127K views</p></li>
+        <li><img src="images/proof-ten-word-sentences.jpg" alt="Instagram video, 67K views: trying the 10-words-per-sentence exercise to stop rambling" width="600" height="1135" loading="lazy" /><p>67K views</p></li>
+        <li><img src="images/proof-pen-in-mouth.jpg" alt="Instagram video, 51.4K views: day 27 of 100 of reading with a pen in my mouth to improve articulation" width="600" height="1135" loading="lazy" /><p>51.4K views</p></li>
+        <li><img src="images/proof-reading-out-loud.jpg" alt="Instagram video, 39.2K views: day 27 of 100 of reading out loud to get better at speaking" width="600" height="1124" loading="lazy" /><p>39.2K views</p></li>
+        <li><img src="images/proof-tongue-twisters.jpg" alt="Instagram video, 34K views: the tongue twisters final boss" width="600" height="1130" loading="lazy" /><p>34K views</p></li>
+      </ul>
+    </section>
+
+    <!-- ================= JOURNEY ================= -->
+    <section class="journey">
+      <div class="journey-before">
+        <h2><span class="journey-lead"><span class="nowrap">I went from being</span></span> <span class="journey-big">scared to speak up in meetings</span></h2>
+        <img src="images/journey-meeting.jpg" alt="Mona at her desk in headphones, on a work call" width="800" height="1418" loading="lazy" />
+        <p>Scared to speak up in meetings 😭</p>
+      </div>
+      <div class="journey-arrow">
+        <svg viewBox="0 0 140 90" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 62 C 26 18, 70 10, 74 40 C 77 64, 46 66, 50 46 C 55 22, 98 22, 130 44" />
+          <path d="M114 30 L131 45 L110 52" />
+        </svg>
+        <p>to doing the unthinkable</p>
+      </div>
+      <div class="journey-arrow-m">
+        <p>to doing the unthinkable</p>
+        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M112 14 C 84 6, 52 14, 56 38 C 59 56, 84 52, 78 36 C 72 20, 40 30, 26 56 C 18 72, 16 88, 20 108" />
+          <path d="M8 94 L20 110 L33 97" />
+        </svg>
+      </div>
+      <ul class="journey-after" id="journey-after" aria-label="where I am now">
+        <li data-pos="0"><img src="images/journey-toastmasters.jpg" alt="Mona waving to the room while giving a Toastmasters speech" width="800" height="1236" loading="lazy" style="object-position: 50% 28%" /><p>Delivering a 7-min <br class="m-br" /><span class="nowrap">Toastmaster speech</span></p></li>
+        <li data-pos="1"><div class="journey-abc"><img src="images/journey-abc-news.jpg" alt="Mona being interviewed on ABC News for a segment on improving your public speaking" width="800" height="450" loading="lazy" /></div><p>Going on ABC News</p></li>
+        <li data-pos="2"><img src="images/journey-stand-up.jpg" alt="Mona on stage with a microphone doing stand-up comedy" width="800" height="1000" loading="lazy" style="object-position: 50% 38%" /><p>Giving a 5 min stand up set</p></li>
+      </ul>
+      <div class="journey-dots" role="group" aria-label="choose a photo">
+        <button type="button" aria-label="Toastmaster speech" aria-controls="journey-after" aria-current="true"></button>
+        <button type="button" aria-label="ABC News" aria-controls="journey-after" aria-current="false"></button>
+        <button type="button" aria-label="stand-up set" aria-controls="journey-after" aria-current="false"></button>
+      </div>
+      <p class="journey-deck-hint">swipe</p>
+      <script>
+        (function () {
+          var deck = document.getElementById("journey-after");
+          var dots = document.querySelectorAll(".journey-dots button");
+          if (!deck || !dots.length) return;
+          var cards = Array.prototype.slice.call(deck.children);
+          var order = cards.slice(); // order[0] is the card on top
+          var mobile = window.matchMedia("(max-width: 859px)");
+          var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+          var busy = false;
+
+          function render() {
+            order.forEach(function (card, pos) { card.dataset.pos = pos; });
+            var top = cards.indexOf(order[0]);
+            dots.forEach(function (dot, i) { dot.setAttribute("aria-current", i === top ? "true" : "false"); });
+          }
+
+          // flick the top card off to one side, then tuck it in at the back of the stack
+          function next(dir, done) {
+            var card = order[0];
+            order.push(order.shift());
+            if (reduced.matches) { card.style.transform = ""; render(); if (done) done(); return; }
+            busy = true;
+            card.classList.remove("dragging");
+            card.style.transform = "translateX(" + dir * 120 + "%) rotate(" + dir * 16 + "deg)";
+            setTimeout(function () {
+              render();
+              card.style.transform = "";
+              setTimeout(function () { busy = false; if (done) done(); }, 200);
+            }, 220);
+          }
+
+          var startX = 0, startY = 0, dx = 0, active = null;
+          deck.addEventListener("pointerdown", function (e) {
+            if (!mobile.matches || busy || e.target.closest("li") !== order[0]) return;
+            active = order[0];
+            startX = e.clientX; startY = e.clientY; dx = 0;
+            active.classList.add("dragging");
+            active.setPointerCapture(e.pointerId);
+          });
+          deck.addEventListener("pointermove", function (e) {
+            if (!active) return;
+            dx = e.clientX - startX;
+            active.style.transform = "translateX(" + dx + "px) rotate(" + (dx / 18 - 2) + "deg)";
+          });
+          function release(e) {
+            if (!active) return;
+            var card = active;
+            active = null;
+            var moved = Math.abs(dx) > 6 || Math.abs(e.clientY - startY) > 6;
+            if (Math.abs(dx) > 60) return next(dx > 0 ? 1 : -1);
+            if (!moved && e.type === "pointerup") return next(-1);
+            card.classList.remove("dragging");
+            card.style.transform = "";
+          }
+          deck.addEventListener("pointerup", release);
+          deck.addEventListener("pointercancel", release);
+
+          dots.forEach(function (dot, i) {
+            dot.addEventListener("click", function () {
+              if (busy) return;
+              (function step() { if (order[0] !== cards[i]) next(-1, step); })();
+            });
+          });
+
+          render();
+        })();
+      </script>
+    </section>
+
+    <!-- ================= TRIED EVERYTHING ================= -->
+    <section class="tried">
+      <div class="tried-bridge">
+        <p>I've condensed all the</p>
+        <ul class="tried-bridge-list">
+          <li>drills that worked</li>
+          <li>tips I've picked up</li>
+          <li>mindset shifts</li>
+        </ul>
+        <p>into a 6-week course</p>
+        <svg class="tried-bridge-arrow" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M112 14 C 84 6, 52 14, 56 38 C 59 56, 84 52, 78 36 C 72 20, 40 30, 26 56 C 18 72, 16 88, 20 108" />
+          <path d="M8 94 L20 110 L33 97" />
+        </svg>
+      </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="how-section">
+      <h2>the roadmap</h2>
+
+      <div class="roadmap-wrap">
+      <svg class="roadmap-path" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="0 9" /></svg>
+      <ol class="roadmap">
+        <li><b>pronunciation drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>warm up your mouth muscles for clean sounds and gain awareness of which syllables you mumble</span></li>
+        <li><b>rhythm, pitch &amp; volume drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>add vocal variety with rhythm in your speech. vary your speed of speech and change your volume</span></li>
+        <li><b>tone &amp; pausing drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>learn how to use your voice to elicit different emotions and how to pause effectively</span></li>
+        <li><b>shadowing drills</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>copy a speaker you admire: their pace, their energy, the way they land a point. this was the first exercise I did on my page, and it’s quite helpful</span></li>
+        <li><b>stage presence and audience engagement tips</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>we’ll work on how to look and feel confident when public speaking, get over the fear of being judged, and speak in a way that keeps the audience’s attention</span></li>
+        <li><b>storytelling &amp; humor tips</b><span class="roadmap-plus">+ daily 1 min speaking practice</span><span>I’ll teach you what I know about keeping an audience engaged, plus a few humor tips I learned in my (very short) stand-up comedy endeavor</span></li>
+      </ol>
+      </div>
+      <script>
+        (function () {
+          var wrap = document.querySelector(".roadmap-wrap");
+          if (!wrap) return;
+          var list = wrap.querySelector(".roadmap");
+          var path = wrap.querySelector(".roadmap-path path");
+          var items = Array.prototype.slice.call(list.children);
+          var NODE = 26; // half the node width
+
+          // dotted line: straight down from each node, then an S-bend through the gap to the next node
+          function draw() {
+            var box = wrap.getBoundingClientRect();
+            var pts = items.map(function (li, i) {
+              var r = li.getBoundingClientRect();
+              return {
+                x: (i % 2 ? r.right - NODE : r.left + NODE) - box.left,
+                y: r.top + NODE - box.top,
+                bottom: r.bottom - box.top
+              };
+            });
+            var d = "M" + pts[0].x + " " + pts[0].y;
+            for (var i = 1; i < pts.length; i++) {
+              var a = pts[i - 1], b = pts[i];
+              var mid = (a.bottom + b.y - NODE) / 2;
+              var bend = Math.min(18, (b.y - a.bottom) / 2);
+              d += " V" + (mid - bend) +
+                " C" + a.x + " " + (mid + bend * 0.6) + " " + b.x + " " + (mid - bend * 0.6) + " " + b.x + " " + (mid + bend) +
+                " V" + b.y;
+            }
+            path.setAttribute("d", d);
+          }
+
+          // every card starts open; tap a title to collapse it
+          items.forEach(function (li) {
+            var title = li.querySelector("b");
+            title.setAttribute("role", "button");
+            title.setAttribute("tabindex", "0");
+            title.setAttribute("aria-expanded", "true");
+            li.classList.add("open");
+          });
+
+          function toggle(li) {
+            var open = li.classList.toggle("open");
+            li.querySelector("b").setAttribute("aria-expanded", open ? "true" : "false");
+            draw();
+          }
+
+          items.forEach(function (li) {
+            li.addEventListener("click", function () { toggle(li); });
+            li.querySelector("b").addEventListener("keydown", function (e) {
+              if (e.key !== "Enter" && e.key !== " ") return;
+              e.preventDefault();
+              toggle(li);
+            });
+          });
+
+          if (window.ResizeObserver) new ResizeObserver(draw).observe(list);
+          window.addEventListener("resize", draw);
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+          draw();
+        })();
+      </script>
+
+      <h3 class="how-sub">weekly schedule</h3>
+
+      <div class="rhythm" id="rhythm">
+        <article class="rhythm-card">
+          <div class="rhythm-visual">
+            <div class="tip-video">
+              <!--
+                ===== DAILY TIP VIDEO =====
+                Drop the video into images/ (or a videos/ folder) and swap the <img> + play button below for:
+                <video src="videos/daily-tip.mp4" poster="images/daily-tip-preview.jpg" controls playsinline preload="none"></video>
+              -->
+              <img src="images/daily-tip-preview.jpg" alt="Mona recording a daily speaking tip" width="960" height="536" loading="lazy" />
+              <span class="tip-play" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></span>
+              <span class="tip-tag">daily tip</span>
+            </div>
+          </div>
+          <div class="rhythm-text">
+            <span class="rhythm-when">mon, tue, wed, thur, fri</span>
+            <b>a tip from me</b>
+            <p>a pre-recorded video from me - an exercise that's worked, a mindset shift, a public speaking trick</p>
+          </div>
+        </article>
+
+        <article class="rhythm-card">
+          <div class="rhythm-visual" aria-hidden="true">
+            <div class="mock-drill">
+              <span class="md-label">week 1 · pronunciation</span>
+              <p class="md-title">land every ending consonant</p>
+              <ol class="md-steps">
+                <li class="done">“red lorry, yellow lorry” <span>5× ✓</span></li>
+                <li class="done">“big black bug” <span>5× ✓</span></li>
+                <li>read a paragraph slowly <span>1×</span></li>
+              </ol>
+            </div>
+          </div>
+          <div class="rhythm-text">
+            <span class="rhythm-when">mon, tue, wed, thur, fri</span>
+            <b>a drill</b>
+            <p>a quick drill that targets that week's skill</p>
+          </div>
+        </article>
+
+        <article class="rhythm-card">
+          <div class="rhythm-visual" aria-hidden="true">
+            <div class="mock-phone">
+              <div class="mp-screen">
+                <span class="mp-label">today's random topic</span>
+                <p class="mp-topic">“what's a hill you'd die on?”</p>
+                <div class="mp-wave"><i style="height:8px"></i><i style="height:16px"></i><i style="height:26px"></i><i style="height:14px"></i><i style="height:30px"></i><i style="height:20px"></i><i style="height:10px"></i><i style="height:24px"></i><i style="height:32px"></i><i style="height:18px"></i><i style="height:12px"></i><i style="height:22px"></i><i style="height:28px"></i><i style="height:14px"></i><i style="height:8px"></i><i style="height:18px"></i><i style="height:26px"></i><i style="height:12px"></i></div>
+                <span class="mp-rec">0:47 / 1:00</span>
+              </div>
+            </div>
+          </div>
+          <div class="rhythm-text">
+            <span class="rhythm-when">mon, tue, wed, thur, fri, sat</span>
+            <b>record 1 minute of <span class="m-hide">speaking</span><span class="m-only">speech</span></b>
+            <p>speak for 1 min on a topic I'll send in the group chat</p>
+          </div>
+        </article>
+
+        <article class="rhythm-card">
+          <div class="rhythm-visual" aria-hidden="true">
+            <div class="mock-chat">
+              <div class="mc-head"># saturday-feedback <span>· the cohort</span></div>
+              <div class="mc-body">
+                <div class="mc-msg">
+                  <span class="mc-av">J</span>
+                  <div><span class="mc-name">jess</span><div class="mc-clip">1:00 · “best advice you ever ignored”</div></div>
+                </div>
+                <div class="mc-msg">
+                  <span class="mc-av" style="background: var(--accent)">K</span>
+                  <div><span class="mc-name">kai</span><p>your pauses this week?? so much better</p></div>
+                </div>
+                <div class="mc-msg">
+                  <img class="mc-av" src="images/profile-mona.jpg" alt="" width="320" height="320" loading="lazy" />
+                  <div><span class="mc-name">mona</span><p>love the opener! try slowing down on the last line so it lands</p>
+                    <div class="mc-react"><span>🔥 12</span><span>👏 8</span></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="rhythm-text">
+            <span class="rhythm-when">saturday</span>
+            <b>post + get feedback</b>
+            <p>post your 1 min speech and we'll give each other feedback</p>
+          </div>
+        </article>
+
+        <article class="rhythm-card">
+          <div class="rhythm-visual" aria-hidden="true">
+            <div class="mock-zoom">
+              <div class="mz-top"><span class="mz-live">live · sunday session</span><span>24 people</span></div>
+              <div class="mz-grid">
+                <div>A</div>
+                <div class="speaking">S<small>sam 🎤</small></div>
+                <div>R</div>
+                <div><img src="images/profile-mona.jpg" alt="" width="320" height="320" loading="lazy" /><small>mona</small></div>
+                <div>T</div>
+                <div>L</div>
+              </div>
+              <div class="mz-bar"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg></span><span class="leave"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M3 14.5c5-4.7 13-4.7 18 0l-2.4 2.6-3.7-1.5v-3a12 12 0 0 0-5.8 0v3l-3.7 1.5z"/></svg></span></div>
+            </div>
+          </div>
+          <div class="rhythm-text">
+            <span class="rhythm-when">sunday, 3 times</span>
+            <b>live session</b>
+            <p>big zoom call to practice public speaking with (basically) no stakes w/ fun games + debates 👀</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= OUTCOMES ================= -->
+    <section class="outcomes-section" id="outcomes">
+      <h2>what you'll leave with</h2>
+      <ul class="outcomes">
+        <li><div><b>36 speeches on camera</b><p>you'll do the reps of speaking for 1 min on a topic. everyone in the cohort does the same topic, so you have extra accountability to show up</p></div></li>
+        <li><div><b>30 articulation drills + tips from me</b><p>I'll share every exercise that's worked for me this past year, to help you add vocal variety, avoid going blank, and overcome your fear of public speaking</p></div></li>
+        <li><div><b>6 rounds of feedback from the cohort</b><p>get feedback from each other on what you’ve done well + what to improve</p></div></li>
+        <li><div><b>3 live zooms</b><p>practice public speaking with fun games + debates w/ no stakes</p></div></li>
+        <li><div><b>10-minute daily speaking routine</b><p>I'll share what I (try to) do every day to help train my speech muscles, so you can keep practicing long after the bootcamp ends</p></div></li>
+        <li><div><b>correct your speech habits</b><p>gain awareness of your filler words, the words you tend to mumble, and when you speak too fast or too slow</p></div></li>
+        <li><div><b>hear a difference in your speech</b><p>I promise you'll notice a difference in how you speak! you've (prob) never intentionally trained your speech before, so you'll pick up on lots of things you didn't even realize</p></div></li>
+      </ul>
+      <p class="doors-note">doors close oct 25th<br />we start oct 26th</p>
+    </section>
+
+    <!-- ================= STORY: HI, I'M MONA ================= -->
+    <section class="about">
+      <p class="about-hi">hi, I'm mona 👋</p>
+      <div class="story about-grid">
+        <img class="about-photo" src="images/honest-mona.jpg" alt="Mona taking a selfie on a rooftop, shading her eyes from the sun" width="750" height="1000" loading="lazy" />
+        <div class="story-text">
+          <p>This year, I made a New Year's resolution: <b>stop being scared of public speaking</b>. I was so tired of not showing up the way I wanted to - both at work and in day to day.</p>
+          <p>I started <b>giving speeches at Toastmasters every week</b> while trying (a billion) articulation drills at home. I started posting my progress online and have somehow built a community of <b>300k+ people who all want to improve their speech</b>!</p>
+          <p>10 months later, <b>I’ve truly improved so much as a speaker</b>. <b>My confidence has also skyrocketed</b>.</p>
+          <p>I’ve condensed everything I’ve learned into this bootcamp - all the best drills and tips. This is your chance to hold yourself accountable and commit to training your speech!</p>
+          <p class="about-shout">I’m going to teach you (almost) everything I know about speech</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DAY 1 VS DAY 30 ================= -->
+    <section class="difference">
+      <h2>see the difference after 30 days of practice</h2>
+      <div class="compare">
+        <figure>
+          <video src="videos/day-1-of-30.mp4" poster="images/day-1-of-30-poster.jpg" controls playsinline preload="none" width="720" height="1280"></video>
+          <figcaption>day 1</figcaption>
+        </figure>
+        <div class="compare-arrow">
+          <svg viewBox="0 0 140 90" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 62 C 26 18, 70 10, 74 40 C 77 64, 46 66, 50 46 C 55 22, 98 22, 130 44" />
+            <path d="M114 30 L131 45 L110 52" />
+          </svg>
+        </div>
+        <figure>
+          <video src="videos/day-30-of-30.mp4" poster="images/day-30-of-30-poster.jpg" controls playsinline preload="none" width="720" height="1280"></video>
+          <figcaption>day 30</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= LEVEL SET ================= -->
+    <section class="levelset">
+      <div class="photo-stack">
+        <img src="images/lastcall-1.jpg" alt="Mona giving a speech in front of the Toastmasters banner" width="515" height="651" loading="lazy" />
+        <img src="images/lastcall-2.jpg" alt="Mona speaking to a seated audience at Toastmasters, holding a notebook" width="640" height="865" loading="lazy" />
+        <img class="shot" src="images/proof-random-topic.jpg" alt="Instagram video, 7.2M views: day 11 of 30 of talking for 1 minute on a random topic" width="600" height="1135" loading="lazy" />
+        <img class="shot" src="images/proof-learn-vocab.jpg" alt="Instagram video, 128K views: practicing new vocab in a timed speech" width="600" height="1135" loading="lazy" />
+        <img src="images/lastcall-3.jpg" alt="Mona smiling mid-speech at Toastmasters in a grey sweater" width="593" height="900" loading="lazy" />
+      </div>
+      <script>
+        (function () {
+          var stack = document.querySelector(".photo-stack");
+          if (!stack) return;
+          var topZ = stack.children.length;
+          Array.prototype.forEach.call(stack.querySelectorAll("img"), function (img, i) {
+            img.style.zIndex = i + 1;
+            img.tabIndex = 0;
+            img.setAttribute("role", "button");
+            img.setAttribute("aria-label", "bring to front: " + img.alt);
+            function bringToFront() {
+              img.style.zIndex = ++topZ;
+              img.classList.remove("front");
+              void img.offsetWidth; // restart the pop animation
+              img.classList.add("front");
+            }
+            img.addEventListener("click", bringToFront);
+            img.addEventListener("keydown", function (e) {
+              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); bringToFront(); }
+            });
+          });
+        })();
+      </script>
+      <p class="levelset-shout">if I can do it,<br />you can do it too</p>
+      <div class="levelset-copy">
+      <h2><span class="levelset-fr">but let's be fr,</span> this isn't a magic fix.</h2>
+      <p>you've been <b>unconsciously training the way you talk your whole life</b>. 6 weeks won't undo all of it</p>
+      <p>what this bootcamp will do is <b>kickstart your journey of intentionally training your communication skills</b>. you’ll gain awareness of your speech patterns, and I promise you’ll hear a big difference at the end of it.</p>
+      <div class="levelset-cta"><a class="cta" href="#join">hop on the waitlist</a></div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="faq">
+      <h2>questions</h2>
+      <details>
+        <summary>when does it start?</summary>
+        <p>we start monday, oct 26th and go for 6 weeks. doors close oct 25th, so <a href="#join">hop on the waitlist</a> before then 😊</p>
+      </details>
+      <details>
+        <summary>what if I'm really, really shy?</summary>
+        <p>I was really shy when I first started this whole journey! I could barely get my own name out at my first Toastmasters meeting. everyone here is trying to get better. you're in the right place.</p>
+      </details>
+      <details>
+        <summary>what happens in a sunday live session?</summary>
+        <p>we all hop on a big zoom call and practice public speaking together: speaking games, drills, and fun debate rounds. it's your chance to practice getting over your nerves with basically no stakes.</p>
+      </details>
+      <details>
+        <summary>do I have to post my videos?</summary>
+        <p>no, you don't, but it's strongly encouraged! every saturday, you can post the video of your 1-minute speech in the chat, and everyone gives each other feedback. one of the best ways to learn is from watching other people.</p>
+      </details>
+      <details>
+        <summary>how much time does this take?</summary>
+        <p class="faq-lead">10 to 20 minutes a day:</p>
+        <ul>
+          <li><span><b>monday – friday:</b> watch my video tip, do the drill, record yourself, speak for 1 minute.</span></li>
+          <li><span><b>saturday:</b> speak for 1 minute and post it in the chat for feedback.</span></li>
+          <li><span><b>every other sunday:</b> we meet live on zoom (3 sessions total).</span></li>
+        </ul>
+      </details>
+      <details>
+        <summary>what does this bootcamp do that the free spinner doesn't?</summary>
+        <p>The spinner gives you a topic - that's it. The bootcamp helps you learn your speech style, gives you a drill for improving every day, gives you a cohort of people to do it with, and puts you in a live Zoom every other Sunday.</p>
+      </details>
+      <details>
+        <summary>what if I miss a day?</summary>
+        <p>don't quit. just do the next one. every rep still counts.</p>
+      </details>
+    </section>
+
+    <!-- ================= P.S. CARD ================= -->
+    <section class="ps-section">
+      <div class="ps">
+        <p>when I first started, I wasn’t even sure you could actually improve your speech.</p>
+        <p>I proved to myself (and hopefully to anyone who’s followed along) that speech is very much trainable.</p>
+        <p>it's time to get in on the action</p>
+        <p class="sig">see you at the mic. – mona</p>
+        <div class="ps-cta"><a class="cta" href="#join">hop on the waitlist</a></div>
+      </div>
+    </section>
+
     <footer>&copy; 2026 JINY LLC &middot; <a href="terms.html">terms</a> &middot; <a href="privacy.html">privacy</a></footer>
   </main>
+
+  <script>
+    // In-page links scroll without adding #section to the address, so a refresh stays at the top
+    document.addEventListener("click", function (e) {
+      var link = e.target.closest('a[href^="#"]');
+      var target = link && document.getElementById(link.getAttribute("href").slice(1));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth" });
+    });
+  </script>
 
 </body>
 </html>

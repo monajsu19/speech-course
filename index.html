@@ -1537,10 +1537,12 @@
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
   <script>
-    // Doors close at midnight Eastern on oct 26; add ?doors=closed to preview the closed page early
+    // Doors close at midnight Eastern on oct 26, then the home page becomes the waitlist page;
+    // add ?doors=closed to preview the closed page early
     window.DOORS_CLOSE = new Date("2026-10-26T00:00:00-04:00").getTime();
     if (Date.now() >= window.DOORS_CLOSE || /[?&]doors=closed\b/.test(location.search)) {
       document.documentElement.classList.add("doors-closed");
+      location.replace("waitlist.html" + location.search + location.hash);
     }
   </script>
 </head>
@@ -1604,6 +1606,7 @@
               banner.textContent = "we started oct 26";
               box.hidden = true;
               document.documentElement.classList.add("doors-closed");
+              location.replace("waitlist.html" + location.search);
               return clearInterval(timer);
             }
             var d = Math.floor(left / 86400), h = Math.floor(left / 3600) % 24, m = Math.floor(left / 60) % 60;

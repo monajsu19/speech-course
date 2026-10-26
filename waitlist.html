@@ -329,6 +329,16 @@
     .signup button:hover,
     .signup input[type="submit"]:hover { background: var(--accent-hover); }
     /* EmailOctopus ships its own Bootstrap styles; pull the embed back onto the brand palette */
+    /* doors closed (after midnight Eastern, oct 26): swap the enrollment wording for closed-doors wording */
+    .doors-closed .when-open, html:not(.doors-closed) .when-closed { display: none !important; }
+    .signup-closed {
+      margin-bottom: 6px;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-size: clamp(24px, 3vw, 28px);
+      line-height: 1.15;
+      text-align: center;
+    }
+    .signup-label.when-closed { text-align: center; }
     .signup-label {
       margin-bottom: 8px;
       font-size: 14px;
@@ -1584,6 +1594,15 @@
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+    // Doors close at midnight Eastern on oct 26; add ?doors=closed to preview the closed page early
+    (function () {
+      var close = new Date("2026-10-26T00:00:00-04:00").getTime();
+      function shut() { document.documentElement.classList.add("doors-closed"); }
+      if (Date.now() >= close || /[?&]doors=closed\b/.test(location.search)) shut();
+      else setTimeout(shut, Math.min(close - Date.now(), 2147483647));
+    })();
+  </script>
 </head>
 <body>
   <div class="topbar topbar-phone">the 6-week articulation bootcamp</div>
@@ -1622,7 +1641,9 @@
       </ul>
 
       <div class="signup">
-        <p class="signup-label">hop on the waitlist to get enrollment info</p>
+        <p class="signup-closed when-closed">the bootcamp doors are now closed</p>
+        <p class="signup-label when-closed">hop on the waitlist to stay updated</p>
+        <p class="signup-label when-open">hop on the waitlist to get enrollment info</p>
         <!-- EmailOctopus waitlist form (placeholder and button text are set below once it renders) -->
         <script>
           (function () {
@@ -1638,7 +1659,7 @@
           })();
         </script>
         <script async src="https://eocampaign1.com/form/344f1aea-bd0d-11f1-991f-39819b1d3e3d.js" data-form="344f1aea-bd0d-11f1-991f-39819b1d3e3d"></script>
-        <p class="doors-note">we start oct 26th<br />doors close oct 25th</p>
+        <p class="doors-note when-open">we start oct 26th<br />doors close oct 25th</p>
       </div>
 
       </div>
@@ -2043,7 +2064,7 @@
         <li><div><b>correct your speech habits</b><p>gain awareness of your filler words, the words you tend to mumble, and when you speak too fast or too slow</p></div></li>
         <li><div><b>hear a difference in your speech</b><p>I promise you'll notice a difference in how you speak! you've (prob) never intentionally trained your speech before, so you'll pick up on lots of things you didn't even realize</p></div></li>
       </ul>
-      <p class="doors-note">doors close oct 25th<br />we start oct 26th</p>
+      <p class="doors-note when-open">doors close oct 25th<br />we start oct 26th</p>
     </section>
 
     <!-- ================= STORY: HI, I'M MONA ================= -->
@@ -2128,7 +2149,8 @@
       <h2>questions</h2>
       <details>
         <summary>when does it start?</summary>
-        <p>we start monday, oct 26th and go for 6 weeks. doors close oct 25th, so <a href="#join">hop on the waitlist</a> before then 😊</p>
+        <p class="when-open">we start monday, oct 26th and go for 6 weeks. doors close oct 25th, so <a href="#join">hop on the waitlist</a> before then 😊</p>
+        <p class="when-closed">this round started monday, oct 26th and runs for 6 weeks. doors are closed for now, but <a href="#join">hop on the waitlist</a> to hear when the next one opens 😊</p>
       </details>
       <details>
         <summary>what if I'm really, really shy?</summary>

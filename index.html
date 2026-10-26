@@ -303,6 +303,14 @@
       box-shadow: 0 5px 0 var(--accent-hover);
     }
     .hero-cta .cta svg { width: 18px; height: 18px; flex: none; }
+    /* doors closed (after midnight Eastern, oct 26): swap the open-enrollment bits for waitlist ones */
+    .doors-closed .when-open, html:not(.doors-closed) .when-closed { display: none !important; }
+    .hero-closed-note {
+      font-family: "DM Serif Display", Georgia, serif;
+      font-size: clamp(24px, 3vw, 30px);
+      line-height: 1.15;
+      text-align: center;
+    }
     .hero-cta .doors-note {
       margin-top: 0;
       font: 400 12px/1.4 "DM Mono", ui-monospace, monospace;
@@ -1528,6 +1536,13 @@
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+    // Doors close at midnight Eastern on oct 26; add ?doors=closed to preview the closed page early
+    window.DOORS_CLOSE = new Date("2026-10-26T00:00:00-04:00").getTime();
+    if (Date.now() >= window.DOORS_CLOSE || /[?&]doors=closed\b/.test(location.search)) {
+      document.documentElement.classList.add("doors-closed");
+    }
+  </script>
 </head>
 <body>
   <div class="topbar"><span class="topbar-phone">the 6-week articulation bootcamp</span><span class="topbar-desktop" id="start-banner">we start oct 26</span></div>
@@ -1565,17 +1580,19 @@
       </ul>
 
       <div class="hero-cta">
-        <a class="cta" href="#outcomes">I'm ready to get my reps in <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
-        <div class="hero-kickoff" id="kickoff" hidden>
+        <p class="hero-closed-note when-closed">the bootcamp doors are now closed</p>
+        <a class="cta when-closed" href="waitlist.html">hop on the waitlist to stay updated <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+        <a class="cta when-open" href="#outcomes">I'm ready to get my reps in <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+        <div class="hero-kickoff when-open" id="kickoff" hidden>
           <p class="hero-kickoff-label">kickoff in</p>
           <div class="hero-countdown" id="countdown" aria-label="time until kickoff"></div>
         </div>
-        <p class="doors-note">starts oct 26 · doors close oct 25</p>
+        <p class="doors-note when-open">starts oct 26 · doors close oct 25</p>
       </div>
       <script>
         // Counts down to the first day (midnight Eastern); the kickoff block stays hidden without JS and after the start
         (function () {
-          var start = new Date("2026-10-26T00:00:00-04:00").getTime();
+          var start = window.DOORS_CLOSE;
           var banner = document.getElementById("start-banner");
           var box = document.getElementById("kickoff");
           var out = document.getElementById("countdown");
@@ -1586,6 +1603,7 @@
             if (left <= 0) {
               banner.textContent = "we started oct 26";
               box.hidden = true;
+              document.documentElement.classList.add("doors-closed");
               return clearInterval(timer);
             }
             var d = Math.floor(left / 86400), h = Math.floor(left / 3600) % 24, m = Math.floor(left / 60) % 60;
@@ -2005,7 +2023,7 @@
         <li><div><b>correct your speech habits</b><p>gain awareness of your filler words, the words you tend to mumble, and when you speak too fast or too slow</p></div></li>
         <li><div><b>hear a difference in your speech</b><p>I promise you'll notice a difference in how you speak! you've (prob) never intentionally trained your speech before, so you'll pick up on lots of things you didn't even realize</p></div></li>
       </ul>
-      <div class="pricing" id="offer">
+      <div class="pricing when-open" id="offer">
         <div class="price-card featured">
           <span class="price-badge">best deal</span>
           <p class="price">$297</p>
@@ -2018,7 +2036,7 @@
           <a class="cta cta-outline" href="checkout.html?plan=split">split it <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6"/></svg></a>
         </div>
       </div>
-      <p class="doors-note">doors close oct 25th<br />we start oct 26th</p>
+      <p class="doors-note when-open">doors close oct 25th<br />we start oct 26th</p>
     </section>
 
     <!-- ================= STORY: HI, I'M MONA ================= -->
@@ -2094,7 +2112,7 @@
       <h2><span class="levelset-fr">but let's be fr,</span> this isn't a magic fix.</h2>
       <p>you've been <b>unconsciously training the way you talk your whole life</b>. 6 weeks won't undo all of it</p>
       <p>what this bootcamp will do is <b>kickstart your journey of intentionally training your communication skills</b>. you’ll gain awareness of your speech patterns, and I promise you’ll hear a big difference at the end of it.</p>
-      <div class="levelset-cta"><a class="cta" href="#outcomes">sign me up</a></div>
+      <div class="levelset-cta"><a class="cta when-open" href="#outcomes">sign me up</a><a class="cta when-closed" href="waitlist.html">hop on the waitlist</a></div>
       </div>
     </section>
 
@@ -2103,7 +2121,8 @@
       <h2>questions</h2>
       <details>
         <summary>when does it start?</summary>
-        <p>we start monday, oct 26th and go for 6 weeks. doors close oct 25th, so <a href="#offer">grab your spot</a> before then 😊</p>
+        <p class="when-open">we start monday, oct 26th and go for 6 weeks. doors close oct 25th, so <a href="#offer">grab your spot</a> before then 😊</p>
+        <p class="when-closed">this round started monday, oct 26th and runs for 6 weeks. doors are closed for now, but <a href="waitlist.html">hop on the waitlist</a> to hear when the next one opens 😊</p>
       </details>
       <details>
         <summary>what if I'm really, really shy?</summary>
@@ -2143,7 +2162,7 @@
         <p>I proved to myself (and hopefully to anyone who’s followed along) that speech is very much trainable.</p>
         <p>it's time to get in on the action</p>
         <p class="sig">see you at the mic. – mona</p>
-        <div class="ps-cta"><a class="cta" href="#outcomes">sign me up</a></div>
+        <div class="ps-cta"><a class="cta when-open" href="#outcomes">sign me up</a><a class="cta when-closed" href="waitlist.html">hop on the waitlist</a></div>
       </div>
     </section>
 

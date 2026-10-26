@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Checkout | 6 Week Articulation Bootcamp</title>
+  <script>
+    // Doors close at midnight Eastern on oct 26: send anyone with an old checkout link to the waitlist
+    if (Date.now() >= new Date("2026-10-26T00:00:00-04:00").getTime() || /[?&]doors=closed\b/.test(location.search)) {
+      location.replace("waitlist.html");
+    }
+  </script>
   <meta name="robots" content="noindex" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

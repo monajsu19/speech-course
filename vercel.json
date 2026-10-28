@@ -1,3 +1,8 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/checkout", "destination": "/waitlist", "permanent": false },
+    { "source": "/checkout.html", "destination": "/waitlist", "permanent": false },
+    { "source": "/checkout/:path*", "destination": "/waitlist", "permanent": false }
+  ]
 }
